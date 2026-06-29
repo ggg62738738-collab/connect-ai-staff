@@ -18,8 +18,17 @@ import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as ForFreelancersRouteImport } from './routes/for-freelancers'
 import { Route as ForCompaniesRouteImport } from './routes/for-companies'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
+import { Route as AdminJobsRouteImport } from './routes/admin.jobs'
+import { Route as AdminFreelancersRouteImport } from './routes/admin.freelancers'
+import { Route as AdminContractsRouteImport } from './routes/admin.contracts'
+import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
+import { Route as AdminApplicationsRouteImport } from './routes/admin.applications'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -66,6 +75,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -76,10 +90,51 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminJobsRoute = AdminJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminFreelancersRoute = AdminFreelancersRouteImport.update({
+  id: '/freelancers',
+  path: '/freelancers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminContractsRoute = AdminContractsRouteImport.update({
+  id: '/contracts',
+  path: '/contracts',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCompaniesRoute = AdminCompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminApplicationsRoute = AdminApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
   '/for-companies': typeof ForCompaniesRoute
   '/for-freelancers': typeof ForFreelancersRoute
@@ -89,6 +144,14 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contracts': typeof AdminContractsRoute
+  '/admin/freelancers': typeof AdminFreelancersRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,11 +165,20 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contracts': typeof AdminContractsRoute
+  '/admin/freelancers': typeof AdminFreelancersRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
   '/for-companies': typeof ForCompaniesRoute
   '/for-freelancers': typeof ForFreelancersRoute
@@ -116,12 +188,21 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contracts': typeof AdminContractsRoute
+  '/admin/freelancers': typeof AdminFreelancersRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/contact'
     | '/for-companies'
     | '/for-freelancers'
@@ -131,6 +212,14 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/register'
     | '/sitemap.xml'
+    | '/admin/applications'
+    | '/admin/companies'
+    | '/admin/contracts'
+    | '/admin/freelancers'
+    | '/admin/jobs'
+    | '/admin/payments'
+    | '/admin/settings'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,10 +233,19 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/register'
     | '/sitemap.xml'
+    | '/admin/applications'
+    | '/admin/companies'
+    | '/admin/contracts'
+    | '/admin/freelancers'
+    | '/admin/jobs'
+    | '/admin/payments'
+    | '/admin/settings'
+    | '/admin'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
     | '/contact'
     | '/for-companies'
     | '/for-freelancers'
@@ -157,11 +255,20 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/register'
     | '/sitemap.xml'
+    | '/admin/applications'
+    | '/admin/companies'
+    | '/admin/contracts'
+    | '/admin/freelancers'
+    | '/admin/jobs'
+    | '/admin/payments'
+    | '/admin/settings'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ContactRoute: typeof ContactRoute
   ForCompaniesRoute: typeof ForCompaniesRoute
   ForFreelancersRoute: typeof ForFreelancersRoute
@@ -238,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -252,12 +366,93 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/jobs': {
+      id: '/admin/jobs'
+      path: '/jobs'
+      fullPath: '/admin/jobs'
+      preLoaderRoute: typeof AdminJobsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/freelancers': {
+      id: '/admin/freelancers'
+      path: '/freelancers'
+      fullPath: '/admin/freelancers'
+      preLoaderRoute: typeof AdminFreelancersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/contracts': {
+      id: '/admin/contracts'
+      path: '/contracts'
+      fullPath: '/admin/contracts'
+      preLoaderRoute: typeof AdminContractsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/companies': {
+      id: '/admin/companies'
+      path: '/companies'
+      fullPath: '/admin/companies'
+      preLoaderRoute: typeof AdminCompaniesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/applications': {
+      id: '/admin/applications'
+      path: '/applications'
+      fullPath: '/admin/applications'
+      preLoaderRoute: typeof AdminApplicationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
+
+interface AdminRouteChildren {
+  AdminApplicationsRoute: typeof AdminApplicationsRoute
+  AdminCompaniesRoute: typeof AdminCompaniesRoute
+  AdminContractsRoute: typeof AdminContractsRoute
+  AdminFreelancersRoute: typeof AdminFreelancersRoute
+  AdminJobsRoute: typeof AdminJobsRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminApplicationsRoute: AdminApplicationsRoute,
+  AdminCompaniesRoute: AdminCompaniesRoute,
+  AdminContractsRoute: AdminContractsRoute,
+  AdminFreelancersRoute: AdminFreelancersRoute,
+  AdminJobsRoute: AdminJobsRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRouteWithChildren,
   ContactRoute: ContactRoute,
   ForCompaniesRoute: ForCompaniesRoute,
   ForFreelancersRoute: ForFreelancersRoute,
