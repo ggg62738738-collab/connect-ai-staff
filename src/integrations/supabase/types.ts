@@ -435,6 +435,59 @@ export type Database = {
         }
         Relationships: []
       }
+      timesheets: {
+        Row: {
+          contract_id: string
+          created_at: string
+          freelancer_id: string
+          hours: number
+          id: string
+          notes: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["timesheet_status"]
+          updated_at: string
+          week_start: string
+        }
+        Insert: {
+          contract_id: string
+          created_at?: string
+          freelancer_id: string
+          hours?: number
+          id?: string
+          notes?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["timesheet_status"]
+          updated_at?: string
+          week_start: string
+        }
+        Update: {
+          contract_id?: string
+          created_at?: string
+          freelancer_id?: string
+          hours?: number
+          id?: string
+          notes?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["timesheet_status"]
+          updated_at?: string
+          week_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timesheets_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "contracts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -491,6 +544,7 @@ export type Database = {
       job_type: "Full-time" | "Part-time" | "Contract"
       payment_direction: "in" | "out"
       payment_status: "paid" | "pending" | "failed"
+      timesheet_status: "draft" | "submitted" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -635,6 +689,7 @@ export const Constants = {
       job_type: ["Full-time", "Part-time", "Contract"],
       payment_direction: ["in", "out"],
       payment_status: ["paid", "pending", "failed"],
+      timesheet_status: ["draft", "submitted", "approved", "rejected"],
     },
   },
 } as const
