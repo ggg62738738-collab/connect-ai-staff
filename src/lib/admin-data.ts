@@ -89,7 +89,7 @@ export const adminApi = {
 };
 
 export const fmtMoney = (n: number) =>
-  n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+  n.toLocaleString("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
 
 export const initials = (name: string) =>
   name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase();
