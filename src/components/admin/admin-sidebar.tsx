@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, Users, Building2, Briefcase, FileText, Receipt,
-  ClipboardList, Settings, Sparkles,
+  ClipboardList, Settings, Sparkles, Clock,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent,
@@ -16,6 +16,7 @@ const nav = [
   { title: "Jobs", url: "/admin/jobs", icon: Briefcase },
   { title: "Applications", url: "/admin/applications", icon: ClipboardList },
   { title: "Contracts", url: "/admin/contracts", icon: FileText },
+  { title: "Timesheets", url: "/admin/timesheets", icon: Clock },
   { title: "Payments", url: "/admin/payments", icon: Receipt },
 ];
 

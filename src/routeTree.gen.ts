@@ -31,6 +31,7 @@ import { Route as FreelancerJobsRouteImport } from './routes/freelancer.jobs'
 import { Route as FreelancerEarningsRouteImport } from './routes/freelancer.earnings'
 import { Route as FreelancerContractsRouteImport } from './routes/freelancer.contracts'
 import { Route as FreelancerApplicationsRouteImport } from './routes/freelancer.applications'
+import { Route as AdminTimesheetsRouteImport } from './routes/admin.timesheets'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
 import { Route as AdminJobsRouteImport } from './routes/admin.jobs'
@@ -149,6 +150,11 @@ const FreelancerApplicationsRoute = FreelancerApplicationsRouteImport.update({
   path: '/applications',
   getParentRoute: () => FreelancerRoute,
 } as any)
+const AdminTimesheetsRoute = AdminTimesheetsRouteImport.update({
+  id: '/timesheets',
+  path: '/timesheets',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -206,6 +212,7 @@ export interface FileRoutesByFullPath {
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/timesheets': typeof AdminTimesheetsRoute
   '/freelancer/applications': typeof FreelancerApplicationsRoute
   '/freelancer/contracts': typeof FreelancerContractsRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
@@ -235,6 +242,7 @@ export interface FileRoutesByTo {
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/timesheets': typeof AdminTimesheetsRoute
   '/freelancer/applications': typeof FreelancerApplicationsRoute
   '/freelancer/contracts': typeof FreelancerContractsRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
@@ -267,6 +275,7 @@ export interface FileRoutesById {
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/timesheets': typeof AdminTimesheetsRoute
   '/freelancer/applications': typeof FreelancerApplicationsRoute
   '/freelancer/contracts': typeof FreelancerContractsRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
@@ -300,6 +309,7 @@ export interface FileRouteTypes {
     | '/admin/jobs'
     | '/admin/payments'
     | '/admin/settings'
+    | '/admin/timesheets'
     | '/freelancer/applications'
     | '/freelancer/contracts'
     | '/freelancer/earnings'
@@ -329,6 +339,7 @@ export interface FileRouteTypes {
     | '/admin/jobs'
     | '/admin/payments'
     | '/admin/settings'
+    | '/admin/timesheets'
     | '/freelancer/applications'
     | '/freelancer/contracts'
     | '/freelancer/earnings'
@@ -360,6 +371,7 @@ export interface FileRouteTypes {
     | '/admin/jobs'
     | '/admin/payments'
     | '/admin/settings'
+    | '/admin/timesheets'
     | '/freelancer/applications'
     | '/freelancer/contracts'
     | '/freelancer/earnings'
@@ -543,6 +555,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FreelancerApplicationsRouteImport
       parentRoute: typeof FreelancerRoute
     }
+    '/admin/timesheets': {
+      id: '/admin/timesheets'
+      path: '/timesheets'
+      fullPath: '/admin/timesheets'
+      preLoaderRoute: typeof AdminTimesheetsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/settings': {
       id: '/admin/settings'
       path: '/settings'
@@ -603,6 +622,7 @@ interface AdminRouteChildren {
   AdminJobsRoute: typeof AdminJobsRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminTimesheetsRoute: typeof AdminTimesheetsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -614,6 +634,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminJobsRoute: AdminJobsRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
+  AdminTimesheetsRoute: AdminTimesheetsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
