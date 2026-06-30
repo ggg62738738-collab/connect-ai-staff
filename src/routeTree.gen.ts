@@ -25,6 +25,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as FreelancerIndexRouteImport } from './routes/freelancer.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as FreelancerProfileRouteImport } from './routes/freelancer.profile'
+import { Route as FreelancerOnboardingRouteImport } from './routes/freelancer.onboarding'
 import { Route as FreelancerJobsRouteImport } from './routes/freelancer.jobs'
 import { Route as FreelancerEarningsRouteImport } from './routes/freelancer.earnings'
 import { Route as FreelancerContractsRouteImport } from './routes/freelancer.contracts'
@@ -117,6 +118,11 @@ const FreelancerProfileRoute = FreelancerProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => FreelancerRoute,
 } as any)
+const FreelancerOnboardingRoute = FreelancerOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => FreelancerRoute,
+} as any)
 const FreelancerJobsRoute = FreelancerJobsRouteImport.update({
   id: '/jobs',
   path: '/jobs',
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/freelancer/contracts': typeof FreelancerContractsRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/jobs': typeof FreelancerJobsRoute
+  '/freelancer/onboarding': typeof FreelancerOnboardingRoute
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/admin/': typeof AdminIndexRoute
   '/freelancer/': typeof FreelancerIndexRoute
@@ -225,6 +232,7 @@ export interface FileRoutesByTo {
   '/freelancer/contracts': typeof FreelancerContractsRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/jobs': typeof FreelancerJobsRoute
+  '/freelancer/onboarding': typeof FreelancerOnboardingRoute
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/admin': typeof AdminIndexRoute
   '/freelancer': typeof FreelancerIndexRoute
@@ -255,6 +263,7 @@ export interface FileRoutesById {
   '/freelancer/contracts': typeof FreelancerContractsRoute
   '/freelancer/earnings': typeof FreelancerEarningsRoute
   '/freelancer/jobs': typeof FreelancerJobsRoute
+  '/freelancer/onboarding': typeof FreelancerOnboardingRoute
   '/freelancer/profile': typeof FreelancerProfileRoute
   '/admin/': typeof AdminIndexRoute
   '/freelancer/': typeof FreelancerIndexRoute
@@ -286,6 +295,7 @@ export interface FileRouteTypes {
     | '/freelancer/contracts'
     | '/freelancer/earnings'
     | '/freelancer/jobs'
+    | '/freelancer/onboarding'
     | '/freelancer/profile'
     | '/admin/'
     | '/freelancer/'
@@ -313,6 +323,7 @@ export interface FileRouteTypes {
     | '/freelancer/contracts'
     | '/freelancer/earnings'
     | '/freelancer/jobs'
+    | '/freelancer/onboarding'
     | '/freelancer/profile'
     | '/admin'
     | '/freelancer'
@@ -342,6 +353,7 @@ export interface FileRouteTypes {
     | '/freelancer/contracts'
     | '/freelancer/earnings'
     | '/freelancer/jobs'
+    | '/freelancer/onboarding'
     | '/freelancer/profile'
     | '/admin/'
     | '/freelancer/'
@@ -477,6 +489,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FreelancerProfileRouteImport
       parentRoute: typeof FreelancerRoute
     }
+    '/freelancer/onboarding': {
+      id: '/freelancer/onboarding'
+      path: '/onboarding'
+      fullPath: '/freelancer/onboarding'
+      preLoaderRoute: typeof FreelancerOnboardingRouteImport
+      parentRoute: typeof FreelancerRoute
+    }
     '/freelancer/jobs': {
       id: '/freelancer/jobs'
       path: '/jobs'
@@ -586,6 +605,7 @@ interface FreelancerRouteChildren {
   FreelancerContractsRoute: typeof FreelancerContractsRoute
   FreelancerEarningsRoute: typeof FreelancerEarningsRoute
   FreelancerJobsRoute: typeof FreelancerJobsRoute
+  FreelancerOnboardingRoute: typeof FreelancerOnboardingRoute
   FreelancerProfileRoute: typeof FreelancerProfileRoute
   FreelancerIndexRoute: typeof FreelancerIndexRoute
 }
@@ -595,6 +615,7 @@ const FreelancerRouteChildren: FreelancerRouteChildren = {
   FreelancerContractsRoute: FreelancerContractsRoute,
   FreelancerEarningsRoute: FreelancerEarningsRoute,
   FreelancerJobsRoute: FreelancerJobsRoute,
+  FreelancerOnboardingRoute: FreelancerOnboardingRoute,
   FreelancerProfileRoute: FreelancerProfileRoute,
   FreelancerIndexRoute: FreelancerIndexRoute,
 }
