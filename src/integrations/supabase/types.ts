@@ -319,12 +319,13 @@ export type Database = {
       payments: {
         Row: {
           amount: number
-          contract_id: string | null
           created_at: string
           direction: Database["public"]["Enums"]["payment_direction"]
+          due_date: string | null
           id: string
           invoice: string
-          paid_on: string
+          notes: string | null
+          paid_at: string | null
           party: string
           party_company_id: string | null
           party_user_id: string | null
@@ -333,12 +334,13 @@ export type Database = {
         }
         Insert: {
           amount: number
-          contract_id?: string | null
           created_at?: string
           direction: Database["public"]["Enums"]["payment_direction"]
+          due_date?: string | null
           id?: string
           invoice: string
-          paid_on?: string
+          notes?: string | null
+          paid_at?: string | null
           party: string
           party_company_id?: string | null
           party_user_id?: string | null
@@ -347,12 +349,13 @@ export type Database = {
         }
         Update: {
           amount?: number
-          contract_id?: string | null
           created_at?: string
           direction?: Database["public"]["Enums"]["payment_direction"]
+          due_date?: string | null
           id?: string
           invoice?: string
-          paid_on?: string
+          notes?: string | null
+          paid_at?: string | null
           party?: string
           party_company_id?: string | null
           party_user_id?: string | null
@@ -360,13 +363,6 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "payments_contract_id_fkey"
-            columns: ["contract_id"]
-            isOneToOne: false
-            referencedRelation: "contracts"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "payments_party_company_id_fkey"
             columns: ["party_company_id"]
