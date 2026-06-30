@@ -15,6 +15,7 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as FreelancerRouteImport } from './routes/freelancer'
 import { Route as ForFreelancersRouteImport } from './routes/for-freelancers'
 import { Route as ForCompaniesRouteImport } from './routes/for-companies'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -58,6 +59,11 @@ const IndustriesRoute = IndustriesRouteImport.update({
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FreelancerRoute = FreelancerRouteImport.update({
+  id: '/freelancer',
+  path: '/freelancer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForFreelancersRoute = ForFreelancersRouteImport.update({
@@ -138,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/for-companies': typeof ForCompaniesRoute
   '/for-freelancers': typeof ForFreelancersRoute
+  '/freelancer': typeof FreelancerRoute
   '/how-it-works': typeof HowItWorksRoute
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
@@ -159,6 +166,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/for-companies': typeof ForCompaniesRoute
   '/for-freelancers': typeof ForFreelancersRoute
+  '/freelancer': typeof FreelancerRoute
   '/how-it-works': typeof HowItWorksRoute
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
@@ -182,6 +190,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/for-companies': typeof ForCompaniesRoute
   '/for-freelancers': typeof ForFreelancersRoute
+  '/freelancer': typeof FreelancerRoute
   '/how-it-works': typeof HowItWorksRoute
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
@@ -206,6 +215,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/for-companies'
     | '/for-freelancers'
+    | '/freelancer'
     | '/how-it-works'
     | '/industries'
     | '/login'
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/for-companies'
     | '/for-freelancers'
+    | '/freelancer'
     | '/how-it-works'
     | '/industries'
     | '/login'
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/for-companies'
     | '/for-freelancers'
+    | '/freelancer'
     | '/how-it-works'
     | '/industries'
     | '/login'
@@ -272,6 +284,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ForCompaniesRoute: typeof ForCompaniesRoute
   ForFreelancersRoute: typeof ForFreelancersRoute
+  FreelancerRoute: typeof FreelancerRoute
   HowItWorksRoute: typeof HowItWorksRoute
   IndustriesRoute: typeof IndustriesRoute
   LoginRoute: typeof LoginRoute
@@ -322,6 +335,13 @@ declare module '@tanstack/react-router' {
       path: '/how-it-works'
       fullPath: '/how-it-works'
       preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/freelancer': {
+      id: '/freelancer'
+      path: '/freelancer'
+      fullPath: '/freelancer'
+      preLoaderRoute: typeof FreelancerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/for-freelancers': {
@@ -456,6 +476,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ForCompaniesRoute: ForCompaniesRoute,
   ForFreelancersRoute: ForFreelancersRoute,
+  FreelancerRoute: FreelancerRoute,
   HowItWorksRoute: HowItWorksRoute,
   IndustriesRoute: IndustriesRoute,
   LoginRoute: LoginRoute,
