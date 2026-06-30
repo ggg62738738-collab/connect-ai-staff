@@ -190,7 +190,10 @@ export const updateMyFreelancerProfile = createServerFn({ method: "POST" })
         .eq("id", context.userId);
       if (error) throw new Error(error.message);
     }
-    const fp: Record<string, unknown> = {};
+    const fp: {
+      title?: string; bio?: string; skills?: string[]; rate?: number;
+      location?: string; availability?: string;
+    } = {};
     if (data.title !== undefined) fp.title = data.title;
     if (data.bio !== undefined) fp.bio = data.bio;
     if (data.skills !== undefined) fp.skills = data.skills;
@@ -199,7 +202,7 @@ export const updateMyFreelancerProfile = createServerFn({ method: "POST" })
     if (data.availability !== undefined) fp.availability = data.availability;
     if (Object.keys(fp).length) {
       const { error } = await context.supabase
-        .from("freelancer_profiles").update(fp).eq("user_id", context.userId);
+        .from("freelancer_profiles").update(fp as any).eq("user_id", context.userId);
       if (error) throw new Error(error.message);
     }
     return { ok: true };
