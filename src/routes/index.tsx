@@ -160,12 +160,12 @@ function HowItWorks() {
 
 function PopularRoles() {
   const roles = [
-    { title: "Full Stack Developer", rate: "$35/day" },
-    { title: "UI/UX Designer", rate: "$30/day" },
-    { title: "Mobile Developer", rate: "$32/day" },
-    { title: "DevOps Engineer", rate: "$40/day" },
-    { title: "Data Analyst", rate: "$28/day" },
-    { title: "QA Engineer", rate: "$25/day" },
+    { title: "Full Stack Developer", rate: "₹3,000/day" },
+    { title: "UI/UX Designer", rate: "₹2,500/day" },
+    { title: "Mobile Developer", rate: "₹2,800/day" },
+    { title: "DevOps Engineer", rate: "₹3,500/day" },
+    { title: "Data Analyst", rate: "₹2,400/day" },
+    { title: "QA Engineer", rate: "₹2,200/day" },
   ];
   return (
     <section className="bg-background">

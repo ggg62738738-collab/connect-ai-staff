@@ -61,7 +61,7 @@ function ProfilePage() {
               <Field label="Location">
                 <Input value={form.location} onChange={(e) => set("location")(e.target.value)} />
               </Field>
-              <Field label="Hourly rate (USD)">
+              <Field label="Hourly rate (₹)">
                 <Input type="number" min={0} value={form.rate} onChange={(e) => set("rate")(Number(e.target.value))} />
               </Field>
               <Field label="Availability">
