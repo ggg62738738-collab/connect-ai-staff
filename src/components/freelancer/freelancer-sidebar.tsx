@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Briefcase, ClipboardList, FileText, Receipt, UserRound, Sparkles } from "lucide-react";
+import { LayoutDashboard, Briefcase, ClipboardList, FileText, Receipt, UserRound, Sparkles, ListChecks } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent,
   SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem,
@@ -7,6 +7,7 @@ import {
 
 const nav = [
   { title: "Overview",     url: "/freelancer",              icon: LayoutDashboard, exact: true },
+  { title: "Onboarding",   url: "/freelancer/onboarding",   icon: ListChecks },
   { title: "Find work",    url: "/freelancer/jobs",         icon: Briefcase },
   { title: "Applications", url: "/freelancer/applications", icon: ClipboardList },
   { title: "Contracts",    url: "/freelancer/contracts",    icon: FileText },

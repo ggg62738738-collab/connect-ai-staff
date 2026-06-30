@@ -221,6 +221,39 @@ export type Database = {
           },
         ]
       }
+      freelancer_onboarding: {
+        Row: {
+          completion: number
+          created_at: string
+          data: Json
+          recruiter_assessment: Json
+          recruiter_notes: string | null
+          talent_score: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completion?: number
+          created_at?: string
+          data?: Json
+          recruiter_assessment?: Json
+          recruiter_notes?: string | null
+          talent_score?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completion?: number
+          created_at?: string
+          data?: Json
+          recruiter_assessment?: Json
+          recruiter_notes?: string | null
+          talent_score?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       freelancer_profiles: {
         Row: {
           availability: string | null

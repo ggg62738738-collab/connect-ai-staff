@@ -64,7 +64,7 @@ function AdminDashboard() {
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.4} />
                     <XAxis dataKey="month" tickLine={false} axisLine={false} fontSize={12} />
-                    <YAxis tickLine={false} axisLine={false} fontSize={12} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                    <YAxis tickLine={false} axisLine={false} fontSize={12} tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}k`} />
                     <Tooltip formatter={(v: number) => fmtMoney(v)} contentStyle={{ borderRadius: 12, border: "1px solid var(--border)" }} />
                     <Area type="monotone" dataKey="revenue" stroke="var(--violet)" fill="url(#rev)" strokeWidth={2} />
                   </AreaChart>

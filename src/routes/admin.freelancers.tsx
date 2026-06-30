@@ -98,7 +98,7 @@ function FreelancersPage() {
                     </div>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">{f.location}</TableCell>
-                  <TableCell className="text-sm">${f.rate}/hr</TableCell>
+                  <TableCell className="text-sm">₹{f.rate}/hr</TableCell>
                   <TableCell>
                     <span className="inline-flex items-center gap-1 text-sm">
                       <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" /> {f.rating}
