@@ -15,13 +15,20 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as FreelancerRouteImport } from './routes/freelancer'
 import { Route as ForFreelancersRouteImport } from './routes/for-freelancers'
 import { Route as ForCompaniesRouteImport } from './routes/for-companies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FreelancerIndexRouteImport } from './routes/freelancer.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as FreelancerProfileRouteImport } from './routes/freelancer.profile'
+import { Route as FreelancerJobsRouteImport } from './routes/freelancer.jobs'
+import { Route as FreelancerEarningsRouteImport } from './routes/freelancer.earnings'
+import { Route as FreelancerContractsRouteImport } from './routes/freelancer.contracts'
+import { Route as FreelancerApplicationsRouteImport } from './routes/freelancer.applications'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
 import { Route as AdminJobsRouteImport } from './routes/admin.jobs'
@@ -60,6 +67,11 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FreelancerRoute = FreelancerRouteImport.update({
+  id: '/freelancer',
+  path: '/freelancer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ForFreelancersRoute = ForFreelancersRouteImport.update({
   id: '/for-freelancers',
   path: '/for-freelancers',
@@ -90,10 +102,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FreelancerIndexRoute = FreelancerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FreelancerRoute,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const FreelancerProfileRoute = FreelancerProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => FreelancerRoute,
+} as any)
+const FreelancerJobsRoute = FreelancerJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => FreelancerRoute,
+} as any)
+const FreelancerEarningsRoute = FreelancerEarningsRouteImport.update({
+  id: '/earnings',
+  path: '/earnings',
+  getParentRoute: () => FreelancerRoute,
+} as any)
+const FreelancerContractsRoute = FreelancerContractsRouteImport.update({
+  id: '/contracts',
+  path: '/contracts',
+  getParentRoute: () => FreelancerRoute,
+} as any)
+const FreelancerApplicationsRoute = FreelancerApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => FreelancerRoute,
 } as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
@@ -138,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/for-companies': typeof ForCompaniesRoute
   '/for-freelancers': typeof ForFreelancersRoute
+  '/freelancer': typeof FreelancerRouteWithChildren
   '/how-it-works': typeof HowItWorksRoute
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
@@ -151,7 +194,13 @@ export interface FileRoutesByFullPath {
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/freelancer/applications': typeof FreelancerApplicationsRoute
+  '/freelancer/contracts': typeof FreelancerContractsRoute
+  '/freelancer/earnings': typeof FreelancerEarningsRoute
+  '/freelancer/jobs': typeof FreelancerJobsRoute
+  '/freelancer/profile': typeof FreelancerProfileRoute
   '/admin/': typeof AdminIndexRoute
+  '/freelancer/': typeof FreelancerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -172,7 +221,13 @@ export interface FileRoutesByTo {
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/freelancer/applications': typeof FreelancerApplicationsRoute
+  '/freelancer/contracts': typeof FreelancerContractsRoute
+  '/freelancer/earnings': typeof FreelancerEarningsRoute
+  '/freelancer/jobs': typeof FreelancerJobsRoute
+  '/freelancer/profile': typeof FreelancerProfileRoute
   '/admin': typeof AdminIndexRoute
+  '/freelancer': typeof FreelancerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -182,6 +237,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/for-companies': typeof ForCompaniesRoute
   '/for-freelancers': typeof ForFreelancersRoute
+  '/freelancer': typeof FreelancerRouteWithChildren
   '/how-it-works': typeof HowItWorksRoute
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
@@ -195,7 +251,13 @@ export interface FileRoutesById {
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/freelancer/applications': typeof FreelancerApplicationsRoute
+  '/freelancer/contracts': typeof FreelancerContractsRoute
+  '/freelancer/earnings': typeof FreelancerEarningsRoute
+  '/freelancer/jobs': typeof FreelancerJobsRoute
+  '/freelancer/profile': typeof FreelancerProfileRoute
   '/admin/': typeof AdminIndexRoute
+  '/freelancer/': typeof FreelancerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -206,6 +268,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/for-companies'
     | '/for-freelancers'
+    | '/freelancer'
     | '/how-it-works'
     | '/industries'
     | '/login'
@@ -219,7 +282,13 @@ export interface FileRouteTypes {
     | '/admin/jobs'
     | '/admin/payments'
     | '/admin/settings'
+    | '/freelancer/applications'
+    | '/freelancer/contracts'
+    | '/freelancer/earnings'
+    | '/freelancer/jobs'
+    | '/freelancer/profile'
     | '/admin/'
+    | '/freelancer/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -240,7 +309,13 @@ export interface FileRouteTypes {
     | '/admin/jobs'
     | '/admin/payments'
     | '/admin/settings'
+    | '/freelancer/applications'
+    | '/freelancer/contracts'
+    | '/freelancer/earnings'
+    | '/freelancer/jobs'
+    | '/freelancer/profile'
     | '/admin'
+    | '/freelancer'
   id:
     | '__root__'
     | '/'
@@ -249,6 +324,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/for-companies'
     | '/for-freelancers'
+    | '/freelancer'
     | '/how-it-works'
     | '/industries'
     | '/login'
@@ -262,7 +338,13 @@ export interface FileRouteTypes {
     | '/admin/jobs'
     | '/admin/payments'
     | '/admin/settings'
+    | '/freelancer/applications'
+    | '/freelancer/contracts'
+    | '/freelancer/earnings'
+    | '/freelancer/jobs'
+    | '/freelancer/profile'
     | '/admin/'
+    | '/freelancer/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -272,6 +354,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ForCompaniesRoute: typeof ForCompaniesRoute
   ForFreelancersRoute: typeof ForFreelancersRoute
+  FreelancerRoute: typeof FreelancerRouteWithChildren
   HowItWorksRoute: typeof HowItWorksRoute
   IndustriesRoute: typeof IndustriesRoute
   LoginRoute: typeof LoginRoute
@@ -324,6 +407,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/freelancer': {
+      id: '/freelancer'
+      path: '/freelancer'
+      fullPath: '/freelancer'
+      preLoaderRoute: typeof FreelancerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/for-freelancers': {
       id: '/for-freelancers'
       path: '/for-freelancers'
@@ -366,12 +456,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/freelancer/': {
+      id: '/freelancer/'
+      path: '/'
+      fullPath: '/freelancer/'
+      preLoaderRoute: typeof FreelancerIndexRouteImport
+      parentRoute: typeof FreelancerRoute
+    }
     '/admin/': {
       id: '/admin/'
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/freelancer/profile': {
+      id: '/freelancer/profile'
+      path: '/profile'
+      fullPath: '/freelancer/profile'
+      preLoaderRoute: typeof FreelancerProfileRouteImport
+      parentRoute: typeof FreelancerRoute
+    }
+    '/freelancer/jobs': {
+      id: '/freelancer/jobs'
+      path: '/jobs'
+      fullPath: '/freelancer/jobs'
+      preLoaderRoute: typeof FreelancerJobsRouteImport
+      parentRoute: typeof FreelancerRoute
+    }
+    '/freelancer/earnings': {
+      id: '/freelancer/earnings'
+      path: '/earnings'
+      fullPath: '/freelancer/earnings'
+      preLoaderRoute: typeof FreelancerEarningsRouteImport
+      parentRoute: typeof FreelancerRoute
+    }
+    '/freelancer/contracts': {
+      id: '/freelancer/contracts'
+      path: '/contracts'
+      fullPath: '/freelancer/contracts'
+      preLoaderRoute: typeof FreelancerContractsRouteImport
+      parentRoute: typeof FreelancerRoute
+    }
+    '/freelancer/applications': {
+      id: '/freelancer/applications'
+      path: '/applications'
+      fullPath: '/freelancer/applications'
+      preLoaderRoute: typeof FreelancerApplicationsRouteImport
+      parentRoute: typeof FreelancerRoute
     }
     '/admin/settings': {
       id: '/admin/settings'
@@ -449,6 +581,28 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface FreelancerRouteChildren {
+  FreelancerApplicationsRoute: typeof FreelancerApplicationsRoute
+  FreelancerContractsRoute: typeof FreelancerContractsRoute
+  FreelancerEarningsRoute: typeof FreelancerEarningsRoute
+  FreelancerJobsRoute: typeof FreelancerJobsRoute
+  FreelancerProfileRoute: typeof FreelancerProfileRoute
+  FreelancerIndexRoute: typeof FreelancerIndexRoute
+}
+
+const FreelancerRouteChildren: FreelancerRouteChildren = {
+  FreelancerApplicationsRoute: FreelancerApplicationsRoute,
+  FreelancerContractsRoute: FreelancerContractsRoute,
+  FreelancerEarningsRoute: FreelancerEarningsRoute,
+  FreelancerJobsRoute: FreelancerJobsRoute,
+  FreelancerProfileRoute: FreelancerProfileRoute,
+  FreelancerIndexRoute: FreelancerIndexRoute,
+}
+
+const FreelancerRouteWithChildren = FreelancerRoute._addFileChildren(
+  FreelancerRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -456,6 +610,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ForCompaniesRoute: ForCompaniesRoute,
   ForFreelancersRoute: ForFreelancersRoute,
+  FreelancerRoute: FreelancerRouteWithChildren,
   HowItWorksRoute: HowItWorksRoute,
   IndustriesRoute: IndustriesRoute,
   LoginRoute: LoginRoute,

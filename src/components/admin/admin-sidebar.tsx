@@ -19,7 +19,7 @@ const nav = [
   { title: "Payments", url: "/admin/payments", icon: Receipt },
 ];
 
-export function AdminSidebar() {
+export function AdminSidebar({ user }: { user?: { name: string; email: string; initials: string } }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isActive = (url: string, exact?: boolean) =>
     exact ? pathname === url : pathname === url || pathname.startsWith(url + "/");
@@ -73,10 +73,10 @@ export function AdminSidebar() {
       </SidebarContent>
       <SidebarFooter className="border-t">
         <div className="flex items-center gap-2 px-2 py-1.5 group-data-[collapsible=icon]:hidden">
-          <div className="grid h-8 w-8 place-items-center rounded-full bg-violet text-white text-xs font-semibold">AD</div>
+          <div className="grid h-8 w-8 place-items-center rounded-full bg-violet text-white text-xs font-semibold">{user?.initials ?? "AD"}</div>
           <div className="flex min-w-0 flex-col">
-            <span className="truncate text-sm font-medium">Admin</span>
-            <span className="truncate text-xs text-muted-foreground">admin@talentora.io</span>
+            <span className="truncate text-sm font-medium">{user?.name ?? "Admin"}</span>
+            <span className="truncate text-xs text-muted-foreground">{user?.email ?? ""}</span>
           </div>
         </div>
       </SidebarFooter>
