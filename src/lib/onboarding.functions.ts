@@ -118,7 +118,7 @@ export type OnboardingRecord = {
   completion: number;
   talentScore: number;
   recruiterNotes?: string | null;
-  recruiterAssessment?: Record<string, unknown>;
+  recruiterAssessment?: Record<string, any>;
 };
 
 const SECTION_KEYS: (keyof OnboardingData)[][] = [
