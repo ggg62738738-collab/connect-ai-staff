@@ -208,6 +208,74 @@ export const updateMyFreelancerProfile = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+/* ============================= TIMESHEETS (freelancer) ============================= */
+export type MyTimesheet = {
+  id: string;
+  contractId: string;
+  company: string;
+  role: string;
+  weekStart: string;
+  hours: number;
+  notes: string | null;
+  status: "draft" | "submitted" | "approved" | "rejected";
+  reviewNotes: string | null;
+};
+
+export type ActiveContractLite = { id: string; company: string; role: string };
+
+export const listMyActiveContracts = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<ActiveContractLite[]> => {
+    const { data, error } = await context.supabase
+      .from("contracts")
+      .select("id, role, companies(name)")
+      .eq("freelancer_id", context.userId)
+      .eq("status", "active");
+    if (error) throw new Error(error.message);
+    return (data ?? []).map((c: any) => ({
+      id: c.id, role: c.role, company: c.companies?.name ?? "—",
+    }));
+  });
+
+export const listMyTimesheets = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<MyTimesheet[]> => {
+    const { data, error } = await context.supabase
+      .from("timesheets")
+      .select("id, contract_id, week_start, hours, notes, status, review_notes, contracts(role, companies(name))")
+      .eq("freelancer_id", context.userId)
+      .order("week_start", { ascending: false });
+    if (error) throw new Error(error.message);
+    return (data ?? []).map((t: any) => ({
+      id: t.id, contractId: t.contract_id,
+      company: t.contracts?.companies?.name ?? "—",
+      role: t.contracts?.role ?? "—",
+      weekStart: t.week_start, hours: Number(t.hours ?? 0),
+      notes: t.notes, status: t.status, reviewNotes: t.review_notes,
+    }));
+  });
+
+export const submitTimesheet = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: {
+    contractId: string; weekStart: string; hours: number; notes?: string;
+    asDraft?: boolean;
+  }) => d)
+  .handler(async ({ data, context }) => {
+    if (data.hours < 0 || data.hours > 168) throw new Error("Hours must be 0–168");
+    const status = data.asDraft ? "draft" : "submitted";
+    const { error } = await context.supabase.from("timesheets").upsert({
+      contract_id: data.contractId,
+      freelancer_id: context.userId,
+      week_start: data.weekStart,
+      hours: data.hours,
+      notes: data.notes ?? null,
+      status,
+    }, { onConflict: "contract_id,week_start" });
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
 export const getFreelancerMetrics = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {

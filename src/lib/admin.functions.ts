@@ -397,3 +397,104 @@ export const getActivity = createServerFn({ method: "GET" })
     });
     return out;
   });
+
+/* ============================= JOB AUTHORING ============================= */
+export const listCompaniesLite = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertStaff(context.supabase, context.userId);
+    const { data, error } = await context.supabase
+      .from("companies").select("id, name").order("name");
+    if (error) throw new Error(error.message);
+    return (data ?? []) as Array<{ id: string; name: string }>;
+  });
+
+export const adminCreateJob = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: {
+    title: string; companyId: string; type: "Full-time" | "Part-time" | "Contract";
+    budget: number; description?: string;
+  }) => d)
+  .handler(async ({ data, context }) => {
+    await assertStaff(context.supabase, context.userId);
+    if (!data.title.trim()) throw new Error("Title required");
+    if (!data.companyId) throw new Error("Company required");
+    const { error } = await context.supabase.from("jobs").insert({
+      title: data.title.trim(),
+      company_id: data.companyId,
+      type: data.type,
+      budget: data.budget,
+      description: data.description ?? null,
+      status: "open",
+      posted_by: context.userId,
+    });
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
+export const adminUpdateJobStatus = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { id: string; status: "open" | "filled" | "closed" }) => d)
+  .handler(async ({ data, context }) => {
+    await assertStaff(context.supabase, context.userId);
+    const { error } = await context.supabase
+      .from("jobs").update({ status: data.status }).eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
+/* ============================= TIMESHEETS (admin) ============================= */
+export type AdminTimesheet = {
+  id: string;
+  contractId: string;
+  freelancer: string;
+  freelancerId: string;
+  company: string;
+  role: string;
+  weekStart: string;
+  hours: number;
+  notes: string | null;
+  status: "draft" | "submitted" | "approved" | "rejected";
+  reviewedAt: string | null;
+  reviewNotes: string | null;
+};
+
+export const listTimesheetsForReview = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<AdminTimesheet[]> => {
+    await assertStaff(context.supabase, context.userId);
+    const { data, error } = await context.supabase
+      .from("timesheets")
+      .select("id, contract_id, freelancer_id, week_start, hours, notes, status, reviewed_at, review_notes, contracts(role, companies(name))")
+      .order("week_start", { ascending: false });
+    if (error) throw new Error(error.message);
+    const ids = Array.from(new Set((data ?? []).map((t: any) => t.freelancer_id)));
+    const { data: profs } = ids.length
+      ? await context.supabase.from("profiles").select("id, full_name, email").in("id", ids)
+      : { data: [] as any[] };
+    const nameMap = new Map((profs ?? []).map((p: any) => [p.id, p.full_name ?? p.email ?? "Unknown"]));
+    return (data ?? []).map((t: any) => ({
+      id: t.id, contractId: t.contract_id, freelancerId: t.freelancer_id,
+      freelancer: nameMap.get(t.freelancer_id) ?? "Unknown",
+      company: t.contracts?.companies?.name ?? "—",
+      role: t.contracts?.role ?? "—",
+      weekStart: t.week_start, hours: Number(t.hours ?? 0),
+      notes: t.notes, status: t.status,
+      reviewedAt: t.reviewed_at, reviewNotes: t.review_notes,
+    }));
+  });
+
+export const reviewTimesheet = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { id: string; status: "approved" | "rejected"; notes?: string }) => d)
+  .handler(async ({ data, context }) => {
+    await assertStaff(context.supabase, context.userId);
+    const { error } = await context.supabase.from("timesheets").update({
+      status: data.status,
+      reviewed_by: context.userId,
+      reviewed_at: new Date().toISOString(),
+      review_notes: data.notes ?? null,
+    }).eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
