@@ -498,3 +498,117 @@ export const reviewTimesheet = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+/* ============================= JOB DETAIL + APPLICANTS ============================= */
+export type JobDetail = {
+  id: string;
+  title: string;
+  company: string;
+  companyId: string | null;
+  type: string;
+  budget: number;
+  status: string;
+  description: string | null;
+  postedAt: string;
+  applicantsCount: number;
+  hiredCount: number;
+  inPipeline: number;
+};
+
+export const getJobDetail = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { id: string }) => d)
+  .handler(async ({ data, context }): Promise<JobDetail> => {
+    await assertStaff(context.supabase, context.userId);
+    const { data: j, error } = await context.supabase
+      .from("jobs")
+      .select("id, title, type, budget, status, description, created_at, company_id, companies(name)")
+      .eq("id", data.id).maybeSingle();
+    if (error) throw new Error(error.message);
+    if (!j) throw new Error("Job not found");
+    const { data: apps } = await context.supabase
+      .from("applications").select("stage").eq("job_id", data.id);
+    const list = apps ?? [];
+    return {
+      id: j.id, title: j.title, company: (j as any).companies?.name ?? "—",
+      companyId: (j as any).company_id, type: j.type, budget: Number(j.budget ?? 0),
+      status: j.status, description: j.description, postedAt: dateOnly(j.created_at),
+      applicantsCount: list.length,
+      hiredCount: list.filter((a: any) => a.stage === "hired").length,
+      inPipeline: list.filter((a: any) => !["hired", "rejected"].includes(a.stage)).length,
+    };
+  });
+
+export const listJobApplicants = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { jobId: string }) => d)
+  .handler(async ({ data, context }) => {
+    await assertStaff(context.supabase, context.userId);
+    const { data: apps, error } = await context.supabase
+      .from("applications")
+      .select("id, freelancer_id, stage, match, submitted_at, cover_letter")
+      .eq("job_id", data.jobId)
+      .order("submitted_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    const ids = (apps ?? []).map((a: any) => a.freelancer_id);
+    const [{ data: profs }, { data: fps }] = await Promise.all([
+      ids.length ? context.supabase.from("profiles").select("id, full_name, email").in("id", ids) : Promise.resolve({ data: [] as any[] }),
+      ids.length ? context.supabase.from("freelancer_profiles").select("user_id, title, skills, rate, rating").in("user_id", ids) : Promise.resolve({ data: [] as any[] }),
+    ]);
+    const pMap = new Map((profs ?? []).map((p: any) => [p.id, p]));
+    const fMap = new Map((fps ?? []).map((f: any) => [f.user_id, f]));
+    return (apps ?? []).map((a: any) => {
+      const p: any = pMap.get(a.freelancer_id);
+      const f: any = fMap.get(a.freelancer_id);
+      return {
+        id: a.id, freelancerId: a.freelancer_id,
+        name: p?.full_name ?? p?.email ?? "Unknown", email: p?.email ?? "",
+        title: f?.title ?? "—", skills: f?.skills ?? [], rate: Number(f?.rate ?? 0),
+        rating: Number(f?.rating ?? 0), stage: a.stage, match: Number(a.match ?? 0),
+        submittedAt: dateOnly(a.submitted_at), coverLetter: a.cover_letter,
+      };
+    });
+  });
+
+/* ============================= FREELANCER DETAIL ============================= */
+export const getFreelancerDetail = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { userId: string }) => d)
+  .handler(async ({ data, context }) => {
+    await assertStaff(context.supabase, context.userId);
+    const [{ data: prof }, { data: fp }, { data: onb }, { data: apps }, { data: contracts }] = await Promise.all([
+      context.supabase.from("profiles").select("id, full_name, email, headline").eq("id", data.userId).maybeSingle(),
+      context.supabase.from("freelancer_profiles").select("*").eq("user_id", data.userId).maybeSingle(),
+      context.supabase.from("freelancer_onboarding").select("data, completion, talent_score, recruiter_notes, recruiter_assessment").eq("user_id", data.userId).maybeSingle(),
+      context.supabase.from("applications").select("id, stage, match, submitted_at, jobs(title, companies(name))").eq("freelancer_id", data.userId).order("submitted_at", { ascending: false }),
+      context.supabase.from("contracts").select("id, role, start_date, end_date, value, status, companies(name)").eq("freelancer_id", data.userId).order("start_date", { ascending: false }),
+    ]);
+    return {
+      user: { id: data.userId, name: prof?.full_name ?? prof?.email ?? "Unknown", email: prof?.email ?? "", headline: prof?.headline ?? "" },
+      profile: fp ?? null,
+      onboarding: onb ? { data: onb.data as any, completion: onb.completion ?? 0, talentScore: onb.talent_score ?? 0, recruiterNotes: onb.recruiter_notes, recruiterAssessment: onb.recruiter_assessment as any } : null,
+      applications: (apps ?? []).map((a: any) => ({
+        id: a.id, jobTitle: a.jobs?.title ?? "—", company: a.jobs?.companies?.name ?? "—",
+        stage: a.stage, match: Number(a.match ?? 0), submittedAt: dateOnly(a.submitted_at),
+      })),
+      contracts: (contracts ?? []).map((c: any) => ({
+        id: c.id, role: c.role, company: c.companies?.name ?? "—",
+        start: c.start_date, end: c.end_date, value: Number(c.value ?? 0), status: c.status,
+      })),
+    };
+  });
+
+export const saveRecruiterAssessment = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { userId: string; notes?: string; assessment?: Record<string, any> }) => d)
+  .handler(async ({ data, context }) => {
+    await assertStaff(context.supabase, context.userId);
+    const patch: any = {};
+    if (data.notes !== undefined) patch.recruiter_notes = data.notes;
+    if (data.assessment !== undefined) patch.recruiter_assessment = data.assessment;
+    const { error } = await context.supabase
+      .from("freelancer_onboarding")
+      .upsert({ user_id: data.userId, ...patch }, { onConflict: "user_id" });
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
