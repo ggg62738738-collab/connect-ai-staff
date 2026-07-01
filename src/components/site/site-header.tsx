@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 const nav = [
   { to: "/for-companies", label: "For Companies" },
-  { to: "/for-freelancers", label: "For Freelancers" },
+  { to: "/for-freelancers", label: "For Talents" },
   { to: "/industries", label: "Industries" },
   { to: "/how-it-works", label: "How it Works" },
   { to: "/pricing", label: "Pricing" },
