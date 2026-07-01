@@ -44,7 +44,7 @@ export const listFreelancers = createServerFn({ method: "GET" })
         const p = map.get(r.user_id) as any;
         const name = p?.full_name ?? p?.email ?? "Unknown";
         return {
-          id: r.id, name, email: p?.email ?? "", title: r.title ?? "—",
+          id: r.id, userId: r.user_id, name, email: p?.email ?? "", title: r.title ?? "—",
           skills: r.skills ?? [], rate: Number(r.rate ?? 0), rating: Number(r.rating ?? 0),
           status: r.status, joined: dateOnly(r.created_at), location: r.location ?? "—",
           avatarColor: r.avatar_color ?? pickColor(name),
@@ -55,7 +55,7 @@ export const listFreelancers = createServerFn({ method: "GET" })
       const p = r.profiles;
       const name = p?.full_name ?? p?.email ?? "Unknown";
       return {
-        id: r.id, name, email: p?.email ?? "", title: r.title ?? "—",
+        id: r.id, userId: r.user_id, name, email: p?.email ?? "", title: r.title ?? "—",
         skills: r.skills ?? [], rate: Number(r.rate ?? 0), rating: Number(r.rating ?? 0),
         status: r.status, joined: dateOnly(r.created_at), location: r.location ?? "—",
         avatarColor: r.avatar_color ?? pickColor(name),
