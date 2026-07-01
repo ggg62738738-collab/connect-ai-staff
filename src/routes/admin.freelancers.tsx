@@ -78,7 +78,7 @@ function FreelancersPage() {
             </TableHeader>
             <TableBody>
               {rows.map((f) => (
-                <TableRow key={f.id}>
+                <TableRow key={f.id} className="cursor-pointer hover:bg-muted/40" onClick={() => navigate({ to: "/admin/freelancers/$id", params: { id: f.userId } })}>
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <div className="grid h-9 w-9 place-items-center rounded-full text-xs font-semibold text-white"
