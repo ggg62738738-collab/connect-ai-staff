@@ -10,8 +10,8 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/register")({
   head: () => ({
     meta: [
-      { title: "Create your freelancer account — Talentora" },
-      { name: "description", content: "Join Talentora as a freelancer." },
+      { title: "Create your freelancer account — Workvia" },
+      { name: "description", content: "Join Workvia as a freelancer." },
     ],
   }),
   component: Register,

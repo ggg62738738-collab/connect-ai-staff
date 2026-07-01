@@ -4,9 +4,9 @@ import { PageShell, PageHero } from "@/components/site/page-shell";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Talentora" },
+      { title: "About — Workvia" },
       { name: "description", content: "We're building the talent operating system for modern teams." },
-      { property: "og:title", content: "About — Talentora" },
+      { property: "og:title", content: "About — Workvia" },
       { property: "og:description", content: "We're building the talent operating system for modern teams." },
     ],
   }),
@@ -25,7 +25,7 @@ function About() {
       <PageHero
         eyebrow="About us"
         title={<>We're building the talent <span className="italic text-accent">operating system.</span></>}
-        description="Talentora started as a small staffing studio. Today we power hiring and project delivery for hundreds of teams across the world."
+        description="Workvia started as a small staffing studio. Today we power hiring and project delivery for hundreds of teams across the world."
       />
       <section className="mx-auto max-w-5xl px-6 py-20">
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">

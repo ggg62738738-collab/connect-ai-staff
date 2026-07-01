@@ -17,16 +17,16 @@ function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle>Workspace</CardTitle>
-            <CardDescription>How Talentora appears to your network.</CardDescription>
+            <CardDescription>How Workvia appears to your network.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-1.5">
               <Label>Workspace name</Label>
-              <Input defaultValue="Talentora" />
+              <Input defaultValue="Workvia" />
             </div>
             <div className="space-y-1.5">
               <Label>Support email</Label>
-              <Input type="email" defaultValue="support@talentora.io" />
+              <Input type="email" defaultValue="support@workvia.io" />
             </div>
             <div className="space-y-1.5">
               <Label>Default currency</Label>

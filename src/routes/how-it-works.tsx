@@ -4,9 +4,9 @@ import { PageShell, PageHero } from "@/components/site/page-shell";
 export const Route = createFileRoute("/how-it-works")({
   head: () => ({
     meta: [
-      { title: "How it Works — Talentora" },
-      { name: "description", content: "From requirement to invoice in one place. See how Talentora helps you hire and ship faster." },
-      { property: "og:title", content: "How it Works — Talentora" },
+      { title: "How it Works — Workvia" },
+      { name: "description", content: "From requirement to invoice in one place. See how Workvia helps you hire and ship faster." },
+      { property: "og:title", content: "How it Works — Workvia" },
       { property: "og:description", content: "From requirement to invoice in one place." },
     ],
   }),

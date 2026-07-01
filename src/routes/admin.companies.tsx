@@ -32,7 +32,7 @@ function CompaniesPage() {
     <>
       <PageHeader
         title="Companies"
-        subtitle={`${data.length} hiring teams on Talentora`}
+        subtitle={`${data.length} hiring teams on Workvia`}
         actions={<Button size="sm"><Plus className="mr-1 h-4 w-4" /> Add company</Button>}
       />
       <div className="p-6 space-y-4">

@@ -7,9 +7,9 @@ import { ArrowRight, Sparkles, Users, BadgeCheck, Briefcase, LineChart, ShieldCh
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Talentora — Connecting great companies with great freelancers" },
+      { title: "Workvia — Connecting great companies with great freelancers" },
       { name: "description", content: "AI-powered talent network. On-demand, vetted professionals and managed projects — all in one place." },
-      { property: "og:title", content: "Talentora — AI-powered talent network" },
+      { property: "og:title", content: "Workvia — AI-powered talent network" },
       { property: "og:description", content: "Hire vetted freelancers on demand. Managed projects, transparent payments, all in one place." },
     ],
   }),

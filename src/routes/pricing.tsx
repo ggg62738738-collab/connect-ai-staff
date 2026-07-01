@@ -5,9 +5,9 @@ import { Check } from "lucide-react";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — Talentora" },
+      { title: "Pricing — Workvia" },
       { name: "description", content: "Simple, transparent pricing. Pay only for the talent you use." },
-      { property: "og:title", content: "Pricing — Talentora" },
+      { property: "og:title", content: "Pricing — Workvia" },
       { property: "og:description", content: "Simple, transparent pricing. Pay only for the talent you use." },
     ],
   }),

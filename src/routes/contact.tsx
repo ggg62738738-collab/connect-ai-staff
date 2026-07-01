@@ -5,9 +5,9 @@ import { Mail, Phone, MapPin } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Talentora" },
+      { title: "Contact — Workvia" },
       { name: "description", content: "Get in touch with our team. We respond within one business day." },
-      { property: "og:title", content: "Contact — Talentora" },
+      { property: "og:title", content: "Contact — Workvia" },
       { property: "og:description", content: "Get in touch with our team." },
     ],
   }),
@@ -39,7 +39,7 @@ function Contact() {
           </button>
         </form>
         <div className="md:col-span-2 space-y-4">
-          <InfoCard icon={Mail} title="Email" value="hello@talentora.com" />
+          <InfoCard icon={Mail} title="Email" value="hello@workvia.com" />
           <InfoCard icon={Phone} title="Phone" value="+91 80 4567 8901" />
           <InfoCard icon={MapPin} title="Office" value="Bengaluru · Remote-first" />
         </div>

@@ -33,7 +33,7 @@ export function AdminSidebar({ user }: { user?: { name: string; email: string; i
             <Sparkles className="h-4 w-4" />
           </div>
           <div className="flex flex-col leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-semibold">Talentora</span>
+            <span className="text-sm font-semibold">Workvia</span>
             <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Admin Portal</span>
           </div>
         </Link>

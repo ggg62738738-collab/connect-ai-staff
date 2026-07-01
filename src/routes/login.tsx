@@ -10,8 +10,8 @@ import { Loader2 } from "lucide-react";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Log in — Talentora" },
-      { name: "description", content: "Log in to your Talentora account." },
+      { title: "Log in — Workvia" },
+      { name: "description", content: "Log in to your Workvia account." },
     ],
   }),
   validateSearch: (s: Record<string, unknown>) => ({
@@ -64,7 +64,7 @@ function Login() {
       <section className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-6 py-16">
         <div className="rounded-3xl border border-border/60 bg-white p-8" style={{ boxShadow: "var(--shadow-card)" }}>
           <h1 className="font-display text-3xl tracking-tight text-foreground">Welcome back</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Log in to your Talentora account.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Log in to your Workvia account.</p>
           <form className="mt-6 space-y-4" onSubmit={onSubmit}>
             <div>
               <label className="text-sm font-medium" htmlFor="email">Email</label>

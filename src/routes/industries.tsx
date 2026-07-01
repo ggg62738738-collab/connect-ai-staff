@@ -5,9 +5,9 @@ import { Code2, Cpu, ShoppingBag, Banknote, HeartPulse, Rocket, Building2, Tv } 
 export const Route = createFileRoute("/industries")({
   head: () => ({
     meta: [
-      { title: "Industries We Serve — Talentora" },
-      { name: "description", content: "From SaaS to fintech, healthcare to retail — Talentora powers teams across industries." },
-      { property: "og:title", content: "Industries We Serve — Talentora" },
+      { title: "Industries We Serve — Workvia" },
+      { name: "description", content: "From SaaS to fintech, healthcare to retail — Workvia powers teams across industries." },
+      { property: "og:title", content: "Industries We Serve — Workvia" },
       { property: "og:description", content: "Talent for SaaS, fintech, healthcare, retail and more." },
     ],
   }),

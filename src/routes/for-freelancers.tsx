@@ -5,9 +5,9 @@ import { ArrowRight, Briefcase, Clock, BadgeCheck, Wallet, Star, GraduationCap }
 export const Route = createFileRoute("/for-freelancers")({
   head: () => ({
     meta: [
-      { title: "For Freelancers — Talentora" },
-      { name: "description", content: "Get matched with great companies, ship work you love, and get paid on time. Join the Talentora network." },
-      { property: "og:title", content: "For Freelancers — Talentora" },
+      { title: "For Freelancers — Workvia" },
+      { name: "description", content: "Get matched with great companies, ship work you love, and get paid on time. Join the Workvia network." },
+      { property: "og:title", content: "For Freelancers — Workvia" },
       { property: "og:description", content: "Find great clients, ship great work, get paid on time." },
     ],
   }),
