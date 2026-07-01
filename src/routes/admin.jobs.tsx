@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Plus, Loader2 } from "lucide-react";
@@ -36,6 +36,7 @@ const tone: Record<string, string> = {
 
 function JobsPage() {
   const qc = useQueryClient();
+  const navigate = useNavigate();
   const { data = [], isLoading } = useQuery({ queryKey: ["admin", "jobs"], queryFn: adminApi.jobs });
   const [tab, setTab] = useState("all");
   const [open, setOpen] = useState(false);
@@ -90,14 +91,14 @@ function JobsPage() {
               ) : rows.length === 0 ? (
                 <TableRow><TableCell colSpan={7} className="py-10 text-center text-sm text-muted-foreground">No jobs yet.</TableCell></TableRow>
               ) : rows.map((j) => (
-                <TableRow key={j.id}>
+                <TableRow key={j.id} className="cursor-pointer hover:bg-muted/40" onClick={() => navigate({ to: "/admin/jobs/$jobId", params: { jobId: j.id } })}>
                   <TableCell className="font-medium">{j.title}</TableCell>
                   <TableCell className="text-sm">{j.company}</TableCell>
                   <TableCell><Badge variant="outline">{j.type}</Badge></TableCell>
                   <TableCell className="text-sm">{fmtMoney(j.budget)}</TableCell>
                   <TableCell className="text-sm">{j.applicants}</TableCell>
                   <TableCell><Badge className={tone[j.status] + " hover:" + tone[j.status]}>{j.status}</Badge></TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="sm">Change…</Button>
