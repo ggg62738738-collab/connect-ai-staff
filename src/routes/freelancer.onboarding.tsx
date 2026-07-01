@@ -186,7 +186,7 @@ function BasicSection({ form, set }: { form: OnboardingData; set: SetFn }) {
     <Section title="1. Basic information">
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Full name"><Input value={form.fullName ?? ""} onChange={(e) => set("fullName")(e.target.value)} /></Field>
-        <Field label="Professional photo URL"><Input value={form.photoUrl ?? ""} onChange={(e) => set("photoUrl")(e.target.value)} placeholder="https://…" /></Field>
+        <div className="sm:col-span-1"><FileUploadField label="Profile photo" kind="photo" accept="image/*" value={form.photoUrl} onChange={(v) => set("photoUrl")(v)} /></div>
         <Field label="Email"><Input type="email" value={form.email ?? ""} onChange={(e) => set("email")(e.target.value)} /></Field>
         <Field label="Mobile number"><Input value={form.mobile ?? ""} onChange={(e) => set("mobile")(e.target.value)} placeholder="+91…" /></Field>
         <Field label="Date of birth"><Input type="date" value={form.dob ?? ""} onChange={(e) => set("dob")(e.target.value)} /></Field>
