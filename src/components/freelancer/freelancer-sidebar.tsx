@@ -25,9 +25,7 @@ export function FreelancerSidebar({ user }: { user?: { name: string; email: stri
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b">
         <Link to="/freelancer" className="flex items-center gap-2 px-2 py-1.5">
-          <div className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground">
-            <Sparkles className="h-4 w-4" />
-          </div>
+          <img src={logoUrl} alt="Workvia" className="h-8 w-8 object-contain" />
           <div className="flex flex-col leading-tight group-data-[collapsible=icon]:hidden">
             <span className="text-sm font-semibold">Workvia</span>
             <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Talent Portal</span>
