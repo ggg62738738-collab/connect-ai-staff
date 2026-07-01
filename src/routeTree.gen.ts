@@ -39,6 +39,8 @@ import { Route as AdminFreelancersRouteImport } from './routes/admin.freelancers
 import { Route as AdminContractsRouteImport } from './routes/admin.contracts'
 import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
 import { Route as AdminApplicationsRouteImport } from './routes/admin.applications'
+import { Route as AdminJobsJobIdRouteImport } from './routes/admin.jobs.$jobId'
+import { Route as AdminFreelancersIdRouteImport } from './routes/admin.freelancers.$id'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -190,6 +192,16 @@ const AdminApplicationsRoute = AdminApplicationsRouteImport.update({
   path: '/applications',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminJobsJobIdRoute = AdminJobsJobIdRouteImport.update({
+  id: '/$jobId',
+  path: '/$jobId',
+  getParentRoute: () => AdminJobsRoute,
+} as any)
+const AdminFreelancersIdRoute = AdminFreelancersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminFreelancersRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -208,8 +220,8 @@ export interface FileRoutesByFullPath {
   '/admin/applications': typeof AdminApplicationsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contracts': typeof AdminContractsRoute
-  '/admin/freelancers': typeof AdminFreelancersRoute
-  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/freelancers': typeof AdminFreelancersRouteWithChildren
+  '/admin/jobs': typeof AdminJobsRouteWithChildren
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/timesheets': typeof AdminTimesheetsRoute
@@ -222,6 +234,8 @@ export interface FileRoutesByFullPath {
   '/freelancer/timesheets': typeof FreelancerTimesheetsRoute
   '/admin/': typeof AdminIndexRoute
   '/freelancer/': typeof FreelancerIndexRoute
+  '/admin/freelancers/$id': typeof AdminFreelancersIdRoute
+  '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -238,8 +252,8 @@ export interface FileRoutesByTo {
   '/admin/applications': typeof AdminApplicationsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contracts': typeof AdminContractsRoute
-  '/admin/freelancers': typeof AdminFreelancersRoute
-  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/freelancers': typeof AdminFreelancersRouteWithChildren
+  '/admin/jobs': typeof AdminJobsRouteWithChildren
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/timesheets': typeof AdminTimesheetsRoute
@@ -252,6 +266,8 @@ export interface FileRoutesByTo {
   '/freelancer/timesheets': typeof FreelancerTimesheetsRoute
   '/admin': typeof AdminIndexRoute
   '/freelancer': typeof FreelancerIndexRoute
+  '/admin/freelancers/$id': typeof AdminFreelancersIdRoute
+  '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -271,8 +287,8 @@ export interface FileRoutesById {
   '/admin/applications': typeof AdminApplicationsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contracts': typeof AdminContractsRoute
-  '/admin/freelancers': typeof AdminFreelancersRoute
-  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/freelancers': typeof AdminFreelancersRouteWithChildren
+  '/admin/jobs': typeof AdminJobsRouteWithChildren
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/timesheets': typeof AdminTimesheetsRoute
@@ -285,6 +301,8 @@ export interface FileRoutesById {
   '/freelancer/timesheets': typeof FreelancerTimesheetsRoute
   '/admin/': typeof AdminIndexRoute
   '/freelancer/': typeof FreelancerIndexRoute
+  '/admin/freelancers/$id': typeof AdminFreelancersIdRoute
+  '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -319,6 +337,8 @@ export interface FileRouteTypes {
     | '/freelancer/timesheets'
     | '/admin/'
     | '/freelancer/'
+    | '/admin/freelancers/$id'
+    | '/admin/jobs/$jobId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -349,6 +369,8 @@ export interface FileRouteTypes {
     | '/freelancer/timesheets'
     | '/admin'
     | '/freelancer'
+    | '/admin/freelancers/$id'
+    | '/admin/jobs/$jobId'
   id:
     | '__root__'
     | '/'
@@ -381,6 +403,8 @@ export interface FileRouteTypes {
     | '/freelancer/timesheets'
     | '/admin/'
     | '/freelancer/'
+    | '/admin/freelancers/$id'
+    | '/admin/jobs/$jobId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -611,15 +635,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminApplicationsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/jobs/$jobId': {
+      id: '/admin/jobs/$jobId'
+      path: '/$jobId'
+      fullPath: '/admin/jobs/$jobId'
+      preLoaderRoute: typeof AdminJobsJobIdRouteImport
+      parentRoute: typeof AdminJobsRoute
+    }
+    '/admin/freelancers/$id': {
+      id: '/admin/freelancers/$id'
+      path: '/$id'
+      fullPath: '/admin/freelancers/$id'
+      preLoaderRoute: typeof AdminFreelancersIdRouteImport
+      parentRoute: typeof AdminFreelancersRoute
+    }
   }
 }
+
+interface AdminFreelancersRouteChildren {
+  AdminFreelancersIdRoute: typeof AdminFreelancersIdRoute
+}
+
+const AdminFreelancersRouteChildren: AdminFreelancersRouteChildren = {
+  AdminFreelancersIdRoute: AdminFreelancersIdRoute,
+}
+
+const AdminFreelancersRouteWithChildren =
+  AdminFreelancersRoute._addFileChildren(AdminFreelancersRouteChildren)
+
+interface AdminJobsRouteChildren {
+  AdminJobsJobIdRoute: typeof AdminJobsJobIdRoute
+}
+
+const AdminJobsRouteChildren: AdminJobsRouteChildren = {
+  AdminJobsJobIdRoute: AdminJobsJobIdRoute,
+}
+
+const AdminJobsRouteWithChildren = AdminJobsRoute._addFileChildren(
+  AdminJobsRouteChildren,
+)
 
 interface AdminRouteChildren {
   AdminApplicationsRoute: typeof AdminApplicationsRoute
   AdminCompaniesRoute: typeof AdminCompaniesRoute
   AdminContractsRoute: typeof AdminContractsRoute
-  AdminFreelancersRoute: typeof AdminFreelancersRoute
-  AdminJobsRoute: typeof AdminJobsRoute
+  AdminFreelancersRoute: typeof AdminFreelancersRouteWithChildren
+  AdminJobsRoute: typeof AdminJobsRouteWithChildren
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminTimesheetsRoute: typeof AdminTimesheetsRoute
@@ -630,8 +691,8 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminApplicationsRoute: AdminApplicationsRoute,
   AdminCompaniesRoute: AdminCompaniesRoute,
   AdminContractsRoute: AdminContractsRoute,
-  AdminFreelancersRoute: AdminFreelancersRoute,
-  AdminJobsRoute: AdminJobsRoute,
+  AdminFreelancersRoute: AdminFreelancersRouteWithChildren,
+  AdminJobsRoute: AdminJobsRouteWithChildren,
   AdminPaymentsRoute: AdminPaymentsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminTimesheetsRoute: AdminTimesheetsRoute,

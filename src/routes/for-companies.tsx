@@ -5,9 +5,9 @@ import { ArrowRight, Zap, ShieldCheck, Clock, LineChart, Users, Wallet } from "l
 export const Route = createFileRoute("/for-companies")({
   head: () => ({
     meta: [
-      { title: "For Companies — Talentora" },
+      { title: "For Companies — Workvia" },
       { name: "description", content: "Hire vetted freelancers on demand. Managed projects, transparent payments, AI-powered matching." },
-      { property: "og:title", content: "For Companies — Talentora" },
+      { property: "og:title", content: "For Companies — Workvia" },
       { property: "og:description", content: "Hire vetted freelancers on demand with AI-powered matching." },
     ],
   }),

@@ -10,8 +10,8 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/register")({
   head: () => ({
     meta: [
-      { title: "Create your freelancer account — Talentora" },
-      { name: "description", content: "Join Talentora as a freelancer." },
+      { title: "Create your talent account — Workvia" },
+      { name: "description", content: "Join Workvia as a talent — student, freelancer, or professional." },
     ],
   }),
   component: Register,
@@ -63,7 +63,7 @@ function Register() {
     <PageShell>
       <section className="mx-auto flex min-h-[70vh] max-w-lg flex-col justify-center px-6 py-16">
         <div className="rounded-3xl border border-border/60 bg-white p-8" style={{ boxShadow: "var(--shadow-card)" }}>
-          <h1 className="font-display text-3xl tracking-tight text-foreground">Join as a freelancer</h1>
+          <h1 className="font-display text-3xl tracking-tight text-foreground">Join as a talent</h1>
           <p className="mt-1 text-sm text-muted-foreground">Get started in under a minute. Company hiring is invite-only for now.</p>
           <form className="mt-6 space-y-4" onSubmit={onSubmit}>
             <Input label="Full name" id="name" value={form.name} onChange={update("name")} required />
@@ -71,7 +71,7 @@ function Register() {
             <Input label="Password" id="password" type="password" value={form.password} onChange={update("password")} required minLength={6} />
             <button type="submit" disabled={loading} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background disabled:opacity-60">
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-              {loading ? "Creating…" : "Create freelancer account"}
+              {loading ? "Creating…" : "Create talent account"}
             </button>
           </form>
           <p className="mt-6 text-center text-sm text-muted-foreground">

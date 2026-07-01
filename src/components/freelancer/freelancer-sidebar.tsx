@@ -1,5 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Briefcase, ClipboardList, FileText, Receipt, UserRound, Sparkles, ListChecks, Clock } from "lucide-react";
+import { LayoutDashboard, Briefcase, ClipboardList, FileText, Receipt, UserRound, ListChecks, Clock } from "lucide-react";
+import logoUrl from "@/assets/workvia-logo.png";
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent,
   SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem,
@@ -24,12 +25,10 @@ export function FreelancerSidebar({ user }: { user?: { name: string; email: stri
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b">
         <Link to="/freelancer" className="flex items-center gap-2 px-2 py-1.5">
-          <div className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground">
-            <Sparkles className="h-4 w-4" />
-          </div>
+          <img src={logoUrl} alt="Workvia" className="h-8 w-8 object-contain" />
           <div className="flex flex-col leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-semibold">Talentora</span>
-            <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Freelancer Portal</span>
+            <span className="text-sm font-semibold">Workvia</span>
+            <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Talent Portal</span>
           </div>
         </Link>
       </SidebarHeader>

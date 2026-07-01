@@ -71,7 +71,7 @@
 
 :root {
   --radius: 0.875rem;
-  /* Talentora brand: cream/lavender, deep ink, violet accent */
+  /* Workvia brand: cream/lavender, deep ink, violet accent */
   --background: oklch(0.985 0.008 90);          /* warm cream */
   --foreground: oklch(0.18 0.02 280);           /* near-black ink */
   --card: oklch(1 0 0);

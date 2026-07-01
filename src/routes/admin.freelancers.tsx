@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { Plus, Search, Star } from "lucide-react";
@@ -26,6 +26,7 @@ const statusTone: Record<string, string> = {
 };
 
 function FreelancersPage() {
+  const navigate = useNavigate();
   const { data = [] } = useQuery({ queryKey: ["admin", "freelancers"], queryFn: adminApi.freelancers });
   const [q, setQ] = useState("");
   const [status, setStatus] = useState<string>("all");
@@ -39,9 +40,9 @@ function FreelancersPage() {
   return (
     <>
       <PageHeader
-        title="Freelancers"
-        subtitle={`${data.length} vetted professionals across the network`}
-        actions={<Button size="sm"><Plus className="mr-1 h-4 w-4" /> Invite freelancer</Button>}
+        title="Talents"
+        subtitle={`${data.length} students, freelancers & professionals in the network`}
+        actions={<Button size="sm"><Plus className="mr-1 h-4 w-4" /> Invite talent</Button>}
       />
       <div className="p-6 space-y-4">
         <Card>
@@ -77,7 +78,7 @@ function FreelancersPage() {
             </TableHeader>
             <TableBody>
               {rows.map((f) => (
-                <TableRow key={f.id}>
+                <TableRow key={f.id} className="cursor-pointer hover:bg-muted/40" onClick={() => navigate({ to: "/admin/freelancers/$id", params: { id: f.userId } })}>
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <div className="grid h-9 w-9 place-items-center rounded-full text-xs font-semibold text-white"

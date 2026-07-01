@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/admin/page-header";
 import { listMyApplications, withdrawApplication } from "@/lib/freelancer.functions";
 import { toast } from "sonner";
@@ -32,33 +35,51 @@ function AppsPage() {
     onError: (e: any) => toast.error(e?.message ?? "Failed"),
   });
 
+  const groups = useMemo(() => ({
+    applied: data.filter((a) => ["applied", "screening"].includes(a.stage)),
+    current: data.filter((a) => ["interview", "offer", "hired"].includes(a.stage)),
+    completed: data.filter((a) => a.stage === "rejected"),
+  }), [data]);
+
+  const renderList = (list: typeof data) => list.length === 0 ? (
+    <p className="rounded-md border border-dashed py-10 text-center text-sm text-muted-foreground">Nothing here yet.</p>
+  ) : list.map((a) => (
+    <Card key={a.id}>
+      <CardContent className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-4 sm:flex sm:flex-wrap sm:justify-between">
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold">{a.jobTitle}</p>
+          <p className="truncate text-xs text-muted-foreground">{a.company} · {a.submittedAt} · {a.match}% match</p>
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          <span className={"rounded-full px-2.5 py-1 text-[11px] font-medium capitalize " + (stageTone[a.stage] ?? "")}>{a.stage}</span>
+          {!["hired", "rejected"].includes(a.stage) ? (
+            <Button variant="outline" size="sm" disabled={withdraw.isPending} onClick={() => withdraw.mutate(a.id)}>
+              Withdraw
+            </Button>
+          ) : null}
+        </div>
+      </CardContent>
+    </Card>
+  ));
+
   return (
     <>
-      <PageHeader title="My applications" subtitle="Track where each role stands." />
-      <div className="space-y-3 p-6">
+      <PageHeader title="My applications" subtitle="Track applied, current pipeline, and completed roles." />
+      <div className="p-4 sm:p-6">
         {isLoading ? (
           <div className="grid place-items-center py-20"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
-        ) : data.length === 0 ? (
-          <p className="rounded-md border border-dashed py-10 text-center text-sm text-muted-foreground">You haven't applied to anything yet.</p>
-        ) : data.map((a) => (
-          <Card key={a.id}>
-            <CardContent className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm font-semibold">{a.jobTitle}</p>
-                <p className="text-xs text-muted-foreground">{a.company} · Submitted {a.submittedAt} · {a.match}% match</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className={"rounded-full px-2.5 py-1 text-[11px] font-medium capitalize " + (stageTone[a.stage] ?? "")}>{a.stage}</span>
-                {!["hired", "rejected"].includes(a.stage) ? (
-                  <Button variant="outline" size="sm" disabled={withdraw.isPending}
-                    onClick={() => withdraw.mutate(a.id)}>
-                    Withdraw
-                  </Button>
-                ) : null}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        ) : (
+          <Tabs defaultValue="applied">
+            <TabsList className="flex-wrap">
+              <TabsTrigger value="applied">Applied ({groups.applied.length})</TabsTrigger>
+              <TabsTrigger value="current">Current ({groups.current.length})</TabsTrigger>
+              <TabsTrigger value="completed">Completed ({groups.completed.length})</TabsTrigger>
+            </TabsList>
+            <TabsContent value="applied" className="mt-4 space-y-2">{renderList(groups.applied)}</TabsContent>
+            <TabsContent value="current" className="mt-4 space-y-2">{renderList(groups.current)}</TabsContent>
+            <TabsContent value="completed" className="mt-4 space-y-2">{renderList(groups.completed)}</TabsContent>
+          </Tabs>
+        )}
       </div>
     </>
   );

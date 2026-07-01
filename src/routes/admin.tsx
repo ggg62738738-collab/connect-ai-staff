@@ -14,8 +14,8 @@ export const Route = createFileRoute("/admin")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Admin Portal — Talentora" },
-      { name: "description", content: "Operate the Talentora talent network — freelancers, companies, jobs, contracts, and payments in one place." },
+      { title: "Admin Portal — Workvia" },
+      { name: "description", content: "Operate the Workvia talent network — freelancers, companies, jobs, contracts, and payments in one place." },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),

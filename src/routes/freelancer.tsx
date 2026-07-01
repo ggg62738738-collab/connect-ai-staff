@@ -12,7 +12,7 @@ export const Route = createFileRoute("/freelancer")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Freelancer Portal — Talentora" },
+      { title: "Talent Portal — Workvia" },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),

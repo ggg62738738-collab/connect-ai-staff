@@ -9,6 +9,7 @@ import {
 
 export type Freelancer = {
   id: string;
+  userId: string;
   name: string;
   email: string;
   title: string;

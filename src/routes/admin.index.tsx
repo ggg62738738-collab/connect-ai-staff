@@ -27,7 +27,7 @@ function AdminDashboard() {
     <>
       <PageHeader
         title="Dashboard"
-        subtitle="Real-time signal across the entire Talentora network."
+        subtitle="Real-time signal across the entire Workvia network."
         actions={
           <>
             <Button variant="outline" size="sm">Export</Button>

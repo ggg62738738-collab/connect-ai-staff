@@ -13,6 +13,7 @@ import { PageHeader } from "@/components/admin/page-header";
 import { getMyOnboarding, saveMyOnboarding, type OnboardingData } from "@/lib/onboarding.functions";
 import { toast } from "sonner";
 import { Loader2, Plus, Star, Trash2, X, ChevronRight } from "lucide-react";
+import { FileUploadField } from "@/components/freelancer/file-upload-field";
 
 export const Route = createFileRoute("/freelancer/onboarding")({ component: OnboardingPage });
 
@@ -185,7 +186,7 @@ function BasicSection({ form, set }: { form: OnboardingData; set: SetFn }) {
     <Section title="1. Basic information">
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Full name"><Input value={form.fullName ?? ""} onChange={(e) => set("fullName")(e.target.value)} /></Field>
-        <Field label="Professional photo URL"><Input value={form.photoUrl ?? ""} onChange={(e) => set("photoUrl")(e.target.value)} placeholder="https://…" /></Field>
+        <div className="sm:col-span-1"><FileUploadField label="Profile photo" kind="photo" accept="image/*" value={form.photoUrl} onChange={(v) => set("photoUrl")(v)} /></div>
         <Field label="Email"><Input type="email" value={form.email ?? ""} onChange={(e) => set("email")(e.target.value)} /></Field>
         <Field label="Mobile number"><Input value={form.mobile ?? ""} onChange={(e) => set("mobile")(e.target.value)} placeholder="+91…" /></Field>
         <Field label="Date of birth"><Input type="date" value={form.dob ?? ""} onChange={(e) => set("dob")(e.target.value)} /></Field>
@@ -313,10 +314,15 @@ function ResumeSection({ form, set }: { form: OnboardingData; set: SetFn }) {
   return (
     <Section title="4. Resume & portfolio">
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Resume URL (PDF)"><Input value={form.resumeUrl ?? ""} onChange={(e) => set("resumeUrl")(e.target.value)} placeholder="https://…" /></Field>
-        <Field label="Cover letter URL"><Input value={form.coverLetterUrl ?? ""} onChange={(e) => set("coverLetterUrl")(e.target.value)} placeholder="Optional" /></Field>
-        <Field label="LinkedIn"><Input value={links.linkedin ?? ""} onChange={(e) => upd("linkedin")(e.target.value)} /></Field>
-        <Field label="GitHub"><Input value={links.github ?? ""} onChange={(e) => upd("github")(e.target.value)} /></Field>
+        <FileUploadField label="Resume (PDF)" kind="resume" accept="application/pdf,.doc,.docx"
+          value={form.resumeUrl} onChange={(v) => set("resumeUrl")(v)} />
+        <FileUploadField label="Cover letter (PDF)" kind="cover" accept="application/pdf,.doc,.docx"
+          value={form.coverLetterUrl} onChange={(v) => set("coverLetterUrl")(v)} />
+      </div>
+      <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground pt-2">Professional links</p>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="LinkedIn URL"><Input value={links.linkedin ?? ""} onChange={(e) => upd("linkedin")(e.target.value)} placeholder="https://linkedin.com/in/…" /></Field>
+        <Field label="GitHub URL"><Input value={links.github ?? ""} onChange={(e) => upd("github")(e.target.value)} placeholder="https://github.com/…" /></Field>
         <Field label="Portfolio"><Input value={links.portfolio ?? ""} onChange={(e) => upd("portfolio")(e.target.value)} /></Field>
         <Field label="Behance"><Input value={links.behance ?? ""} onChange={(e) => upd("behance")(e.target.value)} /></Field>
         <Field label="Dribbble"><Input value={links.dribbble ?? ""} onChange={(e) => upd("dribbble")(e.target.value)} /></Field>
@@ -476,9 +482,12 @@ function VerificationSection({ form, set }: { form: OnboardingData; set: SetFn }
         <Field label="Aadhaar number"><Input value={form.aadhaar ?? ""} onChange={(e) => set("aadhaar")(e.target.value)} placeholder="XXXX XXXX XXXX" /></Field>
         <Field label="PAN"><Input value={form.pan ?? ""} onChange={(e) => set("pan")(e.target.value.toUpperCase())} placeholder="ABCDE1234F" /></Field>
         <Field label="Passport (optional)"><Input value={form.passport ?? ""} onChange={(e) => set("passport")(e.target.value)} /></Field>
-        <Field label="Company ID URL"><Input value={form.companyIdUrl ?? ""} onChange={(e) => set("companyIdUrl")(e.target.value)} /></Field>
-        <Field label="Offer letter URL"><Input value={form.offerLetterUrl ?? ""} onChange={(e) => set("offerLetterUrl")(e.target.value)} /></Field>
-        <Field label="Experience letter URL"><Input value={form.experienceLetterUrl ?? ""} onChange={(e) => set("experienceLetterUrl")(e.target.value)} /></Field>
+        <FileUploadField label="Company ID" kind="company-id" accept="image/*,application/pdf"
+          value={form.companyIdUrl} onChange={(v) => set("companyIdUrl")(v)} />
+        <FileUploadField label="Offer letter" kind="offer" accept="image/*,application/pdf"
+          value={form.offerLetterUrl} onChange={(v) => set("offerLetterUrl")(v)} />
+        <FileUploadField label="Experience letter" kind="experience" accept="image/*,application/pdf"
+          value={form.experienceLetterUrl} onChange={(v) => set("experienceLetterUrl")(v)} />
       </div>
       <div className="flex flex-wrap gap-3 pt-2">
         <div className="flex items-center gap-2"><Switch checked={!!form.mobileVerified} onCheckedChange={(v) => set("mobileVerified")(v)} /><span className="text-sm">Mobile verified</span></div>
