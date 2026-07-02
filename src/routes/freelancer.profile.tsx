@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,12 +6,15 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { PageHeader } from "@/components/admin/page-header";
 import { getMyFreelancerProfile, updateMyFreelancerProfile, type FreelancerProfile } from "@/lib/freelancer.functions";
+import { getMyOnboarding } from "@/lib/onboarding.functions";
 import { toast } from "sonner";
-import { Loader2, X } from "lucide-react";
+import { Loader2, X, Star, ExternalLink, Mail, MapPin, Briefcase, GraduationCap, Award, FolderKanban, ShieldCheck, Pencil } from "lucide-react";
 
 export const Route = createFileRoute("/freelancer/profile")({ component: ProfilePage });
+
 
 function ProfilePage() {
   const qc = useQueryClient();
