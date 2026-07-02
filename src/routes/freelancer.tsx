@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FreelancerSidebar } from "@/components/freelancer/freelancer-sidebar";
 import { useSessionUser, signOutAndClear } from "@/lib/use-session";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getMyOnboarding } from "@/lib/onboarding.functions";
+
 
 export const Route = createFileRoute("/freelancer")({
   ssr: false,
