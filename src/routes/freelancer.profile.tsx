@@ -19,8 +19,10 @@ export const Route = createFileRoute("/freelancer/profile")({ component: Profile
 function ProfilePage() {
   const qc = useQueryClient();
   const { data, isLoading } = useQuery({ queryKey: ["fl", "profile"], queryFn: () => getMyFreelancerProfile() });
+  const { data: onb } = useQuery({ queryKey: ["fl", "onboarding"], queryFn: () => getMyOnboarding() });
   const [form, setForm] = useState<FreelancerProfile | null>(null);
   const [skillDraft, setSkillDraft] = useState("");
+
 
   useEffect(() => { if (data) setForm(data); }, [data]);
 
