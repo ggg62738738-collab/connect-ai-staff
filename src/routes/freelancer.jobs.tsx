@@ -107,3 +107,40 @@ function JobsPage() {
     </>
   );
 }
+
+function EmptyJobs() {
+  return (
+    <div className="grid place-items-center px-4 py-10">
+      <div className="flex max-w-md flex-col items-center text-center">
+        <svg viewBox="0 0 240 180" className="h-40 w-56" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          {/* desk */}
+          <path d="M20 150 H220" className="text-muted-foreground/40" />
+          <path d="M40 150 V170 M200 150 V170" className="text-muted-foreground/40" />
+          {/* laptop */}
+          <rect x="70" y="115" width="100" height="35" rx="3" className="text-muted-foreground/60" />
+          <path d="M60 152 H180" className="text-muted-foreground/60" />
+          {/* person */}
+          <circle cx="120" cy="60" r="18" className="text-violet" />
+          <path d="M120 78 V115" className="text-violet" />
+          <path d="M120 90 L100 108 M120 90 L140 108" className="text-violet" />
+          {/* thought bubble w/ briefcase */}
+          <path d="M170 40 q10 -10 22 -6 q10 4 8 16 q-2 10 -14 12 q-8 1 -12 -4" className="text-violet/70" />
+          <circle cx="164" cy="52" r="2" className="text-violet/70" />
+          <circle cx="158" cy="58" r="1.5" className="text-violet/70" />
+          <rect x="176" y="46" width="16" height="12" rx="1.5" className="text-violet" />
+          <path d="M182 46 v-2 h4 v2" className="text-violet" />
+          {/* squiggles */}
+          <path d="M35 40 q6 -6 12 0 t12 0" className="text-cream/80 stroke-violet/40" />
+          <path d="M195 90 q6 -6 12 0" className="text-violet/40" />
+        </svg>
+        <h3 className="mt-4 font-display text-xl">No work available right now</h3>
+        <p className="mt-1 text-sm text-muted-foreground">
+          We're actively matching roles to your profile. We'll notify you the moment something great opens up.
+        </p>
+        <a href="/freelancer/onboarding" className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-violet px-4 py-2 text-xs font-medium text-white hover:opacity-90">
+          Improve your Talent Score
+        </a>
+      </div>
+    </div>
+  );
+}
