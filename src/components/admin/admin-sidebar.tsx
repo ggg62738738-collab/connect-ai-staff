@@ -3,7 +3,8 @@ import {
   LayoutDashboard, Users, Building2, Briefcase, FileText, Receipt,
   ClipboardList, Settings, Clock,
 } from "lucide-react";
-import logoUrl from "@/assets/workvia-logo.png";
+import logoAsset from "@/assets/workvia-logo.png.asset.json";
+const logoUrl = logoAsset.url;
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent,
   SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton,

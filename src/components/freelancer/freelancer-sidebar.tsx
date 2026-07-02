@@ -1,6 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { LayoutDashboard, Briefcase, ClipboardList, FileText, Receipt, UserRound, ListChecks, Clock } from "lucide-react";
-import logoUrl from "@/assets/workvia-logo.png";
+import logoAsset from "@/assets/workvia-logo.png.asset.json";
+const logoUrl = logoAsset.url;
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent,
   SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem,
