@@ -79,9 +79,8 @@ function JobsPage() {
                 </CardContent>
               </Card>
             ))}
-            {filtered.length === 0 ? (
-              <p className="rounded-md border border-dashed py-10 text-center text-sm text-muted-foreground">No matching jobs</p>
-            ) : null}
+            {filtered.length === 0 ? <EmptyJobs /> : null}
+
           </div>
         )}
       </div>
