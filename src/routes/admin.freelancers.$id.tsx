@@ -53,12 +53,17 @@ function FreelancerDetailPage() {
         <Card className="h-fit lg:sticky lg:top-20">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-3">
-              <div className="grid h-12 w-12 place-items-center rounded-full bg-violet text-sm font-semibold text-white">{initials(user.name)}</div>
+              {onb.photoUrl ? (
+                <img src={onb.photoUrl} alt={user.name} className="h-12 w-12 rounded-full object-cover border" />
+              ) : (
+                <div className="grid h-12 w-12 place-items-center rounded-full bg-violet text-sm font-semibold text-white">{initials(user.name)}</div>
+              )}
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold">{user.name}</p>
                 <Badge className={categoryColor + " mt-1"}>{category === "Campus" ? "🟢 Campus" : "🟣 Professional"}</Badge>
               </div>
             </div>
+
           </CardHeader>
           <CardContent className="space-y-1">
             {SECTIONS.map((s) => (
