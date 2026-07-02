@@ -75,7 +75,7 @@ function FreelancerShell({ name, initials, email, qc, navigate }: { name: string
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
-        <FreelancerSidebar user={{ name, email: user.email ?? "", initials }} />
+        <FreelancerSidebar user={{ name, email, initials }} />
         <SidebarInset>
           <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur">
             <SidebarTrigger />
@@ -88,7 +88,12 @@ function FreelancerShell({ name, initials, email, qc, navigate }: { name: string
               <Button variant="ghost" size="icon" aria-label="Notifications">
                 <Bell className="h-4 w-4" />
               </Button>
-              <div className="grid h-8 w-8 place-items-center rounded-full bg-violet text-xs font-semibold text-white">{initials}</div>
+              {photo ? (
+                <img src={photo} alt={name} className="h-8 w-8 rounded-full object-cover border" />
+              ) : (
+                <div className="grid h-8 w-8 place-items-center rounded-full bg-violet text-xs font-semibold text-white">{initials}</div>
+              )}
+
               <Button variant="ghost" size="icon" aria-label="Sign out"
                 onClick={async () => { await signOutAndClear(qc); navigate({ to: "/login" }); }}>
                 <LogOut className="h-4 w-4" />
