@@ -64,6 +64,13 @@ function FreelancerLayout() {
 
   const name = user.profile?.full_name ?? user.email ?? "Freelancer";
   const initials = name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase();
+  return <FreelancerShell name={name} initials={initials} email={user.email ?? ""} qc={qc} navigate={navigate} />;
+}
+
+function FreelancerShell({ name, initials, email, qc, navigate }: { name: string; initials: string; email: string; qc: ReturnType<typeof useQueryClient>; navigate: ReturnType<typeof useNavigate> }) {
+  const { data: onb } = useQuery({ queryKey: ["fl", "onboarding"], queryFn: () => getMyOnboarding() });
+  const photo = onb?.data?.photoUrl;
+
 
   return (
     <SidebarProvider>
