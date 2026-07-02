@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FreelancerSidebar } from "@/components/freelancer/freelancer-sidebar";
 import { useSessionUser, signOutAndClear } from "@/lib/use-session";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getMyOnboarding } from "@/lib/onboarding.functions";
+
 
 export const Route = createFileRoute("/freelancer")({
   ssr: false,
@@ -62,11 +64,18 @@ function FreelancerLayout() {
 
   const name = user.profile?.full_name ?? user.email ?? "Freelancer";
   const initials = name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase();
+  return <FreelancerShell name={name} initials={initials} email={user.email ?? ""} qc={qc} navigate={navigate} />;
+}
+
+function FreelancerShell({ name, initials, email, qc, navigate }: { name: string; initials: string; email: string; qc: ReturnType<typeof useQueryClient>; navigate: ReturnType<typeof useNavigate> }) {
+  const { data: onb } = useQuery({ queryKey: ["fl", "onboarding"], queryFn: () => getMyOnboarding() });
+  const photo = onb?.data?.photoUrl;
+
 
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
-        <FreelancerSidebar user={{ name, email: user.email ?? "", initials }} />
+        <FreelancerSidebar user={{ name, email, initials }} />
         <SidebarInset>
           <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur">
             <SidebarTrigger />
@@ -79,7 +88,12 @@ function FreelancerLayout() {
               <Button variant="ghost" size="icon" aria-label="Notifications">
                 <Bell className="h-4 w-4" />
               </Button>
-              <div className="grid h-8 w-8 place-items-center rounded-full bg-violet text-xs font-semibold text-white">{initials}</div>
+              {photo ? (
+                <img src={photo} alt={name} className="h-8 w-8 rounded-full object-cover border" />
+              ) : (
+                <div className="grid h-8 w-8 place-items-center rounded-full bg-violet text-xs font-semibold text-white">{initials}</div>
+              )}
+
               <Button variant="ghost" size="icon" aria-label="Sign out"
                 onClick={async () => { await signOutAndClear(qc); navigate({ to: "/login" }); }}>
                 <LogOut className="h-4 w-4" />
