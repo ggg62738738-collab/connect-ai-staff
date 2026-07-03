@@ -7,10 +7,10 @@ import { ArrowRight, Sparkles, Users, BadgeCheck, Briefcase, LineChart, ShieldCh
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Workvia — Connecting great companies with great freelancers" },
+      { title: "Workvia — Connecting great companies with great talent" },
       { name: "description", content: "AI-powered talent network. On-demand, vetted professionals and managed projects — all in one place." },
       { property: "og:title", content: "Workvia — AI-powered talent network" },
-      { property: "og:description", content: "Hire vetted freelancers on demand. Managed projects, transparent payments, all in one place." },
+      { property: "og:description", content: "Hire vetted talent on demand. Managed projects, transparent payments, all in one place." },
     ],
   }),
   component: Index,
@@ -39,24 +39,25 @@ function Hero() {
           </span>
           <h1 className="mt-5 font-display text-5xl leading-[1.05] tracking-tight text-foreground md:text-7xl">
             Connecting great <br /> companies with{" "}
-            <span className="italic text-accent">great freelancers.</span>
+            <span className="italic text-accent">great talent.</span>
           </h1>
           <p className="mt-5 max-w-md text-base text-muted-foreground md:text-lg">
             On-demand talent. Vetted professionals. Managed projects. All in one place.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              to="/register"
+              to="/for-companies"
+              hash="inquiry"
               className="group inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.02]"
             >
               Hire talent
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
-              to="/for-freelancers"
+              to="/register"
               className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-5 py-3 text-sm font-medium text-foreground hover:bg-secondary"
             >
-              Join as freelancer
+              Join as talent
             </Link>
           </div>
         </div>
@@ -237,14 +238,14 @@ function CTASection() {
             Ready to build your dream team?
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm text-background/70 md:text-base">
-            Start hiring vetted talent in days — not months. Or join thousands of freelancers shipping great work.
+            Start hiring vetted talent in days — not months. Or join thousands of professionals shipping great work.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Link to="/register" className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-medium text-accent-foreground hover:opacity-95">
+            <Link to="/for-companies" hash="inquiry" className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-medium text-accent-foreground hover:opacity-95">
               Hire talent <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/for-freelancers" className="inline-flex items-center rounded-full border border-background/30 px-5 py-3 text-sm font-medium text-background hover:bg-background/10">
-              Join as freelancer
+            <Link to="/register" className="inline-flex items-center rounded-full border border-background/30 px-5 py-3 text-sm font-medium text-background hover:bg-background/10">
+              Join as talent
             </Link>
           </div>
         </div>

@@ -45,7 +45,7 @@ function ForCompanies() {
           ))}
         </div>
 
-        <div id="inquiry" className="mt-16 scroll-mt-24">
+        <div id="inquiry" className="mt-16 scroll-mt-24" tabIndex={-1}>
           <HiringInquiryForm />
         </div>
       </section>
