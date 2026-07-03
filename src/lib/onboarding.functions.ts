@@ -204,24 +204,44 @@ export const saveMyOnboarding = createServerFn({ method: "POST" })
       }, { onConflict: "user_id" });
     if (error) throw new Error(error.message);
 
-    // mirror key fields into freelancer_profiles so the rest of the app keeps working
-    const fp: any = {};
-    if (data.data.primaryRole) fp.title = data.data.primaryRole;
-    if (data.data.expectedHourlyRate !== undefined) fp.rate = data.data.expectedHourlyRate;
-    if (data.data.city || data.data.country)
-      fp.location = [data.data.city, data.data.country].filter(Boolean).join(", ");
-    if (data.data.skills?.length) fp.skills = data.data.skills.map((s) => s.name);
-    if (Object.keys(fp).length) {
-      await context.supabase
-        .from("freelancer_profiles")
-        .update(fp)
-        .eq("user_id", context.userId);
-    }
-    if (data.data.fullName) {
-      await context.supabase
-        .from("profiles")
-        .update({ full_name: data.data.fullName })
-        .eq("id", context.userId);
+    // mirror high-signal fields into freelancer_profiles for filtering + display
+    const d = data.data;
+    const fp: any = {
+      photo_url: d.photoUrl ?? null,
+      mobile: d.mobile ?? null,
+      mobile_verified: !!d.mobileVerified,
+      email_verified: !!d.emailVerified,
+      city: d.city ?? null,
+      country: d.country ?? null,
+      primary_role: d.primaryRole ?? null,
+      total_experience: d.totalExperience ?? null,
+      employment_status: d.employmentStatus ?? null,
+      notice_period: d.noticePeriod ?? null,
+      expected_daily_rate: d.expectedDailyRate ?? null,
+      expected_hourly_rate: d.expectedHourlyRate ?? null,
+      resume_url: d.resumeUrl ?? null,
+      linkedin_url: d.links?.linkedin ?? null,
+      github_url: d.links?.github ?? null,
+      portfolio_url: d.links?.portfolio ?? null,
+      available_from: d.availableFrom ?? null,
+      register_as: d.registerAs ?? null,
+    };
+    if (d.primaryRole) fp.title = d.primaryRole;
+    if (d.expectedHourlyRate !== undefined) fp.rate = d.expectedHourlyRate;
+    if (d.city || d.country) fp.location = [d.city, d.country].filter(Boolean).join(", ");
+    if (d.skills?.length) fp.skills = d.skills.map((s) => s.name);
+    await context.supabase
+      .from("freelancer_profiles")
+      .update(fp)
+      .eq("user_id", context.userId);
+
+    // mirror name / phone / avatar into profiles
+    const pp: any = {};
+    if (d.fullName) pp.full_name = d.fullName;
+    if (d.mobile) pp.phone = d.mobile;
+    if (d.photoUrl) pp.avatar_url = d.photoUrl;
+    if (Object.keys(pp).length) {
+      await context.supabase.from("profiles").update(pp).eq("id", context.userId);
     }
     return { ok: true, completion, talentScore };
   });
