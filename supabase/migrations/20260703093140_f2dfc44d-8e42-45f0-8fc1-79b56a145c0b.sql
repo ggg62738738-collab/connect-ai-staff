@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.notify_admins_new_signup() FROM PUBLIC, anon, authenticated;
