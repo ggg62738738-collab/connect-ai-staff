@@ -221,6 +221,42 @@ export type Database = {
           },
         ]
       }
+      freelancer_onboarding: {
+        Row: {
+          completion: number
+          created_at: string
+          data: Json
+          id: string
+          recruiter_assessment: Json
+          recruiter_notes: string | null
+          talent_score: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completion?: number
+          created_at?: string
+          data?: Json
+          id?: string
+          recruiter_assessment?: Json
+          recruiter_notes?: string | null
+          talent_score?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completion?: number
+          created_at?: string
+          data?: Json
+          id?: string
+          recruiter_assessment?: Json
+          recruiter_notes?: string | null
+          talent_score?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       freelancer_profiles: {
         Row: {
           availability: string | null
@@ -405,6 +441,59 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      timesheets: {
+        Row: {
+          contract_id: string
+          created_at: string
+          freelancer_id: string
+          hours: number
+          id: string
+          notes: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          updated_at: string
+          week_start: string
+        }
+        Insert: {
+          contract_id: string
+          created_at?: string
+          freelancer_id: string
+          hours?: number
+          id?: string
+          notes?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          week_start: string
+        }
+        Update: {
+          contract_id?: string
+          created_at?: string
+          freelancer_id?: string
+          hours?: number
+          id?: string
+          notes?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          week_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timesheets_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "contracts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
