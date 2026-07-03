@@ -66,13 +66,24 @@ function FreelancerLayout() {
 
   const name = user.profile?.full_name ?? user.email ?? "Freelancer";
   const initials = name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase();
-  return <FreelancerShell name={name} initials={initials} email={user.email ?? ""} qc={qc} navigate={navigate} />;
+  const avatar = user.profile?.avatar_url ?? null;
+  return <FreelancerShell name={name} initials={initials} email={user.email ?? ""} avatar={avatar} qc={qc} navigate={navigate} />;
 }
 
-function FreelancerShell({ name, initials, email, qc, navigate }: { name: string; initials: string; email: string; qc: ReturnType<typeof useQueryClient>; navigate: ReturnType<typeof useNavigate> }) {
+function FreelancerShell({ name, initials, email, avatar, qc, navigate }: { name: string; initials: string; email: string; avatar: string | null; qc: ReturnType<typeof useQueryClient>; navigate: ReturnType<typeof useNavigate> }) {
   const { data: onb } = useQuery({ queryKey: ["fl", "onboarding"], queryFn: () => getMyOnboarding() });
-  const photo = onb?.data?.photoUrl;
+  const photo = avatar ?? onb?.data?.photoUrl ?? null;
 
+  const { data: notifs = [], refetch } = useQuery({
+    queryKey: ["fl", "notifications"],
+    queryFn: () => listMyNotifications(),
+    refetchInterval: 60_000,
+  });
+  const unread = notifs.filter((n) => !n.readAt).length;
+  const markRead = useMutation({
+    mutationFn: () => markAllNotificationsRead(),
+    onSuccess: () => refetch(),
+  });
 
   return (
     <SidebarProvider>
@@ -87,9 +98,30 @@ function FreelancerShell({ name, initials, email, qc, navigate }: { name: string
               <Input placeholder="Search jobs, contracts…" className="h-9 pl-9" />
             </div>
             <div className="ml-auto flex items-center gap-2">
-              <Button variant="ghost" size="icon" aria-label="Notifications">
-                <Bell className="h-4 w-4" />
-              </Button>
+              <Popover onOpenChange={(o) => { if (o && unread > 0) markRead.mutate(); }}>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" size="icon" aria-label="Notifications" className="relative">
+                    <Bell className="h-4 w-4" />
+                    {unread > 0 ? (
+                      <span className="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-rose-500 px-1 text-[10px] font-semibold text-white">{unread}</span>
+                    ) : null}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent align="end" className="w-80 p-0">
+                  <div className="border-b px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Notifications</div>
+                  <div className="max-h-80 overflow-y-auto">
+                    {notifs.length === 0 ? (
+                      <p className="p-4 text-sm text-muted-foreground">You're all caught up.</p>
+                    ) : notifs.map((n) => (
+                      <div key={n.id} className={`border-b px-3 py-2 text-sm ${!n.readAt ? "bg-violet/5" : ""}`}>
+                        <p className="font-medium">{n.title}</p>
+                        {n.body ? <p className="mt-0.5 text-xs text-muted-foreground">{n.body}</p> : null}
+                        <p className="mt-1 text-[10px] uppercase tracking-wider text-muted-foreground">{new Date(n.createdAt).toLocaleString()}</p>
+                      </div>
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
               {photo ? (
                 <img src={photo} alt={name} className="h-8 w-8 rounded-full object-cover border" />
               ) : (
