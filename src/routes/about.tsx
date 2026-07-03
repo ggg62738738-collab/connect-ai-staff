@@ -41,7 +41,7 @@ function About() {
             We believe great work happens when great people meet great teams — without the friction of agencies, paperwork or chasing invoices.
           </p>
           <p>
-            Our platform combines AI-powered matching with a human ops team so companies can scale fast and freelancers can focus on what they love: shipping.
+            Our platform combines AI-powered matching with a human ops team so companies can scale fast and talent can focus on what they love: shipping.
           </p>
           <p>
             We're a remote-first company with operators across India, Europe and the US, building tools we wish existed when we were doing this work the hard way.
