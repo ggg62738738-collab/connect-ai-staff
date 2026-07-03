@@ -23,9 +23,9 @@ export function FileUploadField({
   const upload = async (file: File) => {
     setBusy(true);
     try {
-      const { path, token } = await createTalentUploadUrl({ data: { filename: file.name, kind } });
+      const { bucket, path, token } = await createTalentUploadUrl({ data: { filename: file.name, kind } });
       const { error } = await supabase.storage
-        .from("talent-uploads")
+        .from(bucket)
         .uploadToSignedUrl(path, token, file, { upsert: true });
       if (error) throw new Error(error.message);
       onChange(path);
