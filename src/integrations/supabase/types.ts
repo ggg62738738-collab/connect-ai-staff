@@ -260,46 +260,100 @@ export type Database = {
       freelancer_profiles: {
         Row: {
           availability: string | null
+          available_from: string | null
           avatar_color: string
           bio: string | null
+          city: string | null
+          country: string | null
           created_at: string
+          email_verified: boolean
+          employment_status: string | null
+          expected_daily_rate: number | null
+          expected_hourly_rate: number | null
+          github_url: string | null
           id: string
+          linkedin_url: string | null
           location: string | null
+          mobile: string | null
+          mobile_verified: boolean
+          notice_period: string | null
+          photo_url: string | null
+          portfolio_url: string | null
+          primary_role: string | null
           rate: number | null
           rating: number
+          register_as: string | null
+          resume_url: string | null
           skills: string[]
           status: Database["public"]["Enums"]["freelancer_status"]
           title: string | null
+          total_experience: number | null
           updated_at: string
           user_id: string
         }
         Insert: {
           availability?: string | null
+          available_from?: string | null
           avatar_color?: string
           bio?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string
+          email_verified?: boolean
+          employment_status?: string | null
+          expected_daily_rate?: number | null
+          expected_hourly_rate?: number | null
+          github_url?: string | null
           id?: string
+          linkedin_url?: string | null
           location?: string | null
+          mobile?: string | null
+          mobile_verified?: boolean
+          notice_period?: string | null
+          photo_url?: string | null
+          portfolio_url?: string | null
+          primary_role?: string | null
           rate?: number | null
           rating?: number
+          register_as?: string | null
+          resume_url?: string | null
           skills?: string[]
           status?: Database["public"]["Enums"]["freelancer_status"]
           title?: string | null
+          total_experience?: number | null
           updated_at?: string
           user_id: string
         }
         Update: {
           availability?: string | null
+          available_from?: string | null
           avatar_color?: string
           bio?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string
+          email_verified?: boolean
+          employment_status?: string | null
+          expected_daily_rate?: number | null
+          expected_hourly_rate?: number | null
+          github_url?: string | null
           id?: string
+          linkedin_url?: string | null
           location?: string | null
+          mobile?: string | null
+          mobile_verified?: boolean
+          notice_period?: string | null
+          photo_url?: string | null
+          portfolio_url?: string | null
+          primary_role?: string | null
           rate?: number | null
           rating?: number
+          register_as?: string | null
+          resume_url?: string | null
           skills?: string[]
           status?: Database["public"]["Enums"]["freelancer_status"]
           title?: string | null
+          total_experience?: number | null
           updated_at?: string
           user_id?: string
         }
@@ -351,6 +405,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          kind: string
+          link: string | null
+          read_at: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind: string
+          link?: string | null
+          read_at?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          read_at?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       payments: {
         Row: {
@@ -420,6 +507,7 @@ export type Database = {
           full_name: string | null
           headline: string | null
           id: string
+          phone: string | null
           updated_at: string
         }
         Insert: {
@@ -429,6 +517,7 @@ export type Database = {
           full_name?: string | null
           headline?: string | null
           id: string
+          phone?: string | null
           updated_at?: string
         }
         Update: {
@@ -438,6 +527,7 @@ export type Database = {
           full_name?: string | null
           headline?: string | null
           id?: string
+          phone?: string | null
           updated_at?: string
         }
         Relationships: []
