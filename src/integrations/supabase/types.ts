@@ -221,39 +221,6 @@ export type Database = {
           },
         ]
       }
-      freelancer_onboarding: {
-        Row: {
-          completion: number
-          created_at: string
-          data: Json
-          recruiter_assessment: Json
-          recruiter_notes: string | null
-          talent_score: number
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          completion?: number
-          created_at?: string
-          data?: Json
-          recruiter_assessment?: Json
-          recruiter_notes?: string | null
-          talent_score?: number
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          completion?: number
-          created_at?: string
-          data?: Json
-          recruiter_assessment?: Json
-          recruiter_notes?: string | null
-          talent_score?: number
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
       freelancer_profiles: {
         Row: {
           availability: string | null
@@ -352,13 +319,12 @@ export type Database = {
       payments: {
         Row: {
           amount: number
+          contract_id: string | null
           created_at: string
           direction: Database["public"]["Enums"]["payment_direction"]
-          due_date: string | null
           id: string
           invoice: string
-          notes: string | null
-          paid_at: string | null
+          paid_on: string
           party: string
           party_company_id: string | null
           party_user_id: string | null
@@ -367,13 +333,12 @@ export type Database = {
         }
         Insert: {
           amount: number
+          contract_id?: string | null
           created_at?: string
           direction: Database["public"]["Enums"]["payment_direction"]
-          due_date?: string | null
           id?: string
           invoice: string
-          notes?: string | null
-          paid_at?: string | null
+          paid_on?: string
           party: string
           party_company_id?: string | null
           party_user_id?: string | null
@@ -382,13 +347,12 @@ export type Database = {
         }
         Update: {
           amount?: number
+          contract_id?: string | null
           created_at?: string
           direction?: Database["public"]["Enums"]["payment_direction"]
-          due_date?: string | null
           id?: string
           invoice?: string
-          notes?: string | null
-          paid_at?: string | null
+          paid_on?: string
           party?: string
           party_company_id?: string | null
           party_user_id?: string | null
@@ -396,6 +360,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "payments_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "contracts"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "payments_party_company_id_fkey"
             columns: ["party_company_id"]
@@ -434,59 +405,6 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
-      }
-      timesheets: {
-        Row: {
-          contract_id: string
-          created_at: string
-          freelancer_id: string
-          hours: number
-          id: string
-          notes: string | null
-          review_notes: string | null
-          reviewed_at: string | null
-          reviewed_by: string | null
-          status: Database["public"]["Enums"]["timesheet_status"]
-          updated_at: string
-          week_start: string
-        }
-        Insert: {
-          contract_id: string
-          created_at?: string
-          freelancer_id: string
-          hours?: number
-          id?: string
-          notes?: string | null
-          review_notes?: string | null
-          reviewed_at?: string | null
-          reviewed_by?: string | null
-          status?: Database["public"]["Enums"]["timesheet_status"]
-          updated_at?: string
-          week_start: string
-        }
-        Update: {
-          contract_id?: string
-          created_at?: string
-          freelancer_id?: string
-          hours?: number
-          id?: string
-          notes?: string | null
-          review_notes?: string | null
-          reviewed_at?: string | null
-          reviewed_by?: string | null
-          status?: Database["public"]["Enums"]["timesheet_status"]
-          updated_at?: string
-          week_start?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "timesheets_contract_id_fkey"
-            columns: ["contract_id"]
-            isOneToOne: false
-            referencedRelation: "contracts"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       user_roles: {
         Row: {
@@ -544,7 +462,6 @@ export type Database = {
       job_type: "Full-time" | "Part-time" | "Contract"
       payment_direction: "in" | "out"
       payment_status: "paid" | "pending" | "failed"
-      timesheet_status: "draft" | "submitted" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -689,7 +606,6 @@ export const Constants = {
       job_type: ["Full-time", "Part-time", "Contract"],
       payment_direction: ["in", "out"],
       payment_status: ["paid", "pending", "failed"],
-      timesheet_status: ["draft", "submitted", "approved", "rejected"],
     },
   },
 } as const
