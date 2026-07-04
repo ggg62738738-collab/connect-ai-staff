@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/admin/page-header";
+import { EmptyState } from "@/components/freelancer/empty-state";
 import {
   listMyTimesheets, listMyActiveContracts, submitTimesheet,
 } from "@/lib/freelancer.functions";
