@@ -10,9 +10,15 @@ const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiO
 
 const isBrowser = typeof window !== "undefined";
 
+const noopStorage = {
+  getItem: (_key: string) => null,
+  setItem: (_key: string, _value: string) => {},
+  removeItem: (_key: string) => {},
+};
+
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
-    storage: isBrowser ? window.localStorage : undefined,
+    storage: isBrowser ? window.localStorage : noopStorage,
     persistSession: isBrowser,
     autoRefreshToken: isBrowser,
   }
