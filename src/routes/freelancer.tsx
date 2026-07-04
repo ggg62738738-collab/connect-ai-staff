@@ -11,6 +11,7 @@ import { getMyOnboarding } from "@/lib/onboarding.functions";
 import { listMyNotifications, markAllNotificationsRead } from "@/lib/notifications.functions";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useSignedFileUrl } from "@/lib/use-signed-url";
+import { FreelancerTour } from "@/components/freelancer/freelancer-tour";
 
 
 export const Route = createFileRoute("/freelancer")({
