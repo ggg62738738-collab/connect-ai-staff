@@ -39,7 +39,7 @@ export function FreelancerSidebar({ user }: { user?: { name: string; email: stri
           <SidebarGroupContent>
             <SidebarMenu>
               {nav.map((item) => (
-                <SidebarMenuItem key={item.url}>
+                <SidebarMenuItem key={item.url} data-tour={`sidebar-${item.tour}`}>
                   <SidebarMenuButton asChild isActive={active(item.url, item.exact)} tooltip={item.title}>
                     <Link to={item.url}>
                       <item.icon />
