@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/admin/page-header";
+import { EmptyState } from "@/components/freelancer/empty-state";
 import {
   listMyTimesheets, listMyActiveContracts, submitTimesheet,
 } from "@/lib/freelancer.functions";
@@ -69,9 +70,7 @@ function TimesheetsPage() {
       />
       <div className="p-4 sm:p-6">
         {!contracts.length ? (
-          <Card><CardContent className="py-10 text-center text-sm text-muted-foreground">
-            You have no active contracts. Timesheets unlock once a contract is active.
-          </CardContent></Card>
+          <EmptyState variant="timesheets" title="No active contracts yet" description="Timesheets unlock the moment your first contract goes live." />
         ) : (
           <Tabs defaultValue="pending">
             <TabsList className="flex-wrap">
@@ -84,7 +83,7 @@ function TimesheetsPage() {
                 {isLoading ? (
                   <div className="grid place-items-center py-10"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
                 ) : groups[k].length === 0 ? (
-                  <p className="rounded-md border border-dashed py-8 text-center text-sm text-muted-foreground">Nothing here.</p>
+                  <EmptyState variant="timesheets" title="Nothing here" description={k === "pending" ? "Submit hours for your active week to see them here." : `No ${k} timesheets yet.`} />
                 ) : groups[k].map((t) => (
                   <Card key={t.id}>
                     <CardContent className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-4 sm:flex sm:flex-wrap sm:justify-between">

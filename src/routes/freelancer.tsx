@@ -11,6 +11,7 @@ import { getMyOnboarding } from "@/lib/onboarding.functions";
 import { listMyNotifications, markAllNotificationsRead } from "@/lib/notifications.functions";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useSignedFileUrl } from "@/lib/use-signed-url";
+import { FreelancerTour } from "@/components/freelancer/freelancer-tour";
 
 
 export const Route = createFileRoute("/freelancer")({
@@ -125,9 +126,9 @@ function FreelancerShell({ name, initials, email, avatar, qc, navigate }: { name
                 </PopoverContent>
               </Popover>
               {photo ? (
-                <img src={photo} alt={name} className="h-8 w-8 rounded-full object-cover border" />
+                <img src={photo} alt={name} data-tour="topbar-avatar" className="h-8 w-8 rounded-full object-cover border" />
               ) : (
-                <div className="grid h-8 w-8 place-items-center rounded-full bg-violet text-xs font-semibold text-white">{initials}</div>
+                <div data-tour="topbar-avatar" className="grid h-8 w-8 place-items-center rounded-full bg-violet text-xs font-semibold text-white">{initials}</div>
               )}
 
               <Button variant="ghost" size="icon" aria-label="Sign out"
@@ -137,6 +138,7 @@ function FreelancerShell({ name, initials, email, avatar, qc, navigate }: { name
             </div>
           </header>
           <main className="flex-1"><Outlet /></main>
+          <FreelancerTour />
         </SidebarInset>
       </div>
     </SidebarProvider>

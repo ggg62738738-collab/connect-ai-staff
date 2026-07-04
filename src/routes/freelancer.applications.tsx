@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/admin/page-header";
+import { EmptyState } from "@/components/freelancer/empty-state";
 import { listMyApplications, withdrawApplication } from "@/lib/freelancer.functions";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -42,7 +43,7 @@ function AppsPage() {
   }), [data]);
 
   const renderList = (list: typeof data) => list.length === 0 ? (
-    <p className="rounded-md border border-dashed py-10 text-center text-sm text-muted-foreground">Nothing here yet.</p>
+    <EmptyState variant="applications" title="Nothing here yet" description="Applications you submit will appear here so you can track every stage." />
   ) : list.map((a) => (
     <Card key={a.id}>
       <CardContent className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-4 sm:flex sm:flex-wrap sm:justify-between">
