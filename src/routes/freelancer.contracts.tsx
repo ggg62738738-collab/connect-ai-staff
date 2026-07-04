@@ -19,7 +19,7 @@ function ContractsPage() {
         {isLoading ? (
           <div className="grid place-items-center py-20"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
         ) : data.length === 0 ? (
-          <p className="rounded-md border border-dashed py-10 text-center text-sm text-muted-foreground">No contracts yet.</p>
+          <EmptyState variant="contracts" title="No contracts yet" description="Your active and past engagements will live here once you're hired." />
         ) : data.map((c) => (
           <Card key={c.id}>
             <CardContent className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between">
