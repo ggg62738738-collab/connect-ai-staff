@@ -28,45 +28,42 @@ function claimFullName(claims: Record<string, unknown>) {
   return email ? email.split("@")[0] : null;
 }
 
-async function ensureCurrentUserRows(userId: string, claims: Record<string, unknown>) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+async function ensureCurrentUserRows(
+  supabase: any,
+  userId: string,
+  claims: Record<string, unknown>,
+) {
   const email = claimEmail(claims);
   const fullName = claimFullName(claims);
 
-  await supabaseAdmin.from("profiles").upsert(
-    { id: userId, email: email ?? "", full_name: fullName },
-    { onConflict: "id", ignoreDuplicates: false },
-  );
+  // The `handle_new_user` DB trigger creates profile/user_roles/freelancer_profiles
+  // rows on signup. These upserts are best-effort backfills that run as the
+  // signed-in user under RLS.
+  await supabase
+    .from("profiles")
+    .upsert({ id: userId, email: email ?? "", full_name: fullName }, { onConflict: "id" });
 
-  const { data: existingRoles, error: rolesError } = await supabaseAdmin
+  const { data: existingRoles, error: rolesError } = await supabase
     .from("user_roles")
     .select("role")
     .eq("user_id", userId);
   if (rolesError) throw new Error(rolesError.message);
 
-  let roles = ((existingRoles ?? []).map((r) => r.role).filter(Boolean) as PortalRole[]);
-  if (!roles.length) {
-    const role = safeDefaultRole(claims);
-    const { error } = await supabaseAdmin.from("user_roles").insert({ user_id: userId, role });
-    if (error) throw new Error(error.message);
-    roles = [role];
-  }
-
+  const roles = ((existingRoles ?? []).map((r: any) => r.role).filter(Boolean) as PortalRole[]);
   if (roles.includes("freelancer")) {
-    await supabaseAdmin
+    await supabase
       .from("freelancer_profiles")
       .upsert({ user_id: userId, status: "pending" }, { onConflict: "user_id", ignoreDuplicates: true });
   }
-
-  return { supabaseAdmin, roles };
+  return { roles: roles.length ? roles : [safeDefaultRole(claims)] };
 }
 
 export const getMe = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<SessionInfo> => {
-    const { userId, claims } = context;
-    const { supabaseAdmin, roles } = await ensureCurrentUserRows(userId, claims as Record<string, unknown>);
-    const { data: profile, error: profileError } = await supabaseAdmin
+    const { userId, claims, supabase } = context;
+    const { roles } = await ensureCurrentUserRows(supabase, userId, claims as Record<string, unknown>);
+    const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("full_name, avatar_url, headline")
       .eq("id", userId)
