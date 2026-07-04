@@ -1,134 +1,35 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { PageHeader } from "@/components/admin/page-header";
-import { getMyFreelancerProfile, updateMyFreelancerProfile, type FreelancerProfile } from "@/lib/freelancer.functions";
+import { getMyFreelancerProfile } from "@/lib/freelancer.functions";
 import { getMyOnboarding } from "@/lib/onboarding.functions";
-import { toast } from "sonner";
-import { Loader2, X, Star, ExternalLink, Mail, MapPin, Briefcase, GraduationCap, Award, FolderKanban, ShieldCheck, Pencil } from "lucide-react";
+import { useSignedFileUrl } from "@/lib/use-signed-url";
+import { Loader2, Star, ExternalLink, Mail, MapPin, Briefcase, GraduationCap, Award, FolderKanban, ShieldCheck, Pencil } from "lucide-react";
 
 export const Route = createFileRoute("/freelancer/profile")({ component: ProfilePage });
 
 
 function ProfilePage() {
-  const qc = useQueryClient();
   const { data, isLoading } = useQuery({ queryKey: ["fl", "profile"], queryFn: () => getMyFreelancerProfile() });
   const { data: onb } = useQuery({ queryKey: ["fl", "onboarding"], queryFn: () => getMyOnboarding() });
-  const [form, setForm] = useState<FreelancerProfile | null>(null);
-  const [skillDraft, setSkillDraft] = useState("");
 
-
-  useEffect(() => { if (data) setForm(data); }, [data]);
-
-  const save = useMutation({
-    mutationFn: () => updateMyFreelancerProfile({ data: form! }),
-    onSuccess: () => {
-      toast.success("Profile saved");
-      qc.invalidateQueries({ queryKey: ["fl", "profile"] });
-      qc.invalidateQueries({ queryKey: ["session", "me"] });
-    },
-    onError: (e: any) => toast.error(e?.message ?? "Failed"),
-  });
-
-  if (isLoading || !form) {
+  if (isLoading || !data) {
     return (
       <div className="grid min-h-[60vh] place-items-center"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
     );
   }
 
-  const set = (k: keyof FreelancerProfile) => (v: string | number | string[]) =>
-    setForm((f) => (f ? { ...f, [k]: v } : f));
-
   return (
     <>
       <PageHeader title="Profile" subtitle="Keep your details current — this is what clients see." />
-      <div className="grid gap-6 p-6 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
-          <CardHeader><CardTitle className="text-base">Public profile</CardTitle></CardHeader>
-          <CardContent className="space-y-4">
-            <Field label="Full name">
-              <Input value={form.fullName} onChange={(e) => set("fullName")(e.target.value)} />
-            </Field>
-            <Field label="Headline">
-              <Input placeholder="Senior React Engineer · Open to contract"
-                value={form.headline} onChange={(e) => set("headline")(e.target.value)} />
-            </Field>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Title">
-                <Input value={form.title} onChange={(e) => set("title")(e.target.value)} />
-              </Field>
-              <Field label="Location">
-                <Input value={form.location} onChange={(e) => set("location")(e.target.value)} />
-              </Field>
-              <Field label="Hourly rate (₹)">
-                <Input type="number" min={0} value={form.rate} onChange={(e) => set("rate")(Number(e.target.value))} />
-              </Field>
-              <Field label="Availability">
-                <Input placeholder="e.g. 30 hrs/wk" value={form.availability} onChange={(e) => set("availability")(e.target.value)} />
-              </Field>
-            </div>
-            <Field label="Bio">
-              <Textarea rows={5} value={form.bio} onChange={(e) => set("bio")(e.target.value)} />
-            </Field>
-            <Field label="Skills">
-              <div className="flex flex-wrap items-center gap-2 rounded-md border bg-background p-2">
-                {form.skills.map((s) => (
-                  <Badge key={s} variant="secondary" className="gap-1">
-                    {s}
-                    <button type="button" onClick={() => set("skills")(form.skills.filter((x) => x !== s))} aria-label={`Remove ${s}`}>
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                ))}
-                <input
-                  className="flex-1 min-w-[120px] bg-transparent text-sm outline-none"
-                  placeholder="Add skill and press Enter"
-                  value={skillDraft}
-                  onChange={(e) => setSkillDraft(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && skillDraft.trim()) {
-                      e.preventDefault();
-                      const v = skillDraft.trim();
-                      if (!form.skills.includes(v)) set("skills")([...form.skills, v]);
-                      setSkillDraft("");
-                    }
-                  }}
-                />
-              </div>
-            </Field>
-            <div className="flex justify-end">
-              <Button onClick={() => save.mutate()} disabled={save.isPending}>
-                {save.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                Save changes
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="h-fit">
-          <CardHeader><CardTitle className="text-base">Status</CardTitle></CardHeader>
-          <CardContent className="space-y-3 text-sm">
-            <Row label="Account">
-              <Badge variant={form.status === "active" ? "default" : "outline"} className="capitalize">{form.status}</Badge>
-            </Row>
-            <Row label="Rating"><span className="font-medium">{form.rating?.toFixed(1) ?? "—"}</span></Row>
-            <Row label="Skills"><span>{form.skills.length}</span></Row>
-            <p className="text-xs text-muted-foreground">
-              New accounts start in <em>pending</em> vetting. A recruiter will review your profile.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-      <OnboardingView onb={onb} name={form.fullName} />
+      <OnboardingView onb={onb} name={data.fullName} />
     </>
   );
 }
+
 
 function OnboardingView({ onb, name }: { onb: any; name: string }) {
   const d: any = onb?.data ?? {};
@@ -136,6 +37,7 @@ function OnboardingView({ onb, name }: { onb: any; name: string }) {
   const score = onb?.talentScore ?? 0;
   const has = (v: any) => Array.isArray(v) ? v.length > 0 : v !== undefined && v !== null && v !== "";
   const empty = !onb || Object.keys(d).length === 0;
+  const { url: heroPhoto } = useSignedFileUrl(d.photoUrl);
 
   if (empty) {
     return (
@@ -161,8 +63,8 @@ function OnboardingView({ onb, name }: { onb: any; name: string }) {
         <div className="h-24 bg-gradient-to-r from-violet/25 via-violet/10 to-cream" />
         <CardContent className="-mt-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex items-end gap-4">
-            {d.photoUrl ? (
-              <img src={d.photoUrl} alt={name} className="h-24 w-24 rounded-full border-4 border-background object-cover shadow" />
+            {heroPhoto ? (
+              <img src={heroPhoto} alt={name} className="h-24 w-24 rounded-full border-4 border-background object-cover shadow" />
             ) : (
               <div className="grid h-24 w-24 place-items-center rounded-full border-4 border-background bg-violet text-lg font-semibold text-white shadow">{name.split(" ").map(p=>p[0]).slice(0,2).join("").toUpperCase()}</div>
             )}

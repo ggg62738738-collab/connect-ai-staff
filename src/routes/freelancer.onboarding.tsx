@@ -484,15 +484,10 @@ function VerificationSection({ form, set }: { form: OnboardingData; set: SetFn }
         <Field label="Passport (optional)"><Input value={form.passport ?? ""} onChange={(e) => set("passport")(e.target.value)} /></Field>
         <FileUploadField label="Company ID" kind="company-id" accept="image/*,application/pdf"
           value={form.companyIdUrl} onChange={(v) => set("companyIdUrl")(v)} />
-        <FileUploadField label="Offer letter" kind="offer" accept="image/*,application/pdf"
-          value={form.offerLetterUrl} onChange={(v) => set("offerLetterUrl")(v)} />
         <FileUploadField label="Experience letter" kind="experience" accept="image/*,application/pdf"
           value={form.experienceLetterUrl} onChange={(v) => set("experienceLetterUrl")(v)} />
       </div>
-      <div className="flex flex-wrap gap-3 pt-2">
-        <div className="flex items-center gap-2"><Switch checked={!!form.mobileVerified} onCheckedChange={(v) => set("mobileVerified")(v)} /><span className="text-sm">Mobile verified</span></div>
-        <div className="flex items-center gap-2"><Switch checked={!!form.emailVerified} onCheckedChange={(v) => set("emailVerified")(v)} /><span className="text-sm">Email verified</span></div>
-      </div>
+
     </Section>
   );
 }
@@ -513,8 +508,8 @@ function AvailabilitySection({ form, set }: { form: OnboardingData; set: SetFn }
         </Field>
         <Field label="Hours per day"><Input type="number" min={0} max={24} value={form.hoursPerDay ?? ""} onChange={(e) => set("hoursPerDay")(Number(e.target.value))} /></Field>
         <Field label="Timezone"><Input value={form.timezone ?? "Asia/Kolkata"} onChange={(e) => set("timezone")(e.target.value)} /></Field>
-        <Field label="Internet speed"><Input value={form.internetSpeed ?? ""} onChange={(e) => set("internetSpeed")(e.target.value)} placeholder="e.g. 100 Mbps" /></Field>
       </div>
+
       <div className="flex flex-wrap gap-4">
         <Toggle label="Can travel" v={!!form.canTravel} on={(v) => set("canTravel")(v)} />
         <Toggle label="Can relocate" v={!!form.canRelocate} on={(v) => set("canRelocate")(v)} />

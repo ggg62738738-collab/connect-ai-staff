@@ -221,6 +221,75 @@ export type Database = {
           },
         ]
       }
+      email_log: {
+        Row: {
+          created_at: string
+          error: string | null
+          id: string
+          kind: string
+          status: string
+          subject: string
+          to_email: string
+        }
+        Insert: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind: string
+          status: string
+          subject: string
+          to_email: string
+        }
+        Update: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          status?: string
+          subject?: string
+          to_email?: string
+        }
+        Relationships: []
+      }
+      email_settings: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          from_email: string
+          from_name: string
+          id: string
+          smtp_host: string
+          smtp_password: string
+          smtp_port: number
+          smtp_user: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          from_email?: string
+          from_name?: string
+          id?: string
+          smtp_host?: string
+          smtp_password?: string
+          smtp_port?: number
+          smtp_user?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          from_email?: string
+          from_name?: string
+          id?: string
+          smtp_host?: string
+          smtp_password?: string
+          smtp_port?: number
+          smtp_user?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       freelancer_onboarding: {
         Row: {
           completion: number
@@ -507,7 +576,9 @@ export type Database = {
           full_name: string | null
           headline: string | null
           id: string
+          last_reminder_at: string | null
           phone: string | null
+          tour_seen_at: string | null
           updated_at: string
         }
         Insert: {
@@ -517,7 +588,9 @@ export type Database = {
           full_name?: string | null
           headline?: string | null
           id: string
+          last_reminder_at?: string | null
           phone?: string | null
+          tour_seen_at?: string | null
           updated_at?: string
         }
         Update: {
@@ -527,7 +600,9 @@ export type Database = {
           full_name?: string | null
           headline?: string | null
           id?: string
+          last_reminder_at?: string | null
           phone?: string | null
+          tour_seen_at?: string | null
           updated_at?: string
         }
         Relationships: []
