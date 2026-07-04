@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { createTalentUploadUrl, getTalentFileUrl } from "@/lib/uploads.functions";
+import { createTalentUploadUrl } from "@/lib/uploads.functions";
 import { Button } from "@/components/ui/button";
-import { Loader2, Upload, ExternalLink, X } from "lucide-react";
+import { Loader2, Upload, Eye, X } from "lucide-react";
 import { toast } from "sonner";
+import { FileViewerDialog } from "@/components/site/file-viewer-dialog";
 
 /**
- * Uploads a file to the private `talent-uploads` bucket via signed URL
+ * Uploads a file to a private bucket via signed URL
  * and stores the resulting storage path via `onChange`.
  */
 export function FileUploadField({
@@ -19,6 +20,7 @@ export function FileUploadField({
   accept?: string;
 }) {
   const [busy, setBusy] = useState(false);
+  const [viewOpen, setViewOpen] = useState(false);
 
   const upload = async (file: File) => {
     setBusy(true);
@@ -34,16 +36,6 @@ export function FileUploadField({
       toast.error(e?.message ?? "Upload failed");
     } finally {
       setBusy(false);
-    }
-  };
-
-  const preview = async () => {
-    if (!value) return;
-    try {
-      const { url } = await getTalentFileUrl({ data: { path: value } });
-      window.open(url, "_blank", "noopener");
-    } catch (e: any) {
-      toast.error(e?.message ?? "Could not open");
     }
   };
 
@@ -64,8 +56,8 @@ export function FileUploadField({
         </label>
         {value ? (
           <>
-            <Button variant="ghost" size="sm" onClick={preview}>
-              <ExternalLink className="mr-1 h-3.5 w-3.5" /> View
+            <Button variant="ghost" size="sm" onClick={() => setViewOpen(true)}>
+              <Eye className="mr-1 h-3.5 w-3.5" /> View
             </Button>
             <Button variant="ghost" size="sm" onClick={() => onChange(undefined)}>
               <X className="mr-1 h-3.5 w-3.5" /> Remove
@@ -76,6 +68,7 @@ export function FileUploadField({
           <span className="text-xs text-muted-foreground">No file yet</span>
         )}
       </div>
+      <FileViewerDialog path={value ?? null} open={viewOpen} onOpenChange={setViewOpen} title={label} />
     </div>
   );
 }
