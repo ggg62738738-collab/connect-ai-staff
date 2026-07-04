@@ -126,9 +126,9 @@ function FreelancerShell({ name, initials, email, avatar, qc, navigate }: { name
                 </PopoverContent>
               </Popover>
               {photo ? (
-                <img src={photo} alt={name} className="h-8 w-8 rounded-full object-cover border" />
+                <img src={photo} alt={name} data-tour="topbar-avatar" className="h-8 w-8 rounded-full object-cover border" />
               ) : (
-                <div className="grid h-8 w-8 place-items-center rounded-full bg-violet text-xs font-semibold text-white">{initials}</div>
+                <div data-tour="topbar-avatar" className="grid h-8 w-8 place-items-center rounded-full bg-violet text-xs font-semibold text-white">{initials}</div>
               )}
 
               <Button variant="ghost" size="icon" aria-label="Sign out"
