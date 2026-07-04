@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/admin/page-header";
+import { EmptyState } from "@/components/freelancer/empty-state";
 import { listMyPayouts, getFreelancerMetrics } from "@/lib/freelancer.functions";
 import { fmtMoney } from "@/lib/admin-data";
 import { Loader2, Wallet, Clock, CheckCircle2, XCircle, TrendingUp, Download, Search, Receipt } from "lucide-react";
