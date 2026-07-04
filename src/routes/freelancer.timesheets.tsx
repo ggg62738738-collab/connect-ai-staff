@@ -70,9 +70,7 @@ function TimesheetsPage() {
       />
       <div className="p-4 sm:p-6">
         {!contracts.length ? (
-          <Card><CardContent className="py-10 text-center text-sm text-muted-foreground">
-            You have no active contracts. Timesheets unlock once a contract is active.
-          </CardContent></Card>
+          <EmptyState variant="timesheets" title="No active contracts yet" description="Timesheets unlock the moment your first contract goes live." />
         ) : (
           <Tabs defaultValue="pending">
             <TabsList className="flex-wrap">
