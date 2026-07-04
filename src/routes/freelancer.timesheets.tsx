@@ -83,7 +83,7 @@ function TimesheetsPage() {
                 {isLoading ? (
                   <div className="grid place-items-center py-10"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
                 ) : groups[k].length === 0 ? (
-                  <p className="rounded-md border border-dashed py-8 text-center text-sm text-muted-foreground">Nothing here.</p>
+                  <EmptyState variant="timesheets" title="Nothing here" description={k === "pending" ? "Submit hours for your active week to see them here." : `No ${k} timesheets yet.`} />
                 ) : groups[k].map((t) => (
                   <Card key={t.id}>
                     <CardContent className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-4 sm:flex sm:flex-wrap sm:justify-between">
