@@ -10,6 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMyOnboarding } from "@/lib/onboarding.functions";
 import { listMyNotifications, markAllNotificationsRead } from "@/lib/notifications.functions";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useSignedFileUrl } from "@/lib/use-signed-url";
 
 
 export const Route = createFileRoute("/freelancer")({
@@ -72,7 +73,8 @@ function FreelancerLayout() {
 
 function FreelancerShell({ name, initials, email, avatar, qc, navigate }: { name: string; initials: string; email: string; avatar: string | null; qc: ReturnType<typeof useQueryClient>; navigate: ReturnType<typeof useNavigate> }) {
   const { data: onb } = useQuery({ queryKey: ["fl", "onboarding"], queryFn: () => getMyOnboarding() });
-  const photo = avatar ?? onb?.data?.photoUrl ?? null;
+  const rawPhoto = avatar ?? onb?.data?.photoUrl ?? null;
+  const { url: photo } = useSignedFileUrl(rawPhoto);
 
   const { data: notifs = [], refetch } = useQuery({
     queryKey: ["fl", "notifications"],
