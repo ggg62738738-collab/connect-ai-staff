@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/sidebar";
 
 const nav = [
-  { title: "Overview",     url: "/freelancer",              icon: LayoutDashboard, exact: true },
-  { title: "Onboarding",   url: "/freelancer/onboarding",   icon: ListChecks },
-  { title: "Find work",    url: "/freelancer/jobs",         icon: Briefcase },
-  { title: "Applications", url: "/freelancer/applications", icon: ClipboardList },
-  { title: "Contracts",    url: "/freelancer/contracts",    icon: FileText },
-  { title: "Timesheets",   url: "/freelancer/timesheets",   icon: Clock },
-  { title: "Earnings",     url: "/freelancer/earnings",     icon: Receipt },
-  { title: "Profile",      url: "/freelancer/profile",      icon: UserRound },
+  { title: "Overview",     url: "/freelancer",              icon: LayoutDashboard, exact: true, tour: "overview" },
+  { title: "Onboarding",   url: "/freelancer/onboarding",   icon: ListChecks,      tour: "onboarding" },
+  { title: "Find work",    url: "/freelancer/jobs",         icon: Briefcase,       tour: "jobs" },
+  { title: "Applications", url: "/freelancer/applications", icon: ClipboardList,   tour: "applications" },
+  { title: "Contracts",    url: "/freelancer/contracts",    icon: FileText,        tour: "contracts" },
+  { title: "Timesheets",   url: "/freelancer/timesheets",   icon: Clock,           tour: "timesheets" },
+  { title: "Earnings",     url: "/freelancer/earnings",     icon: Receipt,         tour: "earnings" },
+  { title: "Profile",      url: "/freelancer/profile",      icon: UserRound,       tour: "profile" },
 ];
 
 export function FreelancerSidebar({ user }: { user?: { name: string; email: string; initials: string } }) {
