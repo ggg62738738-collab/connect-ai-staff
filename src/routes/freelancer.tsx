@@ -138,6 +138,7 @@ function FreelancerShell({ name, initials, email, avatar, qc, navigate }: { name
             </div>
           </header>
           <main className="flex-1"><Outlet /></main>
+          <FreelancerTour />
         </SidebarInset>
       </div>
     </SidebarProvider>
