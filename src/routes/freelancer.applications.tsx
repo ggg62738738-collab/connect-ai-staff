@@ -43,7 +43,7 @@ function AppsPage() {
   }), [data]);
 
   const renderList = (list: typeof data) => list.length === 0 ? (
-    <p className="rounded-md border border-dashed py-10 text-center text-sm text-muted-foreground">Nothing here yet.</p>
+    <EmptyState variant="applications" title="Nothing here yet" description="Applications you submit will appear here so you can track every stage." />
   ) : list.map((a) => (
     <Card key={a.id}>
       <CardContent className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-4 sm:flex sm:flex-wrap sm:justify-between">
