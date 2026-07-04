@@ -117,10 +117,8 @@ function EarningsPage() {
             {isLoading ? (
               <div className="grid place-items-center py-16"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
             ) : rows.length === 0 ? (
-              <div className="flex flex-col items-center gap-2 py-16 text-center">
-                <div className="grid h-12 w-12 place-items-center rounded-full bg-violet/10 text-violet"><Receipt className="h-5 w-5" /></div>
-                <p className="text-sm font-medium">No payouts yet</p>
-                <p className="max-w-xs text-xs text-muted-foreground">Once your first contract wraps up, invoices and payouts show up here.</p>
+              <div className="p-6">
+                <EmptyState variant="earnings" title="No payouts yet" description="Once your first contract wraps up, invoices and payouts show up here." />
               </div>
             ) : (
               <ul className="divide-y">
