@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/admin/page-header";
+import { EmptyState } from "@/components/freelancer/empty-state";
 import { listMyApplications, withdrawApplication } from "@/lib/freelancer.functions";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
