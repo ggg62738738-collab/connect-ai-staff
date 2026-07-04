@@ -37,6 +37,7 @@ function OnboardingView({ onb, name }: { onb: any; name: string }) {
   const score = onb?.talentScore ?? 0;
   const has = (v: any) => Array.isArray(v) ? v.length > 0 : v !== undefined && v !== null && v !== "";
   const empty = !onb || Object.keys(d).length === 0;
+  const { url: heroPhoto } = useSignedFileUrl(d.photoUrl);
 
   if (empty) {
     return (
@@ -62,8 +63,8 @@ function OnboardingView({ onb, name }: { onb: any; name: string }) {
         <div className="h-24 bg-gradient-to-r from-violet/25 via-violet/10 to-cream" />
         <CardContent className="-mt-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex items-end gap-4">
-            {d.photoUrl ? (
-              <img src={d.photoUrl} alt={name} className="h-24 w-24 rounded-full border-4 border-background object-cover shadow" />
+            {heroPhoto ? (
+              <img src={heroPhoto} alt={name} className="h-24 w-24 rounded-full border-4 border-background object-cover shadow" />
             ) : (
               <div className="grid h-24 w-24 place-items-center rounded-full border-4 border-background bg-violet text-lg font-semibold text-white shadow">{name.split(" ").map(p=>p[0]).slice(0,2).join("").toUpperCase()}</div>
             )}
