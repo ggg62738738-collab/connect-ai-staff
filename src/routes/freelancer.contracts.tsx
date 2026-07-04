@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/admin/page-header";
+import { EmptyState } from "@/components/freelancer/empty-state";
 import { listMyContracts } from "@/lib/freelancer.functions";
 import { fmtMoney } from "@/lib/admin-data";
 import { Loader2 } from "lucide-react";
