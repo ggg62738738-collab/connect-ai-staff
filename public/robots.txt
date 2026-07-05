@@ -1,8 +1,11 @@
 User-agent: *
 Allow: /
 Disallow: /admin
+Disallow: /admin/
 Disallow: /freelancer
+Disallow: /freelancer/
 Disallow: /login
 Disallow: /register
 
 Sitemap: https://workvia.upcurv.in/sitemap.xml
+
