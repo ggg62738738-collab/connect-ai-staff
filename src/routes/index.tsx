@@ -133,15 +133,15 @@ function Hero() {
               ))}
             </div>
             <div>
-              <p className="text-xs font-semibold text-foreground">100+ talents</p>
-              <p className="text-[10px] text-muted-foreground">already earning on Workvia</p>
+              <p className="text-xs font-semibold text-foreground">Verified Talent Network</p>
+              <p className="text-[10px] text-muted-foreground">Students • Professionals • Freelancers</p>
             </div>
           </FloatingCard>
           <FloatingCard className="bottom-10 left-2 hidden md:flex">
             <Wallet className="h-5 w-5 text-accent" />
             <div>
-              <p className="text-xs font-semibold text-foreground">Paid on time</p>
-              <p className="text-[10px] text-muted-foreground">weekly milestone payouts</p>
+              <p className="text-xs font-semibold text-foreground">Verified Company</p>
+              <p className="text-[10px] text-muted-foreground">Opportunities</p>
             </div>
           </FloatingCard>
         </div>
@@ -163,12 +163,12 @@ function FloatingCard({ className = "", children }: { className?: string; childr
 
 function TalentValueProps() {
   const perks = [
-    { icon: Briefcase, title: "Real projects, real pay", desc: "Freelance, part-time and internship gigs from vetted Indian and global companies." },
-    { icon: GraduationCap, title: "Built for students & freshers", desc: "No experience? No problem. Showcase skills, get assessed, and land your first project." },
-    { icon: Wallet, title: "On-time payouts", desc: "Milestone and weekly payouts in INR — no chasing invoices, no ghosting clients." },
-    { icon: BadgeCheck, title: "Portable profile", desc: "Verified badges, ratings, and a shareable portfolio that grows with every gig." },
-    { icon: Clock, title: "Work your way", desc: "Remote, hybrid, or onsite. Set your rate, your hours, your stack." },
-    { icon: Rocket, title: "Level up", desc: "Free skill assessments, mock interviews, and curated learning paths." },
+    { icon: Briefcase, title: "Verified Company Opportunities", desc: "Opportunities from trusted startups, enterprises, and growing businesses." },
+    { icon: GraduationCap, title: "For Students & Professionals", desc: "Whether you're starting your career or bringing years of experience, Workvia helps you get discovered." },
+    { icon: Wallet, title: "Managed Hiring Process", desc: "We coordinate screening, communication, onboarding, and deployment." },
+    { icon: BadgeCheck, title: "Professional Talent Profile", desc: "Showcase your skills, certifications, projects, and experience in one verified profile." },
+    { icon: Clock, title: "Flexible Opportunities", desc: "Contract, internship, project-based, remote, hybrid, or onsite opportunities." },
+    { icon: Rocket, title: "Career Growth", desc: "Gain industry experience, strengthen your profile, and unlock future opportunities." },
   ];
   return (
     <section style={{ background: "var(--section-cream)" }}>
@@ -176,7 +176,7 @@ function TalentValueProps() {
         <div className="max-w-2xl">
           <span className="text-xs font-semibold uppercase tracking-widest text-accent">Why talents pick Workvia</span>
           <h2 className="mt-3 font-display text-4xl tracking-tight text-foreground md:text-5xl">
-            Everything you need to freelance seriously.
+            Everything You Need To Get Hired
           </h2>
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -197,9 +197,9 @@ function TalentValueProps() {
 
 function HowItWorks() {
   const steps = [
-    { title: "Create your talent profile", desc: "Sign up, upload your resume, and let our AI structure your skills and experience." },
-    { title: "Get matched with projects", desc: "Receive curated freelance, part-time or internship briefs that fit your skills and availability." },
-    { title: "Ship & get paid", desc: "Track work with timesheets and milestones. Get paid weekly, straight to your bank." },
+    { title: "Create your talent profile", desc: "Create your professional profile with your resume, skills, experience, certifications, and availability." },
+    { title: "Get Verified & Shortlisted", desc: "Our recruiters review your profile and match you with suitable company requirements." },
+    { title: "Start Your Contract", desc: "Once selected, begin working with the company while Workvia manages the hiring journey." },
   ];
   return (
     <section className="bg-background">
@@ -207,7 +207,7 @@ function HowItWorks() {
         <div className="text-center">
           <span className="text-xs font-semibold uppercase tracking-widest text-accent">How Workvia works</span>
           <h2 className="mt-3 font-display text-4xl tracking-tight text-foreground md:text-5xl">
-            From profile to paycheck in three steps
+            How Workvia Connects You With Companies
           </h2>
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -239,7 +239,7 @@ function PopularRoles() {
         <div className="text-center">
           <span className="text-xs font-semibold uppercase tracking-widest text-accent">Popular categories</span>
           <h2 className="mt-3 font-display text-4xl tracking-tight text-foreground md:text-5xl">
-            Freelance opportunities in high demand
+            Talent Categories Companies Hire Most
           </h2>
         </div>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -270,7 +270,7 @@ function Testimonial() {
         <p className="mx-auto mt-4 max-w-2xl font-display text-2xl leading-snug text-foreground md:text-3xl">
           "I landed my first paid project in my second semester. Workvia handled the client trust and payments — I just shipped."
         </p>
-        <p className="mt-4 text-sm text-muted-foreground">— Ugasri R, Frontend Developer & Student</p>
+        <p className="mt-4 text-sm text-muted-foreground">— Rajesh R, Frontend Developer</p>
       </div>
     </section>
   );
