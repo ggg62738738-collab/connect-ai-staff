@@ -4,11 +4,14 @@ import { PageShell, PageHero } from "@/components/site/page-shell";
 export const Route = createFileRoute("/how-it-works")({
   head: () => ({
     meta: [
-      { title: "How it Works — Workvia" },
-      { name: "description", content: "From requirement to invoice in one place. See how Workvia helps you hire and ship faster." },
-      { property: "og:title", content: "How it Works — Workvia" },
-      { property: "og:description", content: "From requirement to invoice in one place." },
+      { title: "How Workvia works — Freelance & remote hiring, simplified" },
+      { name: "description", content: "See how Workvia matches Indian freelancers with real projects — from profile creation and vetting to contracts, timesheets and payouts." },
+      { property: "og:title", content: "How Workvia works" },
+      { property: "og:description", content: "Freelance matching, contracts, timesheets and payouts — all in one place." },
+      { property: "og:url", content: "https://workvia.upcurv.in/how-it-works" },
+      { property: "og:type", content: "website" },
     ],
+    links: [{ rel: "canonical", href: "https://workvia.upcurv.in/how-it-works" }],
   }),
   component: HowItWorks,
 });

@@ -5,11 +5,14 @@ import { Check } from "lucide-react";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — Workvia" },
-      { name: "description", content: "Simple, transparent pricing. Pay only for the talent you use." },
-      { property: "og:title", content: "Pricing — Workvia" },
-      { property: "og:description", content: "Simple, transparent pricing. Pay only for the talent you use." },
+      { title: "Workvia Pricing — Free for talent, simple for companies" },
+      { name: "description", content: "Workvia is free for freelancers, students and professionals to join. Companies pay only for successful hires and managed engagements." },
+      { property: "og:title", content: "Workvia Pricing" },
+      { property: "og:description", content: "Free for talent. Simple, transparent pricing for companies." },
+      { property: "og:url", content: "https://workvia.upcurv.in/pricing" },
+      { property: "og:type", content: "website" },
     ],
+    links: [{ rel: "canonical", href: "https://workvia.upcurv.in/pricing" }],
   }),
   component: Pricing,
 });

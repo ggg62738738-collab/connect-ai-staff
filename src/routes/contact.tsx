@@ -5,11 +5,14 @@ import { Mail, Phone, MapPin } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Workvia" },
-      { name: "description", content: "Get in touch with our team. We respond within one business day." },
-      { property: "og:title", content: "Contact — Workvia" },
-      { property: "og:description", content: "Get in touch with our team." },
+      { title: "Contact Workvia — Coimbatore, India" },
+      { name: "description", content: "Talk to the Workvia team. Email upcurvinnovations@gmail.com or call +91 63807 15292. Based in Coimbatore, Tamil Nadu." },
+      { property: "og:title", content: "Contact Workvia" },
+      { property: "og:description", content: "Get in touch with the Workvia team. We reply within one business day." },
+      { property: "og:url", content: "https://workvia.upcurv.in/contact" },
+      { property: "og:type", content: "website" },
     ],
+    links: [{ rel: "canonical", href: "https://workvia.upcurv.in/contact" }],
   }),
   component: Contact,
 });

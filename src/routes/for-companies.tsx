@@ -7,11 +7,15 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/for-companies")({
   head: () => ({
     meta: [
-      { title: "For Companies — Workvia" },
-      { name: "description", content: "Hire vetted talent on demand. Managed projects, transparent payments, AI-powered matching." },
-      { property: "og:title", content: "For Companies — Workvia" },
-      { property: "og:description", content: "Hire vetted talent on demand with AI-powered matching." },
+      { title: "Hire vetted freelancers in India — Workvia for Companies" },
+      { name: "description", content: "Hire vetted Indian freelancers, students and professionals on demand. AI-matched shortlists in 48 hours. Contracts, timesheets and payouts in one place." },
+      { name: "keywords", content: "hire freelancers India, freelance recruitment, remote hiring India, staff augmentation, workvia for companies" },
+      { property: "og:title", content: "Hire vetted freelancers in India — Workvia" },
+      { property: "og:description", content: "AI-matched Indian talent in 48 hours. Managed contracts, timesheets and payouts." },
+      { property: "og:url", content: "https://workvia.upcurv.in/for-companies" },
+      { property: "og:type", content: "website" },
     ],
+    links: [{ rel: "canonical", href: "https://workvia.upcurv.in/for-companies" }],
   }),
   component: ForCompanies,
 });
