@@ -268,9 +268,9 @@ function Testimonial() {
           {[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-4 w-4 fill-current" />)}
         </div>
         <p className="mx-auto mt-4 max-w-2xl font-display text-2xl leading-snug text-foreground md:text-3xl">
-          "I landed my first paid project in my second semester. Workvia handled the client trust and payments — I just shipped."
+          "Great careers aren't built by sending hundreds of applications. They're built by being discovered for the right opportunity."
         </p>
-        <p className="mt-4 text-sm text-muted-foreground">— Rajesh R, Frontend Developer</p>
+        <p className="mt-4 text-sm text-muted-foreground">— Team Workvia</p>
       </div>
     </section>
   );
