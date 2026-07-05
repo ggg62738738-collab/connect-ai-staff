@@ -94,27 +94,27 @@ function Hero() {
             Get hired by growing companies through Workvia
           </h1>
           <p className="mt-5 max-w-md text-base text-muted-foreground md:text-lg">
-            Workvia connects Indian talent with real, vetted projects — freelance, part-time, and internships.
-            Build your profile, get matched, and get paid on time.
+            Workvia connects skilled professionals, freelancers, students, and fresh graduates with verified companies hiring contract, internship, and project-based talent.
+            Create your profile, get verified, and let our team match you with the right opportunities.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               to="/register"
               className="group inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.02]"
             >
-              Join as talent — free
+              Join Talent Network
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
               to="/for-freelancers"
               className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-5 py-3 text-sm font-medium text-foreground hover:bg-secondary"
             >
-              How it works
+              How Workvia Works
             </Link>
           </div>
           <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
-            <span className="inline-flex items-center gap-1"><BadgeCheck className="h-3.5 w-3.5 text-accent" /> Free to join</span>
-            <span className="inline-flex items-center gap-1"><ShieldCheck className="h-3.5 w-3.5 text-accent" /> Vetted clients</span>
+            <span className="inline-flex items-center gap-1"><BadgeCheck className="h-3.5 w-3.5 text-accent" /> Verified talent network</span>
+            <span className="inline-flex items-center gap-1"><ShieldCheck className="h-3.5 w-3.5 text-accent" /> Company-matched opportunities</span>
             <span className="inline-flex items-center gap-1"><Wallet className="h-3.5 w-3.5 text-accent" /> On-time payouts</span>
           </div>
         </div>
