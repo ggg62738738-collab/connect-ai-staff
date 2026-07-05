@@ -307,10 +307,10 @@ function CTASection() {
       <div className="mx-auto max-w-5xl px-6 py-20">
         <div className="overflow-hidden rounded-3xl bg-foreground px-8 py-14 text-center text-background md:px-16">
           <h2 className="font-display text-4xl tracking-tight md:text-5xl">
-            Your first freelance gig is one profile away.
+            Your next opportunity starts with one profile.
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm text-background/70 md:text-base">
-            Join hundreds of Indian students, freshers and professionals earning through Workvia.
+            Join Workvia's verified talent network and get matched with contract, internship, and project-based opportunities from growing companies.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             <Link to="/register" className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-medium text-accent-foreground hover:opacity-95">
