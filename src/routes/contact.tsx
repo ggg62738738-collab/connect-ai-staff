@@ -39,9 +39,9 @@ function Contact() {
           </button>
         </form>
         <div className="md:col-span-2 space-y-4">
-          <InfoCard icon={Mail} title="Email" value="hello@workvia.com" />
-          <InfoCard icon={Phone} title="Phone" value="+91 80 4567 8901" />
-          <InfoCard icon={MapPin} title="Office" value="Bengaluru · Remote-first" />
+          <InfoCard icon={Mail} title="Email" value="upcurvinnovations@gmail.com" />
+          <InfoCard icon={Phone} title="Phone" value="+91 63807 15292" />
+          <InfoCard icon={MapPin} title="Office" value="Coimbatore, Tamil Nadu" />
         </div>
       </section>
     </PageShell>

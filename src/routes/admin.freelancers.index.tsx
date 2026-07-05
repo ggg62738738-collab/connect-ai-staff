@@ -15,7 +15,7 @@ import {
 import { adminApi, initials } from "@/lib/admin-data";
 import { PageHeader } from "@/components/admin/page-header";
 
-export const Route = createFileRoute("/admin/freelancers")({
+export const Route = createFileRoute("/admin/freelancers/")({
   component: FreelancersPage,
 });
 
