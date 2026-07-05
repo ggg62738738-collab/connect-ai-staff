@@ -5,11 +5,15 @@ import { ArrowRight, Briefcase, Clock, BadgeCheck, Wallet, Star, GraduationCap }
 export const Route = createFileRoute("/for-freelancers")({
   head: () => ({
     meta: [
-      { title: "For Freelancers — Workvia" },
-      { name: "description", content: "Get matched with great companies, ship work you love, and get paid on time. Join the Workvia network." },
-      { property: "og:title", content: "For Freelancers — Workvia" },
-      { property: "og:description", content: "Find great clients, ship great work, get paid on time." },
+      { title: "Freelance jobs for students & professionals in India | Workvia" },
+      { name: "description", content: "Find freelance, part-time and internship projects on Workvia. Free to join for Indian students, freshers and professionals. Verified clients, on-time payouts." },
+      { name: "keywords", content: "freelance jobs India, freelance for students, part-time work online, internship for freshers, remote work India, workvia" },
+      { property: "og:title", content: "Freelance jobs for students & professionals — Workvia" },
+      { property: "og:description", content: "India's freelance network for talent. Real projects, verified clients, on-time payouts." },
+      { property: "og:url", content: "https://workvia.upcurv.in/for-freelancers" },
+      { property: "og:type", content: "website" },
     ],
+    links: [{ rel: "canonical", href: "https://workvia.upcurv.in/for-freelancers" }],
   }),
   component: ForFreelancers,
 });

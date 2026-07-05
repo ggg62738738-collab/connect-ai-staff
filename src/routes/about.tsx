@@ -4,11 +4,14 @@ import { PageShell, PageHero } from "@/components/site/page-shell";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Workvia" },
-      { name: "description", content: "We're building the talent operating system for modern teams." },
-      { property: "og:title", content: "About — Workvia" },
-      { property: "og:description", content: "We're building the talent operating system for modern teams." },
+      { title: "About Workvia — India's freelance & talent network" },
+      { name: "description", content: "Workvia is an Upcurv product building India's freelance operating system for students, freshers and professionals. Learn our story and mission." },
+      { property: "og:title", content: "About Workvia — India's freelance & talent network" },
+      { property: "og:description", content: "Building India's freelance operating system for students and professionals." },
+      { property: "og:url", content: "https://workvia.upcurv.in/about" },
+      { property: "og:type", content: "website" },
     ],
+    links: [{ rel: "canonical", href: "https://workvia.upcurv.in/about" }],
   }),
   component: About,
 });

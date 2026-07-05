@@ -5,11 +5,14 @@ import { Code2, Cpu, ShoppingBag, Banknote, HeartPulse, Rocket, Building2, Tv } 
 export const Route = createFileRoute("/industries")({
   head: () => ({
     meta: [
-      { title: "Industries We Serve — Workvia" },
-      { name: "description", content: "From SaaS to fintech, healthcare to retail — Workvia powers teams across industries." },
-      { property: "og:title", content: "Industries We Serve — Workvia" },
-      { property: "og:description", content: "Talent for SaaS, fintech, healthcare, retail and more." },
+      { title: "Industries we serve — SaaS, Fintech, AI, Healthcare & more | Workvia" },
+      { name: "description", content: "Workvia freelancers ship for SaaS, fintech, AI, healthcare, e-commerce and enterprise teams across India and beyond." },
+      { property: "og:title", content: "Industries served by Workvia freelancers" },
+      { property: "og:description", content: "Freelance and remote talent for SaaS, fintech, AI, healthcare and more." },
+      { property: "og:url", content: "https://workvia.upcurv.in/industries" },
+      { property: "og:type", content: "website" },
     ],
+    links: [{ rel: "canonical", href: "https://workvia.upcurv.in/industries" }],
   }),
   component: Industries,
 });

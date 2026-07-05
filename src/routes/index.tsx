@@ -2,15 +2,67 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { PageShell } from "@/components/site/page-shell";
 import heroImage from "@/assets/hero-talent.jpg";
-import { ArrowRight, Sparkles, Users, BadgeCheck, Briefcase, LineChart, ShieldCheck } from "lucide-react";
+import {
+  ArrowRight,
+  Sparkles,
+  Wallet,
+  BadgeCheck,
+  Briefcase,
+  GraduationCap,
+  Rocket,
+  ShieldCheck,
+  Star,
+  Clock,
+} from "lucide-react";
+
+const SITE_URL = "https://workvia.upcurv.in";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Workvia — Connecting great companies with great talent" },
-      { name: "description", content: "AI-powered talent network. On-demand, vetted professionals and managed projects — all in one place." },
-      { property: "og:title", content: "Workvia — AI-powered talent network" },
-      { property: "og:description", content: "Hire vetted talent on demand. Managed projects, transparent payments, all in one place." },
+      { title: "Workvia — Freelance jobs, internships & remote work for students and professionals in India" },
+      {
+        name: "description",
+        content:
+          "Workvia is India's freelance & remote-work network for students, freshers, and professionals. Get vetted, land quality projects, ship great work, and get paid on time.",
+      },
+      {
+        name: "keywords",
+        content:
+          "workvia, freelance jobs India, remote jobs for students, freelance for freshers, part-time work India, upcurv, Coimbatore freelance, remote work platform, student internships, vetted freelancers, gig work India, upwork alternative India",
+      },
+      { property: "og:title", content: "Workvia — Freelance & remote work for students and professionals" },
+      {
+        property: "og:description",
+        content:
+          "Join India's talent-first freelance network. Vetted profiles, real projects, on-time payouts.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:site_name", content: "Workvia" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Workvia — Freelance & remote work for talent" },
+      {
+        name: "twitter:description",
+        content: "India's freelance network for students, freshers and professionals.",
+      },
+    ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Workvia",
+          url: SITE_URL,
+          potentialAction: {
+            "@type": "SearchAction",
+            target: `${SITE_URL}/for-freelancers?q={search_term_string}`,
+            "query-input": "required name=search_term_string",
+          },
+        }),
+      },
     ],
   }),
   component: Index,
@@ -20,10 +72,11 @@ function Index() {
   return (
     <PageShell>
       <Hero />
-      <TrustedBy />
+      <TalentValueProps />
       <HowItWorks />
       <PopularRoles />
-      <Differentiators />
+      <Testimonial />
+      <ForCompaniesTeaser />
       <CTASection />
     </PageShell>
   );
@@ -35,56 +88,61 @@ function Hero() {
       <div className="mx-auto grid max-w-7xl gap-10 px-6 pt-16 pb-20 md:grid-cols-2 md:items-center md:pt-24 md:pb-28">
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-violet/30 bg-white/70 px-3 py-1 text-xs font-medium text-accent">
-            <Sparkles className="h-3.5 w-3.5" /> AI-Powered Talent Network
+            <Sparkles className="h-3.5 w-3.5" /> For students, freshers & professionals
           </span>
           <h1 className="mt-5 font-display text-5xl leading-[1.05] tracking-tight text-foreground md:text-7xl">
-            Connecting great <br /> companies with{" "}
-            <span className="italic text-accent">great talent.</span>
+            Land freelance work you'll{" "}
+            <span className="italic text-accent">actually love.</span>
           </h1>
           <p className="mt-5 max-w-md text-base text-muted-foreground md:text-lg">
-            On-demand talent. Vetted professionals. Managed projects. All in one place.
+            Workvia connects Indian talent with real, vetted projects — freelance, part-time, and internships.
+            Build your profile, get matched, and get paid on time.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              to="/for-companies"
-              hash="inquiry"
+              to="/register"
               className="group inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.02]"
             >
-              Hire talent
+              Join as talent — free
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
-              to="/register"
+              to="/for-freelancers"
               className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-5 py-3 text-sm font-medium text-foreground hover:bg-secondary"
             >
-              Join as talent
+              How it works
             </Link>
+          </div>
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+            <span className="inline-flex items-center gap-1"><BadgeCheck className="h-3.5 w-3.5 text-accent" /> Free to join</span>
+            <span className="inline-flex items-center gap-1"><ShieldCheck className="h-3.5 w-3.5 text-accent" /> Vetted clients</span>
+            <span className="inline-flex items-center gap-1"><Wallet className="h-3.5 w-3.5 text-accent" /> On-time payouts</span>
           </div>
         </div>
         <div className="relative">
           <img
             src={heroImage}
-            alt="Diverse 3D illustrated professionals collaborating"
+            alt="Indian freelancers and students working on remote projects"
             width={1280}
             height={960}
             className="relative z-10 w-full"
           />
           <FloatingCard className="left-4 top-6 hidden md:flex">
             <div className="flex -space-x-2">
-              {["A", "B", "C"].map((l) => (
+              {["A", "S", "R"].map((l) => (
                 <span key={l} className="grid h-7 w-7 place-items-center rounded-full border-2 border-white bg-violet/80 text-[10px] font-semibold text-white">{l}</span>
               ))}
             </div>
             <div>
-              <p className="text-xs font-semibold text-foreground">Top 2% Talent</p>
-              <p className="text-[10px] text-muted-foreground">Pre-vetted experts</p>
+              <p className="text-xs font-semibold text-foreground">100+ talents</p>
+              <p className="text-[10px] text-muted-foreground">already earning on Workvia</p>
             </div>
           </FloatingCard>
           <FloatingCard className="bottom-10 left-2 hidden md:flex">
-            <LineChart className="h-5 w-5 text-accent" />
+            <Wallet className="h-5 w-5 text-accent" />
             <div>
-              <p className="text-xs font-semibold text-foreground">Project Delivered</p>
-              <p className="text-[10px] text-muted-foreground">+38% this quarter</p>
+              <p className="text-xs font-semibold text-foreground">Paid on time</p>
+              <p className="text-[10px] text-muted-foreground">weekly milestone payouts</p>
             </div>
           </FloatingCard>
         </div>
@@ -104,19 +162,33 @@ function FloatingCard({ className = "", children }: { className?: string; childr
   );
 }
 
-function TrustedBy() {
-  const logos = ["Linear", "Framer", "Vanta", "Notion", "Webflow", "Ramp"];
+function TalentValueProps() {
+  const perks = [
+    { icon: Briefcase, title: "Real projects, real pay", desc: "Freelance, part-time and internship gigs from vetted Indian and global companies." },
+    { icon: GraduationCap, title: "Built for students & freshers", desc: "No experience? No problem. Showcase skills, get assessed, and land your first project." },
+    { icon: Wallet, title: "On-time payouts", desc: "Milestone and weekly payouts in INR — no chasing invoices, no ghosting clients." },
+    { icon: BadgeCheck, title: "Portable profile", desc: "Verified badges, ratings, and a shareable portfolio that grows with every gig." },
+    { icon: Clock, title: "Work your way", desc: "Remote, hybrid, or onsite. Set your rate, your hours, your stack." },
+    { icon: Rocket, title: "Level up", desc: "Free skill assessments, mock interviews, and curated learning paths." },
+  ];
   return (
-    <section className="border-y border-border/60 bg-background">
-      <div className="mx-auto max-w-7xl px-6 py-10">
-        <p className="text-center text-xs uppercase tracking-widest text-muted-foreground">
-          Trusted by innovative companies worldwide
-        </p>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
-          {logos.map((l) => (
-            <span key={l} className="text-xl font-semibold tracking-tight text-foreground/70">
-              {l}
-            </span>
+    <section style={{ background: "var(--section-cream)" }}>
+      <div className="mx-auto max-w-7xl px-6 py-20">
+        <div className="max-w-2xl">
+          <span className="text-xs font-semibold uppercase tracking-widest text-accent">Why talents pick Workvia</span>
+          <h2 className="mt-3 font-display text-4xl tracking-tight text-foreground md:text-5xl">
+            Everything you need to freelance seriously.
+          </h2>
+        </div>
+        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {perks.map((p) => (
+            <div key={p.title} className="rounded-2xl border border-border/60 bg-white p-5" style={{ boxShadow: "var(--shadow-card)" }}>
+              <div className="grid h-10 w-10 place-items-center rounded-xl bg-violet-soft text-accent">
+                <p.icon className="h-5 w-5" />
+              </div>
+              <h3 className="mt-3 text-sm font-semibold text-foreground">{p.title}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{p.desc}</p>
+            </div>
           ))}
         </div>
       </div>
@@ -126,30 +198,24 @@ function TrustedBy() {
 
 function HowItWorks() {
   const steps = [
-    { icon: Briefcase, title: "Post a requirement", desc: "Tell us what you need. We'll find the right match." },
-    { icon: Users, title: "We match & onboard", desc: "We shortlist top talent and handle onboarding." },
-    { icon: BadgeCheck, title: "You scale effortlessly", desc: "Manage projects, track work, and pay — all in one place." },
+    { title: "Create your talent profile", desc: "Sign up, upload your resume, and let our AI structure your skills and experience." },
+    { title: "Get matched with projects", desc: "Receive curated freelance, part-time or internship briefs that fit your skills and availability." },
+    { title: "Ship & get paid", desc: "Track work with timesheets and milestones. Get paid weekly, straight to your bank." },
   ];
   return (
-    <section style={{ background: "var(--section-cream)" }}>
+    <section className="bg-background">
       <div className="mx-auto max-w-7xl px-6 py-20">
         <div className="text-center">
-          <span className="text-xs font-semibold uppercase tracking-widest text-accent">How it works</span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-accent">How Workvia works</span>
           <h2 className="mt-3 font-display text-4xl tracking-tight text-foreground md:text-5xl">
-            The smartest way to hire and work
+            From profile to paycheck in three steps
           </h2>
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {steps.map((s, i) => (
-            <div
-              key={s.title}
-              className="rounded-3xl border border-border/60 bg-white p-6"
-              style={{ boxShadow: "var(--shadow-card)" }}
-            >
-              <div className="grid h-11 w-11 place-items-center rounded-xl bg-violet-soft text-accent">
-                <s.icon className="h-5 w-5" />
-              </div>
-              <h3 className="mt-4 text-base font-semibold text-foreground">{i + 1}. {s.title}</h3>
+            <div key={s.title} className="rounded-3xl border border-border/60 bg-white p-6" style={{ boxShadow: "var(--shadow-card)" }}>
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-violet text-sm font-semibold text-white">{i + 1}</span>
+              <h3 className="mt-4 text-base font-semibold text-foreground">{s.title}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
             </div>
           ))}
@@ -161,20 +227,20 @@ function HowItWorks() {
 
 function PopularRoles() {
   const roles = [
-    { title: "Full Stack Developer", rate: "₹3,000/day" },
-    { title: "UI/UX Designer", rate: "₹2,500/day" },
-    { title: "Mobile Developer", rate: "₹2,800/day" },
-    { title: "DevOps Engineer", rate: "₹3,500/day" },
-    { title: "Data Analyst", rate: "₹2,400/day" },
-    { title: "QA Engineer", rate: "₹2,200/day" },
+    { title: "Full Stack Developer", rate: "₹500–1,500/hr" },
+    { title: "UI/UX Designer", rate: "₹400–1,200/hr" },
+    { title: "Mobile Developer", rate: "₹500–1,400/hr" },
+    { title: "Content Writer", rate: "₹200–800/hr" },
+    { title: "Video Editor", rate: "₹300–900/hr" },
+    { title: "Data Analyst", rate: "₹400–1,200/hr" },
   ];
   return (
-    <section className="bg-background">
+    <section style={{ background: "var(--section-lavender)" }}>
       <div className="mx-auto max-w-7xl px-6 py-20">
         <div className="text-center">
-          <span className="text-xs font-semibold uppercase tracking-widest text-accent">Popular roles</span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-accent">Popular categories</span>
           <h2 className="mt-3 font-display text-4xl tracking-tight text-foreground md:text-5xl">
-            Top in-demand talent
+            Freelance opportunities in high demand
           </h2>
         </div>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -185,7 +251,7 @@ function PopularRoles() {
               </span>
               <div>
                 <p className="text-sm font-semibold text-foreground">{r.title}</p>
-                <p className="text-xs text-muted-foreground">From {r.rate}</p>
+                <p className="text-xs text-muted-foreground">Typical rate {r.rate}</p>
               </div>
             </div>
           ))}
@@ -195,34 +261,41 @@ function PopularRoles() {
   );
 }
 
-function Differentiators() {
-  const items = [
-    { title: "AI resume parsing", desc: "Pull structured data from any CV in seconds." },
-    { title: "AI skill matching", desc: "Rank candidates by fit, not by keywords." },
-    { title: "AI interview summaries", desc: "Get crisp readouts after every call." },
-    { title: "Automated reminders", desc: "Never lose a candidate to a missed follow-up." },
-    { title: "Contract & invoice gen", desc: "Generated, signed, and stored automatically." },
-    { title: "Replacement suggestions", desc: "Bench backups ready if anyone drops out." },
-  ];
+function Testimonial() {
   return (
-    <section style={{ background: "var(--section-lavender)" }}>
-      <div className="mx-auto max-w-7xl px-6 py-20">
-        <div className="max-w-2xl">
-          <span className="text-xs font-semibold uppercase tracking-widest text-accent">Why teams pick us</span>
-          <h2 className="mt-3 font-display text-4xl tracking-tight text-foreground md:text-5xl">
-            More than a staffing agency. A talent operating system.
-          </h2>
+    <section className="bg-background">
+      <div className="mx-auto max-w-4xl px-6 py-20 text-center">
+        <div className="mx-auto flex justify-center gap-1 text-amber-400">
+          {[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-4 w-4 fill-current" />)}
         </div>
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((i) => (
-            <div key={i.title} className="rounded-2xl border border-border/60 bg-white/80 p-5 backdrop-blur">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-accent" />
-                <h3 className="text-sm font-semibold text-foreground">{i.title}</h3>
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground">{i.desc}</p>
+        <p className="mx-auto mt-4 max-w-2xl font-display text-2xl leading-snug text-foreground md:text-3xl">
+          "I landed my first paid project in my second semester. Workvia handled the client trust and payments — I just shipped."
+        </p>
+        <p className="mt-4 text-sm text-muted-foreground">— Ugasri R, Frontend Developer & Student</p>
+      </div>
+    </section>
+  );
+}
+
+function ForCompaniesTeaser() {
+  return (
+    <section className="bg-background">
+      <div className="mx-auto max-w-7xl px-6 pb-6">
+        <div className="rounded-3xl border border-border/60 bg-secondary/50 p-8 md:p-12">
+          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+            <div className="max-w-xl">
+              <span className="text-xs font-semibold uppercase tracking-widest text-accent">Hiring on Workvia</span>
+              <h2 className="mt-2 font-display text-3xl tracking-tight text-foreground md:text-4xl">
+                Companies: hire vetted Indian talent, fast.
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Post a role, get a curated shortlist in 48 hours, and manage contracts, timesheets and payouts in one place.
+              </p>
             </div>
-          ))}
+            <Link to="/for-companies" className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background">
+              For companies <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -235,17 +308,17 @@ function CTASection() {
       <div className="mx-auto max-w-5xl px-6 py-20">
         <div className="overflow-hidden rounded-3xl bg-foreground px-8 py-14 text-center text-background md:px-16">
           <h2 className="font-display text-4xl tracking-tight md:text-5xl">
-            Ready to build your dream team?
+            Your first freelance gig is one profile away.
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm text-background/70 md:text-base">
-            Start hiring vetted talent in days — not months. Or join thousands of professionals shipping great work.
+            Join hundreds of Indian students, freshers and professionals earning through Workvia.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Link to="/for-companies" hash="inquiry" className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-medium text-accent-foreground hover:opacity-95">
-              Hire talent <ArrowRight className="h-4 w-4" />
+            <Link to="/register" className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-medium text-accent-foreground hover:opacity-95">
+              Create free talent account <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/register" className="inline-flex items-center rounded-full border border-background/30 px-5 py-3 text-sm font-medium text-background hover:bg-background/10">
-              Join as talent
+            <Link to="/for-freelancers" className="inline-flex items-center rounded-full border border-background/30 px-5 py-3 text-sm font-medium text-background hover:bg-background/10">
+              Learn more
             </Link>
           </div>
         </div>
