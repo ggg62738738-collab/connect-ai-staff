@@ -35,10 +35,10 @@ import { Route as AdminTimesheetsRouteImport } from './routes/admin.timesheets'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
 import { Route as AdminJobsRouteImport } from './routes/admin.jobs'
-import { Route as AdminFreelancersRouteImport } from './routes/admin.freelancers'
 import { Route as AdminContractsRouteImport } from './routes/admin.contracts'
 import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
 import { Route as AdminApplicationsRouteImport } from './routes/admin.applications'
+import { Route as AdminFreelancersIndexRouteImport } from './routes/admin.freelancers.index'
 import { Route as AdminJobsJobIdRouteImport } from './routes/admin.jobs.$jobId'
 import { Route as AdminFreelancersIdRouteImport } from './routes/admin.freelancers.$id'
 
@@ -172,11 +172,6 @@ const AdminJobsRoute = AdminJobsRouteImport.update({
   path: '/jobs',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminFreelancersRoute = AdminFreelancersRouteImport.update({
-  id: '/freelancers',
-  path: '/freelancers',
-  getParentRoute: () => AdminRoute,
-} as any)
 const AdminContractsRoute = AdminContractsRouteImport.update({
   id: '/contracts',
   path: '/contracts',
@@ -192,15 +187,20 @@ const AdminApplicationsRoute = AdminApplicationsRouteImport.update({
   path: '/applications',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminFreelancersIndexRoute = AdminFreelancersIndexRouteImport.update({
+  id: '/freelancers/',
+  path: '/freelancers/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminJobsJobIdRoute = AdminJobsJobIdRouteImport.update({
   id: '/$jobId',
   path: '/$jobId',
   getParentRoute: () => AdminJobsRoute,
 } as any)
 const AdminFreelancersIdRoute = AdminFreelancersIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AdminFreelancersRoute,
+  id: '/freelancers/$id',
+  path: '/freelancers/$id',
+  getParentRoute: () => AdminRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -220,7 +220,6 @@ export interface FileRoutesByFullPath {
   '/admin/applications': typeof AdminApplicationsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contracts': typeof AdminContractsRoute
-  '/admin/freelancers': typeof AdminFreelancersRouteWithChildren
   '/admin/jobs': typeof AdminJobsRouteWithChildren
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
@@ -236,6 +235,7 @@ export interface FileRoutesByFullPath {
   '/freelancer/': typeof FreelancerIndexRoute
   '/admin/freelancers/$id': typeof AdminFreelancersIdRoute
   '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
+  '/admin/freelancers/': typeof AdminFreelancersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -252,7 +252,6 @@ export interface FileRoutesByTo {
   '/admin/applications': typeof AdminApplicationsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contracts': typeof AdminContractsRoute
-  '/admin/freelancers': typeof AdminFreelancersRouteWithChildren
   '/admin/jobs': typeof AdminJobsRouteWithChildren
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
@@ -268,6 +267,7 @@ export interface FileRoutesByTo {
   '/freelancer': typeof FreelancerIndexRoute
   '/admin/freelancers/$id': typeof AdminFreelancersIdRoute
   '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
+  '/admin/freelancers': typeof AdminFreelancersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -287,7 +287,6 @@ export interface FileRoutesById {
   '/admin/applications': typeof AdminApplicationsRoute
   '/admin/companies': typeof AdminCompaniesRoute
   '/admin/contracts': typeof AdminContractsRoute
-  '/admin/freelancers': typeof AdminFreelancersRouteWithChildren
   '/admin/jobs': typeof AdminJobsRouteWithChildren
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/settings': typeof AdminSettingsRoute
@@ -303,6 +302,7 @@ export interface FileRoutesById {
   '/freelancer/': typeof FreelancerIndexRoute
   '/admin/freelancers/$id': typeof AdminFreelancersIdRoute
   '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
+  '/admin/freelancers/': typeof AdminFreelancersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -323,7 +323,6 @@ export interface FileRouteTypes {
     | '/admin/applications'
     | '/admin/companies'
     | '/admin/contracts'
-    | '/admin/freelancers'
     | '/admin/jobs'
     | '/admin/payments'
     | '/admin/settings'
@@ -339,6 +338,7 @@ export interface FileRouteTypes {
     | '/freelancer/'
     | '/admin/freelancers/$id'
     | '/admin/jobs/$jobId'
+    | '/admin/freelancers/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -355,7 +355,6 @@ export interface FileRouteTypes {
     | '/admin/applications'
     | '/admin/companies'
     | '/admin/contracts'
-    | '/admin/freelancers'
     | '/admin/jobs'
     | '/admin/payments'
     | '/admin/settings'
@@ -371,6 +370,7 @@ export interface FileRouteTypes {
     | '/freelancer'
     | '/admin/freelancers/$id'
     | '/admin/jobs/$jobId'
+    | '/admin/freelancers'
   id:
     | '__root__'
     | '/'
@@ -389,7 +389,6 @@ export interface FileRouteTypes {
     | '/admin/applications'
     | '/admin/companies'
     | '/admin/contracts'
-    | '/admin/freelancers'
     | '/admin/jobs'
     | '/admin/payments'
     | '/admin/settings'
@@ -405,6 +404,7 @@ export interface FileRouteTypes {
     | '/freelancer/'
     | '/admin/freelancers/$id'
     | '/admin/jobs/$jobId'
+    | '/admin/freelancers/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -607,13 +607,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminJobsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/freelancers': {
-      id: '/admin/freelancers'
-      path: '/freelancers'
-      fullPath: '/admin/freelancers'
-      preLoaderRoute: typeof AdminFreelancersRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/admin/contracts': {
       id: '/admin/contracts'
       path: '/contracts'
@@ -635,6 +628,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminApplicationsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/freelancers/': {
+      id: '/admin/freelancers/'
+      path: '/freelancers'
+      fullPath: '/admin/freelancers/'
+      preLoaderRoute: typeof AdminFreelancersIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/jobs/$jobId': {
       id: '/admin/jobs/$jobId'
       path: '/$jobId'
@@ -644,24 +644,13 @@ declare module '@tanstack/react-router' {
     }
     '/admin/freelancers/$id': {
       id: '/admin/freelancers/$id'
-      path: '/$id'
+      path: '/freelancers/$id'
       fullPath: '/admin/freelancers/$id'
       preLoaderRoute: typeof AdminFreelancersIdRouteImport
-      parentRoute: typeof AdminFreelancersRoute
+      parentRoute: typeof AdminRoute
     }
   }
 }
-
-interface AdminFreelancersRouteChildren {
-  AdminFreelancersIdRoute: typeof AdminFreelancersIdRoute
-}
-
-const AdminFreelancersRouteChildren: AdminFreelancersRouteChildren = {
-  AdminFreelancersIdRoute: AdminFreelancersIdRoute,
-}
-
-const AdminFreelancersRouteWithChildren =
-  AdminFreelancersRoute._addFileChildren(AdminFreelancersRouteChildren)
 
 interface AdminJobsRouteChildren {
   AdminJobsJobIdRoute: typeof AdminJobsJobIdRoute
@@ -679,24 +668,26 @@ interface AdminRouteChildren {
   AdminApplicationsRoute: typeof AdminApplicationsRoute
   AdminCompaniesRoute: typeof AdminCompaniesRoute
   AdminContractsRoute: typeof AdminContractsRoute
-  AdminFreelancersRoute: typeof AdminFreelancersRouteWithChildren
   AdminJobsRoute: typeof AdminJobsRouteWithChildren
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminTimesheetsRoute: typeof AdminTimesheetsRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminFreelancersIdRoute: typeof AdminFreelancersIdRoute
+  AdminFreelancersIndexRoute: typeof AdminFreelancersIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminApplicationsRoute: AdminApplicationsRoute,
   AdminCompaniesRoute: AdminCompaniesRoute,
   AdminContractsRoute: AdminContractsRoute,
-  AdminFreelancersRoute: AdminFreelancersRouteWithChildren,
   AdminJobsRoute: AdminJobsRouteWithChildren,
   AdminPaymentsRoute: AdminPaymentsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminTimesheetsRoute: AdminTimesheetsRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminFreelancersIdRoute: AdminFreelancersIdRoute,
+  AdminFreelancersIndexRoute: AdminFreelancersIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
@@ -745,13 +736,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

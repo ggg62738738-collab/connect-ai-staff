@@ -1,48 +1,42 @@
-## Audit result (DB ↔ code)
+This is a large multi-part request. Here's how I'll tackle it, grouped by area. I'll ship in this order so each piece is verifiable.
 
-Good news: after the last migration, every table the code references now exists (`profiles`, `freelancer_profiles`, `freelancer_onboarding`, `applications`, `application_notes`, `jobs`, `companies`, `company_members`, `contracts`, `timesheets`, `payments`, `user_roles`). No more "type never" TS errors from missing tables.
+## 1. Quick content + UI fixes (single pass)
+- **About page** — change "12k" → "100+", "600+" → "5+".
+- **Contact page** — email `upcurvinnovations@gmail.com`, phone `6380715292`, office `Coimbatore, Tamil Nadu`.
+- **Login + Register** — add eye-toggle on password fields (reuse a small `PasswordInput` component).
+- **Admin talent detail** — route `/admin/freelancers/$id` exists but detail page doesn't render. Debug and fix the loader/component so clicking a row opens the profile instead of only changing the URL.
 
-Real gaps I want to close before launch:
+## 2. Homepage repositioning (freelancers/students/professionals first)
+- Rewrite hero, value props, sections, and CTAs on `src/routes/index.tsx` to speak to **freelancers, students, and professionals** first (find work, build portfolio, get paid, upskill), with companies as a secondary audience below.
+- Keep existing components/layout; only copy + a couple of section reorders.
 
-1. **Rich onboarding data has nowhere structured to live.** Everything in the 10-step form is stuffed into `freelancer_onboarding.data` (JSONB). Fine for MVP, but admin filtering ("show me React devs, 3+ yrs, available in 15 days") can't be indexed. We should promote the highest-signal fields to real columns on `freelancer_profiles`: `photo_url, mobile, mobile_verified, email_verified, city, country, primary_role, total_experience, employment_status, notice_period, expected_daily_rate, expected_hourly_rate, resume_url, linkedin_url, github_url, portfolio_url, available_from, register_as`. Keep the full JSON for everything else.
-2. **No storage buckets.** Avatar, resume, cover letter, ID/passport, offer letter, experience letter uploads all fail today. Need three buckets: `avatars` (public), `resumes` (private, owner + staff read), `verification-docs` (private, owner + staff read).
-3. **`profiles` is missing `avatar_url` and `phone`** used by the header profile chip and admin talent detail.
-4. **Applications table** has no `updated_at` trigger (only column). Minor — add trigger.
-5. **`applications.match`** is `NOT NULL DEFAULT` unspecified — confirm default 0.
-6. **No `notifications` table** for "we'll notify you when work is available" — needed for the empty-state promise on Find Work.
-7. **Public read policy on `jobs`** — Find Work must be visible to signed-in freelancers; verify RLS allows it.
+## 3. SEO for `workvia.upcurv.in`
+- Update root `head()` title/description/OG defaults and per-route metadata across public pages (`index`, `about`, `for-freelancers`, `for-companies`, `how-it-works`, `pricing`, `industries`, `contact`) targeting keywords: *workvia, freelance jobs India, hire vetted freelancers, student freelance platform, remote work India, Coimbatore freelance*.
+- Set canonical + `og:url` to `https://workvia.upcurv.in/...`.
+- Add JSON-LD `Organization` + `WebSite` (with SearchAction) on root, `BreadcrumbList` on inner pages, `FAQPage` where FAQs exist.
+- Update `public/robots.txt` sitemap URL and `src/routes/sitemap[.]xml.ts` BASE_URL to `https://workvia.upcurv.in`.
+- Add semantic H1s, alt text audit.
 
-## Launch focus: freelancer-first
+## 4. OTP email verification on register
+- **DB**: new table `email_otps` (user_id, code_hash, purpose, expires_at, consumed_at, attempts). Migration includes GRANTs + RLS.
+- **Server fns** (`src/lib/otp.functions.ts`): `sendSignupOtp({ email })`, `verifyOtp({ email, code })`. Verify marks user's email confirmed via `supabaseAdmin.auth.admin.updateUserById`, issues session? — actually we can't create a client session server-side without a magic link. Simpler: after OTP verify, call `admin.updateUserById({ email_confirm: true })` and return success; the frontend then calls `supabase.auth.signInWithPassword` using the password captured at register time (kept in component state) to auto-login. Also fires welcome email.
+- **Email sending**: uses `email_settings` SMTP row via `nodemailer`. Branded HTML template (OTP + welcome).
+- **Frontend**: `/register` → after `signUp`, redirect to `/verify-email?email=...` with 6-digit OTP UI, resend button (60s cooldown). On success → auto sign-in → `/freelancer`.
+- Supabase `Confirm email` should be OFF for this to work smoothly — I'll note it in chat with a dashboard link.
 
-Everything else (company portal, contracts, timesheets, payments) is deferred. Freelancer signup → complete profile → be visible to admin/recruiter is the whole v1 loop.
+## 5. Advanced Post Job form (admin)
+Extend `admin.jobs` create/edit form with: job type (full-time/part-time/contract/internship), work mode (remote/hybrid/onsite), experience level, min/max budget + currency, duration, start date, application deadline, required skills (multi-tag), preferred skills, responsibilities (rich text/markdown), requirements, perks, visibility (public/private/invite-only), number of openings, screening questions (repeater).
+- Migration: add columns to `jobs` table (nullable, safe defaults).
 
-### Phase 1 — Schema + storage (one migration)
-- Add columns above to `freelancer_profiles` and `profiles`.
-- Create `notifications` table (`user_id, kind, title, body, read_at`).
-- Create the 3 storage buckets with RLS: owner writes to their `{user_id}/…` prefix; staff (`is_staff`) reads all; `avatars` public read.
-- Add `updated_at` trigger on `applications`.
-- Ensure `has_role`/`is_staff` used everywhere (already in place).
-
-### Phase 2 — Freelancer portal polish
-- **Onboarding page**: wire file uploads to storage buckets, mirror promoted fields back into `freelancer_profiles` on save (server-fn does both writes atomically), show real % complete + talent score.
-- **Profile page**: add avatar upload; header profile chip reads `profiles.avatar_url`.
-- **Register → onboarding**: after signup, hard-redirect to `/freelancer/onboarding` (already done, verify).
-- **Find Work empty state**: hand-drawn illustration + "We'll notify you when matching work appears" — inserts a `notifications` opt-in row.
-- **Earnings page**: keep read-only for now (no contracts yet); show empty state with copy "Earnings appear here once your first contract starts."
-
-### Phase 3 — Admin visibility into talent (minimum)
-- Admin Talent list filters by promoted columns (role, experience, availability, city).
-- Admin Talent detail: full onboarding JSON rendered by section + recruiter notes/assessment save (already wired).
-- Notify admin on new freelancer signup (row into `notifications` for all admins).
-
-### Deferred (post-launch)
-Company portal, job posting flow, applications pipeline, contracts, timesheets, payments UI. The tables stay so nothing breaks, but no product work on them now.
+## 6. Contracts + Timesheets (functional)
+- **Contracts**: table `contracts` (job_id, freelancer_id, company_id, rate, currency, start_date, end_date, status: draft/active/paused/ended, terms text, signed_at_freelancer, signed_at_company). Server fns: list/create/sign/end. Admin page + freelancer page render live data with actions (freelancer can sign/decline; admin can create/end).
+- **Timesheets**: table `timesheet_entries` (contract_id, freelancer_id, work_date, hours, description, status: draft/submitted/approved/rejected, submitted_at, reviewed_at, reviewer_id). Weekly grouping in UI. Freelancer: add entries, submit week. Admin/company reviewer: approve/reject with note.
+- Both get realtime-friendly queries via TanStack Query (no realtime channel yet).
 
 ## Technical notes
-- One migration for Phase 1; new columns are nullable so existing rows are fine.
-- Storage RLS uses `bucket_id + auth.uid()::text = (storage.foldername(name))[1]` for owner writes; staff read via `public.is_staff(auth.uid())`.
-- Onboarding save server-fn does `upsert freelancer_onboarding` and `update freelancer_profiles` in the same handler (RLS as user handles both).
-- `notifications` gets realtime enabled so the header bell updates live.
+- Nodemailer runs in Cloudflare Worker — I'll verify at build; if it fails, fall back to a fetch-based Gmail SMTP-over-HTTPS via a lightweight lib, or move send into a Supabase Edge Function (existing SMTP path there is safer). Given prior plan already committed to nodemailer server-fn, I'll try that first.
+- All new tables get GRANTs + RLS + updated_at trigger per project standard.
+- Admin talent detail bug likely a missing route file or wrong param name — will read `admin.freelancers.$id.tsx` and the query.
 
-## What I need from you
-Confirm and I'll implement Phase 1 (migration + buckets) and Phase 2 (freelancer portal wiring) in the next turn. Say the word if you want any Phase 3 item pulled forward or Phase 2 item deferred.
+## Scope check
+This is 4–5 turns of work. I'll ship in this order: (1) content/UI fixes + admin detail bug, (2) SEO pass, (3) OTP flow + migration, (4) advanced job fields, (5) contracts + timesheets. After you approve the plan I'll start with group 1 and the migrations needed for groups 3/5/6 (batched so you approve DB changes once).

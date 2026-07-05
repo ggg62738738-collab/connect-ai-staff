@@ -15,8 +15,8 @@ export const Route = createFileRoute("/about")({
 
 function About() {
   const stats = [
-    { v: "12k+", l: "Vetted professionals" },
-    { v: "600+", l: "Companies served" },
+    { v: "100+", l: "Vetted professionals" },
+    { v: "5+", l: "Companies served" },
     { v: "48h", l: "Average match time" },
     { v: "98%", l: "Project success rate" },
   ];
