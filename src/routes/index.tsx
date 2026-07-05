@@ -91,8 +91,7 @@ function Hero() {
             <Sparkles className="h-3.5 w-3.5" /> For students, freshers & professionals
           </span>
           <h1 className="mt-5 font-display text-5xl leading-[1.05] tracking-tight text-foreground md:text-7xl">
-            Land freelance work you'll{" "}
-            <span className="italic text-accent">actually love.</span>
+            Get hired by growing companies through Workvia
           </h1>
           <p className="mt-5 max-w-md text-base text-muted-foreground md:text-lg">
             Workvia connects Indian talent with real, vetted projects — freelance, part-time, and internships.
