@@ -291,7 +291,7 @@ function FreelancerDetailPage() {
 
           {active === "documents" && (
             <Card>
-              <CardHeader className="pb-2"><CardTitle className="text-base">Documents</CardTitle></CardHeader>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Documents & verification</CardTitle></CardHeader>
               <CardContent className="space-y-2 text-sm">
                 <DocRow label="Resume" value={onb.resumeUrl} />
                 <DocRow label="Cover letter" value={onb.coverLetterUrl} />
@@ -299,14 +299,36 @@ function FreelancerDetailPage() {
                 <DocRow label="Company ID" value={onb.companyIdUrl} />
                 <DocRow label="Offer letter" value={onb.offerLetterUrl} />
                 <DocRow label="Experience letter" value={onb.experienceLetterUrl} />
-                <div className="mt-3 border-t pt-3">
+                <div className="mt-3 border-t pt-3 space-y-1">
                   <p className="text-xs font-medium text-muted-foreground">Government IDs</p>
                   <p className="text-sm">Aadhaar: {onb.aadhaar ? "•••• " + String(onb.aadhaar).slice(-4) : "—"}</p>
                   <p className="text-sm">PAN: {onb.pan || "—"}</p>
+                  <p className="text-sm">Passport: {onb.passport || "—"}</p>
+                  <p className="text-sm">Mobile verified: {onb.mobileVerified ? "Yes" : "No"}</p>
+                  <p className="text-sm">Email verified: {onb.emailVerified ? "Yes" : "No"}</p>
                 </div>
               </CardContent>
             </Card>
           )}
+
+          {active === "student" && (
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Student & campus info</CardTitle></CardHeader>
+              <CardContent className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+                <Info label="College" value={onb.studentCollege || "—"} />
+                <Info label="Degree" value={onb.studentDegree || "—"} />
+                <Info label="Branch" value={onb.studentBranch || "—"} />
+                <Info label="Year" value={onb.studentYear || "—"} />
+                <Info label="Graduation year" value={onb.studentGradYear || "—"} />
+                <Info label="Looking for" value={onb.internshipLookingFor || "—"} />
+                <Info label="Hackathons" value={onb.hackathons || "—"} />
+                <Info label="LeetCode" value={onb.leetcode || "—"} />
+                <Info label="HackerRank" value={onb.hackerrank || "—"} />
+                <Info label="Other coding platforms" value={onb.codingPlatforms || "—"} />
+              </CardContent>
+            </Card>
+          )}
+
 
           {active === "onboarding" && (
             <Card>
@@ -429,3 +451,32 @@ function SectionCheck({ label, done }: { label: string; done: boolean }) {
     </div>
   );
 }
+
+function ChipList({ items }: { items?: string[] }) {
+  if (!items?.length) return <p className="mt-1 text-sm text-muted-foreground">—</p>;
+  return (
+    <div className="mt-1 flex flex-wrap gap-1">
+      {items.map((s) => <Badge key={s} variant="secondary">{s}</Badge>)}
+    </div>
+  );
+}
+
+function Empty() {
+  return <p className="text-sm text-muted-foreground">Nothing added yet.</p>;
+}
+
+function LinkRow({ label, value }: { label: string; value?: string }) {
+  return (
+    <div className="flex items-center justify-between rounded-md border p-2 text-sm">
+      <span className="capitalize text-muted-foreground">{label}</span>
+      {value ? (
+        <a href={value} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-violet hover:underline">
+          Open <ExternalLink className="h-3 w-3" />
+        </a>
+      ) : (
+        <span className="text-xs text-muted-foreground">—</span>
+      )}
+    </div>
+  );
+}
+
