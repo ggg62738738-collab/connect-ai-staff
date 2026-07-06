@@ -104,16 +104,162 @@ function FreelancerDetailPage() {
                   <Info label="Availability" value={profile?.availability || onb.availabilityStatus || "—"} />
                   <Info label="Hourly rate" value={profile?.rate ? `${fmtMoney(profile.rate)}/hr` : "—"} />
                   <Info label="Experience" value={onb.totalExperience ? `${onb.totalExperience} years` : "—"} />
+                  <Info label="Mobile" value={onb.mobile || "—"} />
+                  <Info label="Date of birth" value={onb.dob || "—"} />
+                  <Info label="Gender" value={onb.gender || "—"} />
+                  <Info label="Nationality" value={onb.nationality || "—"} />
+                  <Info label="State" value={onb.state || "—"} />
+                  <Info label="Register as" value={onb.registerAs || "—"} />
                 </div>
                 <div>
                   <p className="text-xs font-medium text-muted-foreground">Bio</p>
                   <p className="mt-1 whitespace-pre-line">{profile?.bio || "No bio yet."}</p>
                 </div>
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground">Languages known</p>
+                  <ChipList items={onb.languages} />
+                </div>
               </CardContent>
             </Card>
           )}
 
-          {active === "skills" && (
+          {active === "professional" && (
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Professional information</CardTitle></CardHeader>
+              <CardContent className="space-y-3 text-sm">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <Info label="Primary role" value={onb.primaryRole || "—"} />
+                  <Info label="Secondary role" value={onb.secondaryRole || "—"} />
+                  <Info label="Current company" value={onb.currentCompany || "—"} />
+                  <Info label="Current designation" value={onb.currentDesignation || "—"} />
+                  <Info label="Total experience" value={onb.totalExperience ? `${onb.totalExperience} yrs` : "—"} />
+                  <Info label="Relevant experience" value={onb.relevantExperience ? `${onb.relevantExperience} yrs` : "—"} />
+                  <Info label="Industry" value={onb.industry || "—"} />
+                  <Info label="Employment status" value={onb.employmentStatus || "—"} />
+                  <Info label="Available from" value={onb.availableFrom || "—"} />
+                  <Info label="Preferred shift" value={onb.preferredShift || "—"} />
+                  <Info label="Work mode" value={(onb.workMode ?? []).join(", ") || "—"} />
+                  <Info label="Notice period" value={onb.noticePeriod ? `${onb.noticePeriod} days` : "—"} />
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {active === "experience" && (
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Experience ({onb.experience?.length ?? 0})</CardTitle></CardHeader>
+              <CardContent className="space-y-2">
+                {(onb.experience?.length ?? 0) === 0 ? <Empty /> : onb.experience.map((e: any, i: number) => (
+                  <div key={i} className="rounded-md border p-3 text-sm">
+                    <p className="font-medium">{e.designation} <span className="text-muted-foreground">· {e.company}</span></p>
+                    <p className="text-xs text-muted-foreground">{e.startDate || "—"} → {e.current ? "Present" : e.endDate || "—"} {e.type ? `· ${e.type}` : ""}</p>
+                    {e.tech && <p className="mt-1 text-xs">Tech: {e.tech}</p>}
+                    {e.responsibilities && <p className="mt-1 whitespace-pre-line">{e.responsibilities}</p>}
+                    {e.achievements && <p className="mt-1 text-xs text-muted-foreground whitespace-pre-line">Achievements: {e.achievements}</p>}
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
+          {active === "education" && (
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Education ({onb.education?.length ?? 0})</CardTitle></CardHeader>
+              <CardContent className="space-y-2">
+                {(onb.education?.length ?? 0) === 0 ? <Empty /> : onb.education.map((e: any, i: number) => (
+                  <div key={i} className="rounded-md border p-3 text-sm">
+                    <p className="font-medium">{e.degree}{e.branch ? ` · ${e.branch}` : ""}</p>
+                    <p className="text-xs text-muted-foreground">{e.college}{e.university ? ` · ${e.university}` : ""}</p>
+                    <p className="text-xs text-muted-foreground">Graduated: {e.gradYear || "—"} · CGPA: {e.cgpa || "—"} · %: {e.percentage || "—"}</p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
+          {active === "projects" && (
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Projects ({onb.projects?.length ?? 0})</CardTitle></CardHeader>
+              <CardContent className="space-y-2">
+                {(onb.projects?.length ?? 0) === 0 ? <Empty /> : onb.projects.map((p: any, i: number) => (
+                  <div key={i} className="rounded-md border p-3 text-sm">
+                    <p className="font-medium">{p.name}{p.role ? ` · ${p.role}` : ""}</p>
+                    <p className="text-xs text-muted-foreground">{p.client || ""} {p.duration ? `· ${p.duration}` : ""} {p.teamSize ? `· Team ${p.teamSize}` : ""}</p>
+                    {p.tech && <p className="mt-1 text-xs">Tech: {p.tech}</p>}
+                    {p.description && <p className="mt-1 whitespace-pre-line">{p.description}</p>}
+                    <div className="mt-1 flex gap-3 text-xs">
+                      {p.github && <a href={p.github} target="_blank" rel="noreferrer" className="text-violet hover:underline">GitHub</a>}
+                      {p.demo && <a href={p.demo} target="_blank" rel="noreferrer" className="text-violet hover:underline">Demo</a>}
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
+          {active === "certifications" && (
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Certifications ({onb.certifications?.length ?? 0})</CardTitle></CardHeader>
+              <CardContent className="space-y-2">
+                {(onb.certifications?.length ?? 0) === 0 ? <Empty /> : onb.certifications.map((c: any, i: number) => (
+                  <div key={i} className="flex flex-wrap items-center justify-between gap-2 rounded-md border p-3 text-sm">
+                    <div className="min-w-0">
+                      <p className="truncate font-medium">{c.name}</p>
+                      <p className="truncate text-xs text-muted-foreground">{c.issuer || "—"} · Issued: {c.issueDate || "—"}{c.expiry ? ` · Expiry: ${c.expiry}` : ""}</p>
+                    </div>
+                    {c.url && <a href={c.url} target="_blank" rel="noreferrer" className="text-xs text-violet hover:underline">View</a>}
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
+          {active === "preferences" && (
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Preferences & availability</CardTitle></CardHeader>
+              <CardContent className="space-y-3 text-sm">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <Info label="Expected daily rate" value={onb.expectedDailyRate ? fmtMoney(onb.expectedDailyRate) : "—"} />
+                  <Info label="Expected hourly rate" value={onb.expectedHourlyRate ? fmtMoney(onb.expectedHourlyRate) : "—"} />
+                  <Info label="Expected monthly salary" value={onb.expectedMonthlySalary ? fmtMoney(onb.expectedMonthlySalary) : "—"} />
+                  <Info label="Min budget" value={onb.minBudget ? fmtMoney(onb.minBudget) : "—"} />
+                  <Info label="Preferred industry" value={onb.preferredIndustry || "—"} />
+                  <Info label="Preferred location" value={onb.preferredLocation || "—"} />
+                  <Info label="Remote only" value={onb.remoteOnly ? "Yes" : "No"} />
+                  <Info label="Contract duration" value={onb.contractDuration || "—"} />
+                  <Info label="Notice period" value={onb.noticePeriod ? `${onb.noticePeriod} days` : "—"} />
+                  <Info label="Availability" value={onb.availabilityStatus || "—"} />
+                  <Info label="Hours per day" value={onb.hoursPerDay ? `${onb.hoursPerDay}h` : "—"} />
+                  <Info label="Timezone" value={onb.timezone || "—"} />
+                  <Info label="Can travel" value={onb.canTravel ? "Yes" : "No"} />
+                  <Info label="Can relocate" value={onb.canRelocate ? "Yes" : "No"} />
+                  <Info label="Passport" value={onb.passportAvailable ? "Yes" : "No"} />
+                  <Info label="Laptop" value={onb.laptopAvailable ? "Yes" : "No"} />
+                  <Info label="Internet speed" value={onb.internetSpeed || "—"} />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground">Preferred technologies</p>
+                  <ChipList items={onb.preferredTech} />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground">Preferred countries</p>
+                  <ChipList items={onb.preferredCountries} />
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {active === "links" && (
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Links</CardTitle></CardHeader>
+              <CardContent className="space-y-2 text-sm">
+                {["linkedin","github","portfolio","behance","dribbble","stackoverflow","medium","website"].map((k) => (
+                  <LinkRow key={k} label={k} value={onb.links?.[k]} />
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
             <Card>
               <CardHeader className="pb-2"><CardTitle className="text-base">Skills</CardTitle></CardHeader>
               <CardContent>
