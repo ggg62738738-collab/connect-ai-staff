@@ -15,13 +15,22 @@ export const Route = createFileRoute("/admin/freelancers/$id")({ component: Free
 
 const SECTIONS = [
   { id: "bio", label: "Bio & profile" },
+  { id: "professional", label: "Professional" },
   { id: "skills", label: "Skills" },
-  { id: "documents", label: "Documents" },
+  { id: "experience", label: "Experience" },
+  { id: "education", label: "Education" },
+  { id: "projects", label: "Projects" },
+  { id: "certifications", label: "Certifications" },
+  { id: "preferences", label: "Preferences & availability" },
+  { id: "links", label: "Links" },
+  { id: "documents", label: "Documents & verification" },
+  { id: "student", label: "Student info" },
   { id: "onboarding", label: "Onboarding progress" },
   { id: "applications", label: "Applications" },
   { id: "contracts", label: "Contracts" },
   { id: "ratings", label: "Ratings & assessment" },
 ];
+
 
 function FreelancerDetailPage() {
   const { id } = Route.useParams();
