@@ -10,8 +10,10 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import favicon from "@/assets/workvia-favicon.png.asset.json";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
+
 
 function NotFoundComponent() {
   return (
@@ -96,7 +98,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap",
       },
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/png", href: favicon.url },
+      { rel: "apple-touch-icon", href: favicon.url },
     ],
+
     scripts: [
       {
         type: "application/ld+json",

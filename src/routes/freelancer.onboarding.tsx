@@ -542,8 +542,13 @@ function ChipsField({ label, values, onChange, placeholder }: { label: string; v
           placeholder={placeholder ?? "Add and press Enter"}
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
+          onBlur={() => {
+            const v = draft.trim();
+            if (v && !values.includes(v)) onChange([...values, v]);
+            setDraft("");
+          }}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && draft.trim()) {
+            if ((e.key === "Enter" || e.key === "," || e.key === "Tab") && draft.trim()) {
               e.preventDefault();
               const v = draft.trim();
               if (!values.includes(v)) onChange([...values, v]);
@@ -551,6 +556,7 @@ function ChipsField({ label, values, onChange, placeholder }: { label: string; v
             }
           }}
         />
+
       </div>
     </Field>
   );
