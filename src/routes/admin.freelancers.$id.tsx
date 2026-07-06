@@ -260,7 +260,9 @@ function FreelancerDetailPage() {
             </Card>
           )}
 
+          {active === "skills" && (
             <Card>
+
               <CardHeader className="pb-2"><CardTitle className="text-base">Skills</CardTitle></CardHeader>
               <CardContent>
                 {(onb.skills?.length ?? 0) === 0 && (profile?.skills?.length ?? 0) === 0 ? (
